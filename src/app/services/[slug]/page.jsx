@@ -4,8 +4,9 @@ import { db } from '@/lib/db';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 
 export async function generateMetadata({ params }) {
+  const { slug } = await params;
   const service = await db.service.findUnique({
-    where: { slug: params.slug, status: 'ACTIVE' }
+    where: { slug, status: 'ACTIVE' }
   });
   
   if (!service) return { title: 'Service Not Found' };
@@ -17,8 +18,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ServicePage({ params }) {
+  const { slug } = await params;
   const service = await db.service.findUnique({
-    where: { slug: params.slug, status: 'ACTIVE' }
+    where: { slug, status: 'ACTIVE' }
   });
 
   if (!service) {

@@ -75,14 +75,20 @@ export default function ClientList({ initialClients }) {
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {clients.map((client) => (
           <div key={client.id} className="bg-admin-surface/[0.02] border border-white/5 rounded-xl p-6 flex flex-col items-center text-center group">
-            <div className="relative w-32 h-20 mb-4 opacity-70 group-hover:opacity-100 transition-opacity">
-              <Image 
-                src={client.logo || 'https://via.placeholder.com/300x150.png?text=No+Logo'} 
-                alt={client.name} 
-                fill
-                className="object-contain"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
+            <div className="relative w-32 h-20 mb-4 opacity-70 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              {(client.logoUrl || client.logo) ? (
+                <Image
+                  src={client.logoUrl || client.logo}
+                  alt={client.name}
+                  fill
+                  className="object-contain"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-xs text-secondary/60 border border-dashed border-white/10 rounded">
+                  No Logo
+                </div>
+              )}
             </div>
             <h3 className="text-white font-medium mb-1">{client.name}</h3>
             <p className="text-xs text-secondary mb-4 uppercase tracking-widest">{client.sector || 'General'}</p>

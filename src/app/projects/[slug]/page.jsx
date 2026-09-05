@@ -73,27 +73,34 @@ export default async function ProjectPage({ params }) {
               </div>
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginBottom: '2rem', color: '#94A3B8' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <User size={18} style={{ color: 'var(--accent)' }} />
-                  <span><strong>Client:</strong> {project.client}</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Calendar size={18} style={{ color: 'var(--accent)' }} />
-                  <span><strong>Location:</strong> Bengaluru, India</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ color: 'var(--accent)' }}><strong>Industry:</strong> {industry}</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ color: 'var(--accent)' }}><strong>Duration:</strong> 8 months</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ color: 'var(--accent)' }}><strong>Scope:</strong> {project.category}</span>
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <CheckCircle size={18} style={{ color: 'var(--accent)' }} />
-                  <span><strong>Status:</strong> {project.status}</span>
-                </div>
+                {project.client && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <User size={18} style={{ color: 'var(--accent)' }} />
+                    <span><strong>Client:</strong> {project.client}</span>
+                  </div>
+                )}
+                {project.year && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Calendar size={18} style={{ color: 'var(--accent)' }} />
+                    <span><strong>Year:</strong> {project.year}</span>
+                  </div>
+                )}
+                {industry && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ color: 'var(--accent)' }}><strong>Industry:</strong> {industry}</span>
+                  </div>
+                )}
+                {project.category && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <span style={{ color: 'var(--accent)' }}><strong>Scope:</strong> {project.category}</span>
+                  </div>
+                )}
+                {project.status && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <CheckCircle size={18} style={{ color: 'var(--accent)' }} />
+                    <span><strong>Status:</strong> {project.status}</span>
+                  </div>
+                )}
               </div>
             </div>
 

@@ -377,7 +377,7 @@ const AdminDashboard = () => {
                       name="client"
                       value={projectForm.client}
                       onChange={handleProjectFormChange}
-                      placeholder="e.g. Apex Automotives"
+                      placeholder="Client Enterprise Name"
                       className="form-control"
                     />
                   </div>

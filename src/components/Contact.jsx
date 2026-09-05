@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle, Upload, Calendar } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -19,19 +19,13 @@ const Contact = ({ services = [], content, initialService = '' }) => {
     serviceRequired: initialService || (services.length > 0 ? services[0].title : 'Industrial Erection'),
     projectDescription: '',
     expectedTimeline: '',
-    preferredContactMethod: 'Email',
-    documentUpload: null
+    preferredContactMethod: 'Email'
   });
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [referenceNumber, setReferenceNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [uploadError, setUploadError] = useState('');
-
-  // File validation constants
-  const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
-  const ALLOWED_FILE_TYPES = ['application/pdf', 'image/jpeg', 'image/png', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 
   const validateForm = () => {
     const errors = {};
@@ -91,26 +85,6 @@ const Contact = ({ services = [], content, initialService = '' }) => {
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      // Validate file size
-      if (file.size > MAX_FILE_SIZE) {
-        setUploadError(`File size must be less than ${MAX_FILE_SIZE / (1024 * 1024)}MB`);
-        return;
-      }
-
-      // Validate file type
-      if (!ALLOWED_FILE_TYPES.includes(file.type)) {
-        setUploadError('Only PDF, JPG, PNG, DOC, and DOCX files are allowed');
-        return;
-      }
-
-      setFormData(prev => ({ ...prev, documentUpload: file }));
-      setUploadError('');
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errors = validateForm();
@@ -120,10 +94,8 @@ const Contact = ({ services = [], content, initialService = '' }) => {
     }
 
     setIsSubmitting(true);
-    setUploadError('');
 
     try {
-      // Create FormData for file upload
       const formDataObj = new FormData();
       formDataObj.append('fullName', formData.fullName);
       formDataObj.append('companyName', formData.companyName);
@@ -134,10 +106,6 @@ const Contact = ({ services = [], content, initialService = '' }) => {
       formDataObj.append('projectDescription', formData.projectDescription);
       formDataObj.append('expectedTimeline', formData.expectedTimeline);
       formDataObj.append('preferredContactMethod', formData.preferredContactMethod);
-
-      if (formData.documentUpload) {
-        formDataObj.append('documentUpload', formData.documentUpload);
-      }
 
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -157,8 +125,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
           serviceRequired: initialService || (services.length > 0 ? services[0].title : 'Industrial Erection'),
           projectDescription: '',
           expectedTimeline: '',
-          preferredContactMethod: 'Email',
-          documentUpload: null
+          preferredContactMethod: 'Email'
         });
       } else {
         const errorData = await response.json();
@@ -203,15 +170,15 @@ const Contact = ({ services = [], content, initialService = '' }) => {
           <div className="contact-left flex flex-col gap-12">
             <div>
               <h3 className="text-2xl font-light text-white mb-8">
-                {content?.companyName || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED'}
+                {content?.legalName || content?.companyName || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED'}
               </h3>
               <div className="flex flex-col gap-6">
                 <div className="flex items-start gap-4">
                   <MapPin size={20} className="text-accent mt-1" />
                   <div>
-                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">HEADQUARTERS</h4>
+                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">REGISTERED OFFICE / YARDS</h4>
                     <p className="text-white/80 text-sm font-light leading-relaxed whitespace-pre-wrap">
-                      {content?.address || 'Bengaluru, India'}
+                      {content?.address || 'Official registered office address available upon request'}
                     </p>
                   </div>
                 </div>
@@ -229,9 +196,9 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                 <div className="flex items-start gap-4">
                   <Mail size={20} className="text-accent mt-1" />
                   <div>
-                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">EMAIL ADDRESS</h4>
+                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">OFFICIAL EMAIL</h4>
                     <p className="text-white/80 text-sm font-light leading-relaxed">
-                      {content?.email || 'Contact via secure website form'}
+                      {content?.email || 'contact@mecelfab.com'}
                     </p>
                   </div>
                 </div>
@@ -241,7 +208,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                   <div>
                     <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">OPERATIONS</h4>
                     <p className="text-white/80 text-sm font-light leading-relaxed">
-                      {content?.workingHours || 'Standard business hours'}
+                      {content?.workingHours || 'Mon - Sat: 9:00 AM - 6:00 PM IST'}
                     </p>
                   </div>
                 </div>
@@ -249,19 +216,31 @@ const Contact = ({ services = [], content, initialService = '' }) => {
             </div>
 
             {/* Styled Map Container */}
-            <div className="w-full h-64 border border-white/5 overflow-hidden filter grayscale contrast-125 opacity-80">
-              <iframe
-                title="MECELFAB Industrial Location Map"
-                width="100%"
-                height="100%"
-                frameBorder="0"
-                scrolling="no"
-                marginHeight="0"
-                marginWidth="0"
-                src="https://maps.google.com/maps?width=100%25&amp;height=250&amp;hl=en&amp;q=Peenya%20Industrial%20Area,%20Bengaluru+(MECELFAB%20Industrial%20Solutions%20LLP)&amp;t=m&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                className="invert hue-rotate-180"
-              />
-            </div>
+            {content?.address ? (
+              <div className="w-full h-64 border border-white/5 overflow-hidden filter grayscale contrast-125 opacity-80">
+                <iframe
+                  title="MECELFAB Industrial Location Map"
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  scrolling="no"
+                  marginHeight="0"
+                  marginWidth="0"
+                  src={`https://maps.google.com/maps?width=100%25&height=250&hl=en&q=${encodeURIComponent(content.address)}&t=m&z=14&ie=UTF8&iwloc=B&output=embed`}
+                  className="invert hue-rotate-180"
+                />
+              </div>
+            ) : (
+              <div className="w-full p-8 border border-white/5 bg-white/[0.02] flex flex-col justify-center">
+                <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-2">CORPORATE FACILITIES & YARDS</h4>
+                <p className="text-white/70 text-xs font-light leading-relaxed mb-3">
+                  Physical yard, fabrication shop, and registered office visits are scheduled in coordination with project managers.
+                </p>
+                <p className="text-secondary text-xs font-light">
+                  For immediate project inquiries, please submit the request form or email <span className="text-white font-medium">{content?.email || 'contact@mecelfab.com'}</span>.
+                </p>
+              </div>
+            )}
           </div>
 
           {/* Contact Form */}
@@ -302,7 +281,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       value={formData.fullName}
                       onChange={handleChange}
                       className={`w-full bg-white/5 border ${formErrors.fullName ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
-                      placeholder="e.g. John Doe"
+                      placeholder="Contact Person Full Name"
                     />
                     {formErrors.fullName && <p className="text-red-500 text-xs mt-1">{formErrors.fullName}</p>}
                   </div>
@@ -314,7 +293,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       value={formData.companyName}
                       onChange={handleChange}
                       className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
-                      placeholder="e.g. Acme Corp"
+                      placeholder="Organization / Enterprise Name"
                     />
                     {formErrors.companyName && <p className="text-red-500 text-xs mt-1">{formErrors.companyName}</p>}
                   </div>
@@ -330,7 +309,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       value={formData.email}
                       onChange={handleChange}
                       className={`w-full bg-white/5 border ${formErrors.email ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
-                      placeholder="e.g. john@acme.com"
+                      placeholder="corporate.email@company.com"
                     />
                     {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
                   </div>
@@ -342,7 +321,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       value={formData.phone}
                       onChange={handleChange}
                       className={`w-full bg-white/5 border ${formErrors.phone ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
-                      placeholder="e.g. +91 98450 12345"
+                      placeholder="Contact Telephone Number"
                     />
                     {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
                   </div>
@@ -358,7 +337,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       value={formData.projectLocation}
                       onChange={handleChange}
                       className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
-                      placeholder="e.g. Mumbai, Maharashtra"
+                      placeholder="Project Site / City, State"
                     />
                     {formErrors.projectLocation && <p className="text-red-500 text-xs mt-1">{formErrors.projectLocation}</p>}
                   </div>
@@ -443,29 +422,6 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                   />
                   {formErrors.projectDescription && <p className="text-red-500 text-xs mt-1">{formErrors.projectDescription}</p>}
                 </div>
-
-                {/* Document Upload */}
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-heading tracking-widest text-secondary uppercase">Document Upload (Optional)</label>
-                  <input
-                    type="file"
-                    id="documentUpload"
-                    name="documentUpload"
-                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-                    onChange={handleFileChange}
-                    className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
-                  />
-                  <p className="text-secondary text-xs font-light mt-1">
-                    Accepted formats: PDF, JPG, PNG, DOC, DOCX (Max 5MB)
-                  </p>
-                  {formData.documentUpload && (
-                    <p className="text-secondary text-xs font-light">
-                      Selected: {formData.documentUpload.name}
-                    </p>
-                  )}
-                </div>
-
-                {uploadError && <p className="text-red-500 text-xs mt-4">{uploadError}</p>}
 
                 <button
                   type="submit"

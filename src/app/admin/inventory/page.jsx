@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Package, Search, Plus, AlertTriangle, ArrowRight, ArrowDownToLine, ArrowUpFromLine } from 'lucide-react';
+import { Package, Search, Plus, AlertTriangle, ArrowRight } from 'lucide-react';
 
 export const metadata = {
   title: 'Inventory | Admin | MECELFAB',

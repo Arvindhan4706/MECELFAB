@@ -1,6 +1,5 @@
 "use server";
 import { db } from "@/lib/db";
-import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
 import { getServerSession } from "next-auth";
@@ -100,11 +99,12 @@ export async function createService(formData) {
   const title = formData.get('title');
   const slug = formData.get('slug');
   const description = formData.get('description');
-  const icon = formData.get('icon');
-  const status = formData.get('status') || 'ACTIVE';
+  const image = formData.get('image') || null;
+  const rawStatus = formData.get('status');
+  const status = (rawStatus === 'DISABLED' || rawStatus === 'ARCHIVED') ? 'DISABLED' : 'ACTIVE';
   
   await db.service.create({
-    data: { title, slug, description, icon, status }
+    data: { title, slug, description, image, status }
   });
   
   revalidatePath('/admin/services');
@@ -119,12 +119,13 @@ export async function updateService(id, formData) {
   const title = formData.get('title');
   const slug = formData.get('slug');
   const description = formData.get('description');
-  const icon = formData.get('icon');
-  const status = formData.get('status') || 'ACTIVE';
+  const image = formData.get('image') || null;
+  const rawStatus = formData.get('status');
+  const status = (rawStatus === 'DISABLED' || rawStatus === 'ARCHIVED') ? 'DISABLED' : 'ACTIVE';
   
   await db.service.update({
     where: { id },
-    data: { title, slug, description, icon, status }
+    data: { title, slug, description, image, status }
   });
   
   revalidatePath('/admin/services');
@@ -183,9 +184,9 @@ export async function deleteInquiry(id) {
 export async function createClient(formData) {
   await checkAdmin();
   const name = formData.get('name');
-  const logo = formData.get('logo');
-  const sector = formData.get('sector');
-  await db.client.create({ data: { name, logo, sector } });
+  const logoUrl = formData.get('logoUrl') || formData.get('logo') || null;
+  const featured = formData.get('featured') === 'true';
+  await db.client.create({ data: { name, logoUrl, featured, status: 'PUBLISHED' } });
   revalidatePath('/admin/clients');
   revalidatePath('/'); // Trust section
   return { success: true };
@@ -204,11 +205,13 @@ export async function deleteClient(id) {
 // ----------------------------------------------------------------------
 export async function createTestimonial(formData) {
   await checkAdmin();
-  const clientName = formData.get('clientName');
-  const company = formData.get('company');
-  const content = formData.get('content');
-  const rating = parseInt(formData.get('rating') || '5');
-  await db.testimonial.create({ data: { clientName, company, content, rating } });
+  const name = formData.get('name') || formData.get('clientName') || 'Verified Client';
+  const role = formData.get('role') || 'Project Manager';
+  const company = formData.get('company') || 'Industrial Partner';
+  const quote = formData.get('quote') || formData.get('content') || '';
+  const rating = parseInt(formData.get('rating') || '5', 10);
+  const featured = formData.get('featured') === 'true';
+  await db.testimonial.create({ data: { name, role, company, quote, rating, featured, status: 'PUBLISHED' } });
   revalidatePath('/admin/testimonials');
   revalidatePath('/'); 
   return { success: true };
@@ -219,5 +222,32 @@ export async function deleteTestimonial(id) {
   await db.testimonial.delete({ where: { id } });
   revalidatePath('/admin/testimonials');
   revalidatePath('/');
+  return { success: true };
+}
+
+// ----------------------------------------------------------------------
+// Certification Actions
+// ----------------------------------------------------------------------
+export async function createCertification(formData) {
+  await checkAdmin();
+  const title = formData.get('title');
+  const issuer = formData.get('issuer') || 'Regulatory Body';
+  const year = formData.get('year') || new Date().getFullYear().toString();
+  const image = formData.get('image') || null;
+  const fileUrl = formData.get('fileUrl') || null;
+  const featured = formData.get('featured') === 'true';
+  await db.certification.create({
+    data: { title, issuer, year, image, fileUrl, featured, status: 'PUBLISHED' }
+  });
+  revalidatePath('/admin/certifications');
+  revalidatePath('/about');
+  return { success: true };
+}
+
+export async function deleteCertification(id) {
+  await checkAdmin();
+  await db.certification.delete({ where: { id } });
+  revalidatePath('/admin/certifications');
+  revalidatePath('/about');
   return { success: true };
 }

@@ -30,6 +30,22 @@ async function saveContentAction(formData) {
   await upsertSetting('CONTENT_ABOUT', about);
   await upsertSetting('CONTENT_CONTACT', contact);
 
+  // Synchronize individual keys for Admin Settings / Company Profile
+  try {
+    const contactObj = typeof contact === 'string' ? JSON.parse(contact) : contact;
+    if (contactObj) {
+      if (contactObj.companyName) await upsertSetting('companyName', contactObj.companyName);
+      if (contactObj.email) await upsertSetting('contactEmail', contactObj.email);
+      if (contactObj.phone !== undefined) await upsertSetting('contactPhone', contactObj.phone);
+      if (contactObj.address !== undefined) await upsertSetting('contactAddress', contactObj.address);
+      if (contactObj.workingHours) await upsertSetting('workingHours', contactObj.workingHours);
+      if (contactObj.linkedin !== undefined) await upsertSetting('socialLinkedIn', contactObj.linkedin);
+      if (contactObj.twitter !== undefined) await upsertSetting('socialTwitter', contactObj.twitter);
+    }
+  } catch (err) {
+    console.error('Error syncing contact keys:', err);
+  }
+
   // Log activity
   const user = await db.user.findUnique({ where: { email: session.user.email } });
   if (user) {
@@ -47,6 +63,9 @@ async function saveContentAction(formData) {
   revalidatePath('/about');
   revalidatePath('/contact');
   revalidatePath('/admin/content');
+  revalidatePath('/admin/settings');
+  revalidatePath('/admin/quotations/[id]/print', 'page');
+  revalidatePath('/admin/billing/[id]/print', 'page');
 }
 
 export default async function AdminContentPage() {

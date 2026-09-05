@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
-import { Home, Settings, Briefcase, FileText, Wrench, Shield } from 'lucide-react';
+import { Home, Briefcase, FileText, Wrench, Shield } from 'lucide-react';
 import { db } from '@/lib/db';
 
 export const metadata = {
@@ -57,12 +57,16 @@ export default async function PortalLayout({ children }) {
             <Home size={18} className="text-blue-400" />
             Dashboard
           </Link>
+          <Link href="/portal/work-orders" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 transition-colors text-sm text-gray-300 hover:text-white">
+            <Wrench size={18} className="text-blue-400" />
+            My Work Orders
+          </Link>
           <Link href="/portal/equipment" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 transition-colors text-sm text-gray-300 hover:text-white">
             <Briefcase size={18} className="text-amber-400" />
             My Equipment & AMCs
           </Link>
-          <Link href="/portal/work-orders" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 transition-colors text-sm text-gray-300 hover:text-white">
-            <Wrench size={18} className="text-purple-400" />
+          <Link href="/portal/service-requests" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 transition-colors text-sm text-gray-300 hover:text-white">
+            <Shield size={18} className="text-purple-400" />
             Service Requests
           </Link>
           <Link href="/portal/invoices" className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-white/5 transition-colors text-sm text-gray-300 hover:text-white">

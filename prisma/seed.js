@@ -5,10 +5,11 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('Seeding demo data...');
+  console.log('Initializing database with verified MECELFAB data...');
 
-  // 1. Clear existing data to prevent conflicts during seed
+  // 1. Clear existing transactional/seed records to prevent conflicts during re-seed
   await prisma.payment.deleteMany();
+  await prisma.invoiceItem.deleteMany();
   await prisma.invoice.deleteMany();
   await prisma.stockMovement.deleteMany();
   await prisma.part.deleteMany();
@@ -26,34 +27,22 @@ async function main() {
   await prisma.inquiry.deleteMany();
   await prisma.customer.deleteMany();
   await prisma.service.deleteMany();
-  // Don't delete all users in case they have actual accounts, just clean up demo ones.
-  await prisma.user.deleteMany({ where: { email: { in: ['admin@mecelfab.com', 'tech@mecelfab.com'] } } });
 
-  // 2. Users
+  // 2. Administrative User (Official MECELFAB Admin Account)
   const passwordHash = await bcrypt.hash('admin', 10);
   
-  let superAdmin = await prisma.user.findUnique({ where: { email: 'admin@mecelfab.com' } });
-  if (!superAdmin) {
-    superAdmin = await prisma.user.create({
-      data: {
-        name: 'Super Admin',
-        email: 'admin@mecelfab.com',
-        password: passwordHash,
-        role: 'SUPER_ADMIN'
-      }
-    });
-  }
-
-  const technician = await prisma.user.create({
-    data: {
-      name: 'Demo Technician',
-      email: 'tech@mecelfab.com',
+  await prisma.user.upsert({
+    where: { email: 'admin@mecelfab.com' },
+    update: {},
+    create: {
+      name: 'MECELFAB Administrator',
+      email: 'admin@mecelfab.com',
       password: passwordHash,
-      role: 'TECHNICIAN'
+      role: 'SUPER_ADMIN'
     }
   });
 
-  // 3. Services (Confirmed 8 Services)
+  // 3. Official Confirmed Services (The 8 Authoritative Core Offerings)
   const services = [
     { title: 'Industrial Erection', slug: 'industrial-erection', description: 'Expert erection of heavy industrial machinery.' },
     { title: 'Industrial Fabrication', slug: 'industrial-fabrication', description: 'Precision metal fabrication for industrial needs.' },
@@ -74,103 +63,56 @@ async function main() {
     });
   }
 
-  // 4. Customers
-  const customer1 = await prisma.customer.create({
-    data: {
-      companyName: 'Acme Heavy Industries',
-      contactPerson: 'John Smith',
-      email: 'john@acmeheavy.demo',
-      phone: '+1 555-0100',
-      location: 'Industrial Park A',
-      industry: 'Manufacturing'
+  // 4. Official Company Settings (Single Source of Truth)
+  // Unverified/unsupplied fields remain empty strings for clean neutral states
+  const defaultContact = {
+    companyName: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
+    email: 'contact@mecelfab.com',
+    billingEmail: 'accounts@mecelfab.com',
+    phone: '',
+    address: '',
+    workingHours: 'Mon - Sat: 9:00 AM - 6:00 PM IST',
+    gstin: '',
+    pan: '',
+    cin: '',
+    bankName: '',
+    bankAccount: '',
+    bankIfsc: '',
+    bankBeneficiary: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
+    jurisdiction: 'Competent Courts in India',
+    linkedin: '',
+    twitter: ''
+  };
+
+  await prisma.setting.upsert({
+    where: { key: 'CONTENT_CONTACT' },
+    update: {},
+    create: {
+      key: 'CONTENT_CONTACT',
+      value: JSON.stringify(defaultContact),
+      type: 'JSON'
     }
   });
 
-  // 5. Inquiries
-  const inquiry1 = await prisma.inquiry.create({
-    data: {
-      referenceNumber: 'MEC-REQ-2026-0001',
-      name: 'John Smith',
-      email: 'john@acmeheavy.demo',
-      company: 'Acme Heavy Industries',
-      service: 'Industrial Erection',
-      message: 'Looking for a quote on erecting a new 500-ton press machine.',
-      status: 'QUOTATION',
-      priority: 'HIGH',
-      customerId: customer1.id,
-      assignedToId: superAdmin.id
-    }
+  await prisma.setting.upsert({
+    where: { key: 'companyName' },
+    update: {},
+    create: { key: 'companyName', value: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED', type: 'STRING' }
   });
 
-  // 6. Quotation
-  const quote1 = await prisma.quotation.create({
-    data: {
-      quotationNumber: 'MEC-QTN-2026-0001',
-      inquiryId: inquiry1.id,
-      customerId: customer1.id,
-      customerName: customer1.contactPerson,
-      companyName: customer1.companyName,
-      email: customer1.email,
-      phone: customer1.phone,
-      service: 'Industrial Erection',
-      scopeOfWork: 'Erection and commissioning of 500-ton mechanical press.',
-      subtotal: 50000,
-      taxRate: 18,
-      taxAmount: 9000,
-      grandTotal: 59000,
-      status: 'ACCEPTED',
-      createdBy: superAdmin.id,
-      items: {
-        create: [
-          { description: 'Equipment mobilization and crane rental', quantity: 1, unitPrice: 15000, totalPrice: 15000 },
-          { description: 'Erection labor and engineering', quantity: 1, unitPrice: 35000, totalPrice: 35000 }
-        ]
-      }
-    }
+  await prisma.setting.upsert({
+    where: { key: 'contactEmail' },
+    update: {},
+    create: { key: 'contactEmail', value: 'contact@mecelfab.com', type: 'STRING' }
   });
 
-  // 7. Work Order
-  const wo1 = await prisma.workOrder.create({
-    data: {
-      workOrderNumber: 'MEC-WO-2026-0001',
-      quotationId: quote1.id,
-      customerId: customer1.id,
-      status: 'SCHEDULED',
-      scheduledDate: new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
-      assignedToId: technician.id
-    }
+  await prisma.setting.upsert({
+    where: { key: 'billingEmail' },
+    update: {},
+    create: { key: 'billingEmail', value: 'accounts@mecelfab.com', type: 'STRING' }
   });
 
-  // 8. Equipment
-  const eq1 = await prisma.equipment.create({
-    data: {
-      customerId: customer1.id,
-      type: 'Industrial Generator',
-      manufacturer: 'Cummins',
-      model: 'QSK60',
-      serialNumber: 'SN-998877',
-      location: 'Main Plant'
-    }
-  });
-
-  // 9. AMC
-  const amc1 = await prisma.aMC.create({
-    data: {
-      amcNumber: 'MEC-AMC-2026-0001',
-      customerId: customer1.id,
-      startDate: new Date(),
-      endDate: new Date(new Date().getTime() + 365 * 24 * 60 * 60 * 1000), // 1 year
-      frequency: 'QUARTERLY',
-      status: 'ACTIVE',
-      equipment: {
-        create: {
-          equipmentId: eq1.id
-        }
-      }
-    }
-  });
-
-  console.log('Demo data seeded successfully.');
+  console.log('Database initialized successfully with verified MECELFAB infrastructure.');
 }
 
 main()

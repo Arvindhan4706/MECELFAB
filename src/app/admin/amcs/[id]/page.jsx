@@ -3,8 +3,9 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, User, FileText, Calendar, Briefcase, CheckCircle, AlertTriangle } from 'lucide-react';
+import { ArrowLeft, User, FileText, Briefcase, AlertTriangle } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
+import AMCVisitsManager from './AMCVisitsManager';
 
 export const metadata = {
   title: 'AMC Detail | Admin | MECELFAB',
@@ -35,8 +36,18 @@ export default async function (props) {
       customer: true,
       equipment: {
         include: { equipment: true }
+      },
+      serviceVisits: {
+        include: { technician: true, equipment: true },
+        orderBy: { date: 'asc' }
       }
     }
+  });
+
+  const technicians = await db.user.findMany({
+    where: { role: { in: ['TECHNICIAN', 'STAFF', 'ADMIN', 'SUPER_ADMIN'] } },
+    select: { id: true, name: true, email: true },
+    orderBy: { name: 'asc' }
   });
 
   if (!amc) notFound();
@@ -71,7 +82,7 @@ export default async function (props) {
           </Link>
           <div>
             <h1 className="text-2xl font-bold text-white flex items-center gap-3">
-              {amc.contractNumber}
+              {amc.amcNumber || amc.contractNumber || 'AMC Contract'}
               <span className={`px-2.5 py-0.5 text-xs font-bold uppercase rounded-full border ${getStatusColor()}`}>
                 {getStatusText()}
               </span>
@@ -90,9 +101,6 @@ export default async function (props) {
             <h3 className="text-amber-400 font-semibold text-sm">Action Required: AMC Expiring Soon</h3>
             <p className="text-amber-200/70 text-xs mt-1">This contract expires in {Math.ceil(daysUntilExpiry)} days. You should generate a renewal quotation and contact the client.</p>
           </div>
-          <button className="ml-auto bg-amber-500 hover:bg-amber-600 text-admin-heading px-4 py-2 rounded text-xs font-bold transition-colors whitespace-nowrap">
-            Generate Renewal Quote
-          </button>
         </div>
       )}
 
@@ -113,7 +121,7 @@ export default async function (props) {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         
         {/* Left Col */}
         <div className="space-y-6">
@@ -124,15 +132,17 @@ export default async function (props) {
             <div className="p-5 grid grid-cols-1 gap-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs text-secondary font-medium uppercase tracking-wider mb-1">Total Value</p>
-                  <p className="text-lg font-bold text-white">₹ {amc.totalValue.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</p>
+                  <p className="text-xs text-secondary font-medium uppercase tracking-wider mb-1">Frequency</p>
+                  <p className="text-base font-bold text-white uppercase">{amc.frequency}</p>
                 </div>
                 <div>
                   <p className="text-xs text-secondary font-medium uppercase tracking-wider mb-1">Status</p>
                   <form action={updateAMCStatus}>
                     <input type="hidden" name="id" value={amc.id} />
                     <select name="status" defaultValue={amc.status} onChange={(e) => e.target.form.requestSubmit()} className="w-full bg-black/40 border border-white/10 rounded px-2 py-1 text-sm text-white focus:border-blue-500 focus:outline-none">
+                      <option value="DRAFT">Draft</option>
                       <option value="ACTIVE">Active</option>
+                      <option value="EXPIRING">Expiring</option>
                       <option value="EXPIRED">Expired</option>
                       <option value="CANCELLED">Cancelled</option>
                     </select>
@@ -141,9 +151,9 @@ export default async function (props) {
               </div>
               
               <div className="pt-4 border-t border-white/10">
-                <p className="text-xs text-secondary font-medium uppercase tracking-wider mb-2">Terms & Conditions</p>
-                <div className="bg-black/30 p-4 rounded text-sm text-gray-300 whitespace-pre-wrap border border-white/5 h-32 overflow-y-auto">
-                  {amc.termsConditions || 'Standard AMC Terms Apply.'}
+                <p className="text-xs text-secondary font-medium uppercase tracking-wider mb-2">Covered Services / Scope</p>
+                <div className="bg-black/30 p-4 rounded text-sm text-gray-300 whitespace-pre-wrap border border-white/5 h-28 overflow-y-auto">
+                  {amc.coveredServices || amc.termsConditions || 'Comprehensive Preventive and Corrective Industrial Maintenance.'}
                 </div>
               </div>
             </div>
@@ -186,25 +196,23 @@ export default async function (props) {
               <div className="space-y-2">
                 <p className="text-xs text-gray-400">{amc.customer.email}</p>
                 <p className="text-xs text-gray-400">{amc.customer.phone || 'No phone'}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-admin-surface/5 rounded-lg shadow-lg border border-white/10 overflow-hidden backdrop-blur-sm">
-            <div className="p-5 border-b border-white/10 bg-black/20 flex justify-between items-center">
-              <h2 className="font-semibold text-white flex items-center gap-2"><Calendar size={18} className="text-green-400"/> Scheduled Service Visits</h2>
-            </div>
-            <div className="p-5">
-              <div className="text-center py-6 border border-dashed border-white/20 rounded bg-black/20">
-                <Calendar size={24} className="mx-auto text-admin-muted mb-2" />
-                <p className="text-sm text-secondary">Service scheduling module pending.</p>
-                <p className="text-xs text-admin-muted mt-1">This feature will be built in Phase 4.2.</p>
+                {amc.customer.location && (
+                  <p className="text-xs text-gray-400">{amc.customer.location}</p>
+                )}
               </div>
             </div>
           </div>
         </div>
 
       </div>
+
+      {/* Full-width Scheduled Service Visits Manager */}
+      <AMCVisitsManager
+        amcId={amc.id}
+        frequency={amc.frequency}
+        visits={amc.serviceVisits}
+        technicians={technicians}
+      />
     </div>
   );
 }

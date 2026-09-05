@@ -14,11 +14,15 @@ const Testimonials = ({ testimonials = [] }) => {
   };
 
   useEffect(() => {
+    if (!testimonials || testimonials.length <= 1) return;
     const timer = setInterval(() => {
-      paginate(1);
+      setSlide(([prevCurrent]) => [
+        (prevCurrent + 1) % testimonials.length,
+        1
+      ]);
     }, 6000);
     return () => clearInterval(timer);
-  }, []);
+  }, [testimonials]);
 
   const slideVariants = {
     enter: (direction) => ({

@@ -24,19 +24,8 @@ const Industries = () => {
         'Structural Fabrication'
       ]
     },
-    /* {
-      id: '02',
-      title: 'Construction & Infrastructure',
-      desc: 'Structural fabrication and mechanical infrastructure support.',
-      image: '/images/project-erection.png',
-      capabilities: [
-        'Structural Steel Erection',
-        'Mechanical Installation',
-        'Site Support'
-      ]
-    }, */
     {
-      id: '03',
+      id: '02',
       title: 'Power & Energy',
       desc: 'Generator installations, spare parts and power systems.',
       image: '/images/project-electrical.png',
@@ -47,7 +36,7 @@ const Industries = () => {
       ]
     },
     {
-      id: '04',
+      id: '03',
       title: 'Industrial Maintenance',
       desc: 'Overhauling and annual maintenance contracts for mechanical systems.',
       image: '/images/project-maintenance.png',
@@ -59,7 +48,7 @@ const Industries = () => {
       ]
     },
     {
-      id: '05',
+      id: '04',
       title: 'Commercial / Temporary Power',
       desc: 'Rental solutions for generators and air compressors.',
       image: '/images/project-commercial.png',

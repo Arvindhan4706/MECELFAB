@@ -2,6 +2,8 @@ import { db } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
+import PrintButton from '@/components/admin/PrintButton';
+import { getCompanyProfile } from '@/lib/companyConfig';
 
 export const metadata = {
   title: 'Print Quotation | MECELFAB',
@@ -19,19 +21,14 @@ export default async function (props) {
 
   if (!quotation) notFound();
 
+  const company = await getCompanyProfile();
+
   return (
     <div className="bg-admin-surface min-h-screen font-sans text-admin-heading print:bg-admin-surface">
       {/* Print Controls (Hidden on Print) */}
       <div className="bg-admin-elevated p-4 border-b border-admin-border flex justify-between items-center print:hidden">
         <p className="text-sm text-admin-muted font-medium">Print Preview for {quotation.quotationNumber}</p>
-        <button 
-          onClick={() => {
-            if (typeof window !== 'undefined') window.print();
-          }} 
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded shadow text-sm font-bold transition-colors"
-        >
-          Print / Save as PDF
-        </button>
+        <PrintButton />
       </div>
 
       {/* A4 Document Container */}
@@ -40,13 +37,21 @@ export default async function (props) {
         {/* Header */}
         <header className="flex justify-between items-start border-b-2 border-gray-800 pb-8 mb-8">
           <div>
-            <h1 className="text-4xl font-black tracking-tighter text-admin-heading mb-1">MECELFAB</h1>
-            <p className="text-sm text-admin-muted font-medium uppercase tracking-widest">Industrial Solutions Pvt. Ltd.</p>
+            <h1 className="text-4xl font-black tracking-tighter text-admin-heading mb-1">{company.shortName}</h1>
+            <p className="text-sm text-admin-muted font-medium uppercase tracking-widest">{company.legalName}</p>
             <div className="mt-4 text-xs text-admin-muted space-y-1">
-              <p>123 Industrial Area, Phase 1</p>
-              <p>Mumbai, Maharashtra 400001, India</p>
-              <p>Email: contact@mecelfab.com</p>
-              <p>Phone: +91 98765 43210</p>
+              {company.address ? (
+                <p className="whitespace-pre-wrap">{company.address}</p>
+              ) : (
+                <p className="italic text-admin-muted">Registered office details available upon request</p>
+              )}
+              <p>Email: {company.email}</p>
+              {company.phone ? (
+                <p>Phone: {company.phone}</p>
+              ) : (
+                <p className="text-admin-muted">Phone: Available upon request</p>
+              )}
+              {company.gstin && <p>GSTIN: {company.gstin}</p>}
             </div>
           </div>
           <div className="text-right">

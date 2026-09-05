@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Package, Plus, Minus, History, Wrench } from 'lucide-react';
+import { ArrowLeft, Package, History, Wrench } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
 
 export const metadata = {
@@ -12,42 +12,56 @@ export const metadata = {
 
 async function adjustStock(formData) {
   'use server';
+  const session = await getServerSession(authOptions);
+  if (!session) throw new Error('Unauthorized');
+
   const id = formData.get('id');
   const type = formData.get('type'); // RECEIVED, ISSUED, RETURNED, ADJUSTED
   const amountStr = formData.get('amount');
-  const note = formData.get('note');
+  const note = formData.get('note') || '';
   const workOrderId = formData.get('workOrderId') || null;
   
   const amount = parseInt(amountStr, 10);
   if (isNaN(amount) || amount <= 0) return;
 
-  const part = await db.part.findUnique({ where: { id } });
-  if (!part) return;
+  await db.$transaction(async (tx) => {
+    const part = await tx.part.findUnique({ where: { id } });
+    if (!part) return;
 
-  let newQuantity = part.quantity;
-  if (type === 'RECEIVED' || type === 'RETURNED' || type === 'ADJUSTED') {
-    newQuantity += amount; // We'll assume ADJUSTED is positive for simplicity here, or we need a way to say negative adjustment. Let's stick to standard types.
-  } else if (type === 'ISSUED') {
-    newQuantity -= amount;
-    if (newQuantity < 0) newQuantity = 0; // Prevent negative stock
-  }
+    let newQuantity = part.quantity;
+    if (type === 'RECEIVED' || type === 'RETURNED') {
+      newQuantity += amount;
+    } else if (type === 'ISSUED') {
+      if (amount > part.quantity) {
+        throw new Error(`Insufficient stock. Cannot issue ${amount} units (Available: ${part.quantity}).`);
+      }
+      newQuantity -= amount;
+    } else if (type === 'ADJUSTED') {
+      newQuantity += amount;
+    }
 
-  // Transaction
-  await db.$transaction([
-    db.part.update({
+    if (newQuantity < 0) {
+      throw new Error('Stock cannot become negative.');
+    }
+
+    await tx.part.update({
       where: { id },
       data: { quantity: newQuantity }
-    }),
-    db.stockMovement.create({
+    });
+
+    await tx.stockMovement.create({
       data: {
         partId: id,
         type,
         quantity: amount,
+        previousQuantity: part.quantity,
+        newQuantity,
+        userId: session.user.id,
         note,
         workOrderId
       }
-    })
-  ]);
+    });
+  });
 
   revalidatePath(`/admin/inventory/${id}`);
   revalidatePath(`/admin/inventory`);

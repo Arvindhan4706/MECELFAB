@@ -52,17 +52,6 @@ const Navbar = () => {
     });
   }, [isOpen]);
 
-  // Handle ESC key to close mobile menu
-  useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === 'Escape' && isOpen) {
-        toggleMenu();
-      }
-    };
-    window.addEventListener('keydown', handleEsc);
-    return () => window.removeEventListener('keydown', handleEsc);
-  }, [isOpen]);
-
   const toggleMenu = () => {
     const nextState = !isOpen;
     setIsOpen(nextState);
@@ -89,6 +78,17 @@ const Navbar = () => {
       });
     }
   };
+
+  // Handle ESC key to close mobile menu
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        toggleMenu();
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isOpen]);
 
   if (pathname?.startsWith('/admin')) return null;
 

@@ -27,24 +27,32 @@ const Footer = ({ contact }) => {
             <p className="text-sm text-secondary font-light leading-relaxed mb-6">
               Engineering reliable solutions for industrial growth. Serving fabrication, erection, power distribution, and heavy industrial utility setups across India.
             </p>
-            <div className="flex gap-4">
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-[44px] h-[44px] rounded-full bg-white/5 flex items-center justify-center text-secondary hover:bg-white hover:text-primary transition-colors duration-300"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noreferrer"
-                className="w-[44px] h-[44px] rounded-full bg-white/5 flex items-center justify-center text-secondary hover:bg-white hover:text-primary transition-colors duration-300"
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-              </a>
-            </div>
+            {(contact?.linkedin || contact?.twitter) ? (
+              <div className="flex gap-4">
+                {contact?.linkedin && (
+                  <a
+                    href={contact.linkedin}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="LinkedIn"
+                    className="w-[44px] h-[44px] rounded-full bg-white/5 flex items-center justify-center text-secondary hover:bg-white hover:text-primary transition-colors duration-300"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  </a>
+                )}
+                {contact?.twitter && (
+                  <a
+                    href={contact.twitter}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Twitter / X"
+                    className="w-[44px] h-[44px] rounded-full bg-white/5 flex items-center justify-center text-secondary hover:bg-white hover:text-primary transition-colors duration-300"
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                  </a>
+                )}
+              </div>
+            ) : null}
           </div>
 
           {/* Combined Navigation & Services - Pill Strip on Mobile, Columns on Desktop */}
@@ -140,7 +148,7 @@ const Footer = ({ contact }) => {
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col items-center justify-center gap-6 text-xs text-secondary font-light text-center break-words w-full relative">
           <div className="leading-relaxed">
-            &copy; {new Date().getFullYear()} {contact?.companyName || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED'}. All rights reserved.
+            &copy; {new Date().getFullYear()} {contact?.legalName || contact?.companyName || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED'}. All rights reserved.
           </div>
           <button
             onClick={handleScrollToTop}

@@ -3,11 +3,12 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, Eye, CheckCircle, XCircle, Search, Filter } from 'lucide-react';
+import { FileText, Eye, CheckCircle, XCircle, Search, Filter, Plus } from 'lucide-react';
 
 export const metadata = {
   title: 'Quotations | Admin',
 };
+
 
 export default async function QuotationsIndexPage({ searchParams }) {
   const session = await getServerSession(authOptions);
@@ -57,6 +58,12 @@ export default async function QuotationsIndexPage({ searchParams }) {
           <h1 className="text-2xl font-bold text-admin-heading flex items-center gap-2"><FileText size={24} className="text-indigo-600"/> Quotations</h1>
           <p className="text-admin-muted text-sm mt-1">Manage all business proposals and quotes</p>
         </div>
+        <Link
+          href="/admin/quotations/new"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded font-medium text-sm flex items-center gap-2 transition-colors w-max shadow-sm"
+        >
+          <Plus size={16} /> New Quotation
+        </Link>
       </div>
 
       <div className="bg-admin-surface rounded-lg shadow-sm border border-admin-border overflow-hidden">

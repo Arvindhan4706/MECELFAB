@@ -20,34 +20,27 @@ export async function POST(req) {
     const expectedTimeline = formData.get('expectedTimeline');
     const projectDescription = formData.get('projectDescription');
     
-    // We'll keep the raw projectDescription as 'message' in the DB
-    const message = projectDescription || 'No description provided.';
-    let documentUrl = null;
-
-    const file = formData.get('documentUpload');
-    if (file && file.size > 0) {
-      const { mkdir, writeFile } = await import('fs/promises');
-      const path = await import('path');
-      
-      const buffer = Buffer.from(await file.arrayBuffer());
-      const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-      const uploadDir = path.default.join(process.cwd(), 'public', 'uploads');
-      
-      try {
-        await mkdir(uploadDir, { recursive: true });
-      } catch (e) {}
-
-      const filepath = path.default.join(uploadDir, filename);
-      await writeFile(filepath, buffer);
-      
-      documentUrl = `/uploads/${filename}`;
+    // Server-side validation
+    if (!name || typeof name !== 'string' || !name.trim()) {
+      return NextResponse.json({ success: false, message: 'Full name is required.' }, { status: 400 });
+    }
+    if (!email || typeof email !== 'string' || !/\S+@\S+\.\S+/.test(email.trim())) {
+      return NextResponse.json({ success: false, message: 'Valid email address is required.' }, { status: 400 });
     }
 
-    // Generate Reference Number
+    // We'll keep the raw projectDescription as 'message' in the DB
+    const message = projectDescription?.trim() || 'No description provided.';
+
+    // Generate Collision-Resistant Reference Number
     // Example: MEC-REQ-2026-0001
     const currentYear = new Date().getFullYear();
     const count = await db.inquiry.count();
-    const referenceNumber = `MEC-REQ-${currentYear}-${String(count + 1).padStart(4, '0')}`;
+    let refSeq = count + 1;
+    let referenceNumber = `MEC-REQ-${currentYear}-${String(refSeq).padStart(4, '0')}`;
+    while (await db.inquiry.findUnique({ where: { referenceNumber } })) {
+      refSeq++;
+      referenceNumber = `MEC-REQ-${currentYear}-${String(refSeq).padStart(4, '0')}`;
+    }
 
     const newInquiry = await db.inquiry.create({
       data: {
@@ -61,7 +54,7 @@ export async function POST(req) {
         timeline: expectedTimeline || null,
         preferredContactMethod: formData.get('preferredContactMethod') || 'Email',
         message,
-        documentUrl,
+        documentUrl: null,
         status: 'NEW'
       }
     });

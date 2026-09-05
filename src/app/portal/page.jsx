@@ -2,7 +2,7 @@ import { db } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import Link from 'next/link';
-import { Wrench, Briefcase, FileText, ArrowRight, CheckCircle, Clock, AlertTriangle } from 'lucide-react';
+import { Wrench, Briefcase, FileText, CheckCircle, Clock } from 'lucide-react';
 
 export const metadata = {
   title: 'Portal Dashboard | MECELFAB',
@@ -84,7 +84,10 @@ export default async function PortalDashboard() {
         {/* Active Work Orders */}
         <div className="bg-white/5 rounded-lg border border-white/10 shadow-lg overflow-hidden">
           <div className="p-5 border-b border-white/10 bg-black/20 flex justify-between items-center">
-            <h2 className="font-semibold text-white flex items-center gap-2">Recent Service Requests</h2>
+            <h2 className="font-semibold text-white flex items-center gap-2">
+              <Wrench size={16} className="text-blue-400" />
+              <span>Active Work Orders</span>
+            </h2>
             <Link href="/portal/work-orders" className="text-xs text-blue-400 hover:text-blue-300">View All</Link>
           </div>
           <div className="p-0">
@@ -106,7 +109,7 @@ export default async function PortalDashboard() {
                 </li>
               )) : (
                 <li className="p-8 text-center text-gray-500 text-sm">
-                  No active service requests.
+                  No active work orders.
                 </li>
               )}
             </ul>

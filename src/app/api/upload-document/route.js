@@ -39,7 +39,7 @@ export async function POST(req) {
     
     try {
       await mkdir(uploadDir, { recursive: true });
-    } catch (e) {
+    } catch {
       // Ignore if directory exists
     }
 

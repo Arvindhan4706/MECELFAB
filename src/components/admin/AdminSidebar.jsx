@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -7,7 +7,7 @@ import {
   Briefcase, Activity, Package, Banknote, Settings,
   Users, Image as ImageIcon, Shield, BookOpen,
   Home, LogOut, ChevronLeft, ChevronRight,
-  Zap, ClipboardList, Building2
+  Zap, ClipboardList, Building2, Calendar
 } from 'lucide-react';
 
 const navGroups = [
@@ -28,6 +28,7 @@ const navGroups = [
     label: 'Operations',
     items: [
       { href: '/admin/work-orders', label: 'Work Orders', icon: Wrench },
+      { href: '/admin/field-service', label: 'Field Service', icon: Calendar },
       { href: '/admin/equipment', label: 'Equipment', icon: Briefcase },
       { href: '/admin/amcs', label: 'AMCs', icon: Activity },
       { href: '/admin/inventory', label: 'Inventory', icon: Package },
@@ -72,8 +73,11 @@ export default function AdminSidebar({ user }) {
   const role = user?.role || 'VIEWER';
   const isAdmin = role === 'SUPER_ADMIN' || role === 'ADMIN';
 
-  // Close mobile drawer on route change
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setMobileOpen(false);
+  }
 
   const isActive = (href) => pathname === href || pathname.startsWith(href + '/');
 

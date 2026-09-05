@@ -3,8 +3,10 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, User, Wrench, Calendar, FileText, CheckCircle, Clock } from 'lucide-react';
+import { ArrowLeft, User, FileText } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
+import WorkOrderPartsManager from './WorkOrderPartsManager';
+import WorkOrderInvoiceGenerator from './WorkOrderInvoiceGenerator';
 
 export const metadata = {
   title: 'Work Order Detail | Admin | MECELFAB',
@@ -43,8 +45,20 @@ export default async function (props) {
       quotation: {
         include: { items: true }
       },
-      serviceVisits: true
+      serviceVisits: true,
+      stockMovements: {
+        include: { part: true },
+        orderBy: { createdAt: 'desc' }
+      },
+      invoices: {
+        include: { payments: true },
+        orderBy: { createdAt: 'desc' }
+      }
     }
+  });
+
+  const availableParts = await db.part.findMany({
+    orderBy: { name: 'asc' }
   });
 
   if (!workOrder) notFound();
@@ -156,6 +170,13 @@ export default async function (props) {
             </div>
           </div>
 
+          {/* Spare Parts Allocation Section */}
+          <WorkOrderPartsManager
+            workOrderId={workOrder.id}
+            availableParts={availableParts}
+            stockMovements={workOrder.stockMovements}
+          />
+
         </div>
 
         {/* Right Col */}
@@ -206,20 +227,11 @@ export default async function (props) {
             </div>
           </div>
 
-          {/* Quick Actions (Future scope) */}
-          <div className="bg-admin-surface/5 rounded-lg shadow-lg border border-white/10 overflow-hidden backdrop-blur-sm">
-            <div className="p-5 border-b border-white/10 bg-black/20">
-              <h2 className="font-semibold text-white text-sm">Quick Actions</h2>
-            </div>
-            <div className="p-5 space-y-2">
-              <button className="w-full flex items-center justify-center gap-2 bg-blue-600/20 hover:bg-blue-600/40 text-blue-400 border border-blue-500/30 px-4 py-2 rounded text-sm font-medium transition-colors">
-                <CheckCircle size={16} /> Generate Service Report
-              </button>
-              <button className="w-full flex items-center justify-center gap-2 bg-purple-600/20 hover:bg-purple-600/40 text-purple-400 border border-purple-500/30 px-4 py-2 rounded text-sm font-medium transition-colors">
-                <FileText size={16} /> Generate Invoice
-              </button>
-            </div>
-          </div>
+          {/* Invoice Generation & Status */}
+          <WorkOrderInvoiceGenerator
+            workOrder={workOrder}
+            existingInvoices={workOrder.invoices || []}
+          />
 
         </div>
       </div>

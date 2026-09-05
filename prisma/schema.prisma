@@ -29,6 +29,7 @@ model User {
   workOrders WorkOrder[] @relation("AssignedTechnician")
   serviceVisits ServiceVisit[] @relation("AssignedTechnician")
   serviceReports ServiceReport[] @relation("ReportTechnician")
+  stockMovements StockMovement[]
 }
 
 model Customer {
@@ -327,6 +328,9 @@ model WorkOrder {
   
   status          String   @default("SCHEDULED") // SCHEDULED, ASSIGNED, IN_PROGRESS, COMPLETED, CLOSED
   scheduledDate   DateTime?
+  service         String?
+  description     String?
+  priority        String?  @default("MEDIUM")
   
   assignedToId    String?
   assignedTo      User?    @relation("AssignedTechnician", fields: [assignedToId], references: [id])
@@ -377,6 +381,7 @@ model AMC {
   updatedAt       DateTime @updatedAt
   
   equipment       AMCEquipment[]
+  serviceVisits   ServiceVisit[]
 }
 
 model AMCEquipment {
@@ -389,29 +394,39 @@ model AMCEquipment {
 }
 
 model ServiceVisit {
-  id              String   @id @default(cuid())
-  customerId      String
-  customer        Customer @relation(fields: [customerId], references: [id])
-  
-  workOrderId     String?
-  workOrder       WorkOrder? @relation(fields: [workOrderId], references: [id])
-  
-  equipmentId     String?
-  equipment       Equipment? @relation(fields: [equipmentId], references: [id])
-  
-  technicianId    String?
-  technician      User?    @relation("AssignedTechnician", fields: [technicianId], references: [id])
-  
-  date            DateTime
-  startTime       String?
-  endTime         String?
-  workPerformed   String?
-  observations    String?
-  recommendations String?
-  status          String   @default("SCHEDULED") // SCHEDULED, IN_PROGRESS, COMPLETED, CANCELLED
-  
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                      String    @id @default(cuid())
+  customerId              String
+  customer                Customer  @relation(fields: [customerId], references: [id])
+
+  amcId                   String?
+  amc                     AMC?      @relation(fields: [amcId], references: [id], onDelete: Cascade)
+
+  workOrderId             String?
+  workOrder               WorkOrder? @relation(fields: [workOrderId], references: [id])
+
+  equipmentId             String?
+  equipment               Equipment? @relation(fields: [equipmentId], references: [id])
+
+  technicianId            String?
+  technician              User?     @relation("AssignedTechnician", fields: [technicianId], references: [id])
+
+  date                    DateTime
+  timeSlot                String?
+  startTime               String?
+  endTime                 String?
+  workPerformed           String?
+  observations            String?
+  recommendations         String?
+  technicianNotes         String?
+  partsUsed               String?
+  status                  String    @default("SCHEDULED") // SCHEDULED, ASSIGNED, IN_PROGRESS, COMPLETED, CANCELLED
+  customerAcknowledgement Boolean   @default(false)
+  acknowledgedBy          String?
+  acknowledgedAt          DateTime?
+  completedAt             DateTime?
+
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
 }
 
 model ServiceReport {
@@ -459,17 +474,22 @@ model Part {
 }
 
 model StockMovement {
-  id              String   @id @default(cuid())
-  partId          String
-  part            Part     @relation(fields: [partId], references: [id])
-  type            String   // RECEIVED, ISSUED, RETURNED, ADJUSTED
-  quantity        Int
+  id               String   @id @default(cuid())
+  partId           String
+  part             Part     @relation(fields: [partId], references: [id])
+  type             String   // RECEIVED, ISSUED, RETURNED, ADJUSTED
+  quantity         Int
+  previousQuantity Int?
+  newQuantity      Int?
   
-  workOrderId     String?
-  workOrder       WorkOrder? @relation(fields: [workOrderId], references: [id])
+  workOrderId      String?
+  workOrder        WorkOrder? @relation(fields: [workOrderId], references: [id])
   
-  note            String?
-  createdAt       DateTime @default(now())
+  userId           String?
+  user             User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  note             String?
+  createdAt        DateTime @default(now())
 }
 
 model Invoice {
@@ -477,38 +497,58 @@ model Invoice {
   invoiceNumber   String   @unique
   customerId      String
   customer        Customer @relation(fields: [customerId], references: [id])
-  
+
   workOrderId     String?
   workOrder       WorkOrder? @relation(fields: [workOrderId], references: [id])
-  
+
   quotationId     String?
   quotation       Quotation? @relation(fields: [quotationId], references: [id])
-  
+
   status          String   @default("DRAFT") // DRAFT, ISSUED, SENT, PARTIALLY_PAID, PAID, OVERDUE, CANCELLED
-  
+
   subtotal        Float
+  taxRate         Float    @default(18)
   taxAmount       Float
-  discount        Float
+  discount        Float    @default(0)
   grandTotal      Float
-  
+
+  gstType         String?  @default("INTRA_STATE") // INTRA_STATE, INTER_STATE
+  cgst            Float?   @default(0)
+  sgst            Float?   @default(0)
+  igst            Float?   @default(0)
+  notes           String?
+
   issueDate       DateTime?
   dueDate         DateTime?
-  
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  
+
+  items           InvoiceItem[]
   payments        Payment[]
+}
+
+model InvoiceItem {
+  id          String   @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Int
+  unitPrice   Float
+  totalPrice  Float
 }
 
 model Payment {
   id              String   @id @default(cuid())
   invoiceId       String
   invoice         Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-  
+
   amount          Float
   date            DateTime
   method          String   // CASH, BANK_TRANSFER, CHEQUE, ONLINE
   reference       String?
-  
+  type            String?  @default("PARTIAL") // ADVANCE, PARTIAL, FULL
+  notes           String?
+
   createdAt       DateTime @default(now())
 }

@@ -3,9 +3,11 @@ import { db } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-export async function POST(req, { params }) {
+export async function POST(req, props) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+
+  const { id } = await props.params;
 
   try {
     const user = await db.user.findUnique({ where: { email: session.user.email } });
@@ -13,14 +15,14 @@ export async function POST(req, { params }) {
 
     await db.notification.update({
       where: { 
-        id: params.id,
+        id,
         userId: user.id 
       },
       data: { read: true }
     });
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }

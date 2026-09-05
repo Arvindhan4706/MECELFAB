@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function QuotationBuilder({ inquiry, saveQuotationAction }) {
   const [items, setItems] = useState([
-    { id: Date.now(), description: `Service: ${inquiry.service || 'General Works'}`, quantity: 1, unitPrice: 0 }
+    { id: 1, description: `Service: ${inquiry.service || 'General Works'}`, quantity: 1, unitPrice: 0 }
   ]);
   const [taxRate, setTaxRate] = useState(18); // Default 18% GST
   const [discount, setDiscount] = useState(0);

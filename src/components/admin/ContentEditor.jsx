@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Save, Layout, Info, Phone, MessageSquare } from 'lucide-react';
+import { Save, Layout, Info, Phone, CheckCircle } from 'lucide-react';
 
 export default function ContentEditor({ initialSettings, saveContentAction }) {
   const [activeTab, setActiveTab] = useState('homepage');
@@ -23,14 +23,33 @@ export default function ContentEditor({ initialSettings, saveContentAction }) {
     values: 'Safety, Quality, Integrity, Innovation'
   });
 
-  const [contact, setContact] = useState(initialSettings.find(s => s.key === 'CONTENT_CONTACT')?.value ? JSON.parse(initialSettings.find(s => s.key === 'CONTENT_CONTACT').value) : {
-    companyName: 'MECELFAB Industrial Solutions Pvt Ltd',
-    phone: '+91 98765 43210',
-    email: 'contact@mecelfab.com',
-    address: '123 Industrial Area, Phase 1, Mumbai, Maharashtra 400001, India',
-    workingHours: 'Mon - Sat: 9:00 AM - 6:00 PM',
-    linkedin: '',
-    twitter: ''
+  const [contact, setContact] = useState(() => {
+    const existing = initialSettings.find(s => s.key === 'CONTENT_CONTACT')?.value;
+    if (existing) {
+      try {
+        const parsed = JSON.parse(existing);
+        return {
+          companyName: parsed.companyName || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
+          phone: parsed.phone || '',
+          email: parsed.email || 'contact@mecelfab.com',
+          address: parsed.address || '',
+          workingHours: parsed.workingHours || 'Mon - Sat: 9:00 AM - 6:00 PM IST',
+          linkedin: parsed.linkedin || '',
+          twitter: parsed.twitter || ''
+        };
+      } catch {
+        // Fallback below
+      }
+    }
+    return {
+      companyName: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
+      phone: '',
+      email: 'contact@mecelfab.com',
+      address: '',
+      workingHours: 'Mon - Sat: 9:00 AM - 6:00 PM IST',
+      linkedin: '',
+      twitter: ''
+    };
   });
 
   const handleSubmit = async (e) => {

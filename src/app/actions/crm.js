@@ -6,7 +6,7 @@ import { revalidatePath } from 'next/cache';
 
 export async function addInquiryNote(formData) {
   const session = await getServerSession(authOptions);
-  if (!session) throw new Error('Unauthorized');
+  if (!session || session.user?.role === 'CUSTOMER') throw new Error('Unauthorized');
 
   const inquiryId = formData.get('inquiryId');
   const noteText = formData.get('note');
@@ -36,7 +36,7 @@ export async function addInquiryNote(formData) {
 
 export async function updateInquiryStatus(formData) {
   const session = await getServerSession(authOptions);
-  if (!session) throw new Error('Unauthorized');
+  if (!session || session.user?.role === 'CUSTOMER') throw new Error('Unauthorized');
 
   const inquiryId = formData.get('inquiryId');
   const status = formData.get('status');

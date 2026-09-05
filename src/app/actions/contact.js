@@ -14,8 +14,18 @@ export async function submitInquiry(formData) {
   }
 
   try {
+    const currentYear = new Date().getFullYear();
+    const count = await db.inquiry.count();
+    let refSeq = count + 1;
+    let referenceNumber = `MEC-REQ-${currentYear}-${String(refSeq).padStart(4, '0')}`;
+    while (await db.inquiry.findUnique({ where: { referenceNumber } })) {
+      refSeq++;
+      referenceNumber = `MEC-REQ-${currentYear}-${String(refSeq).padStart(4, '0')}`;
+    }
+
     await db.inquiry.create({
       data: {
+        referenceNumber,
         name,
         email,
         phone: phone || null,

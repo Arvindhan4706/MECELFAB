@@ -1,7 +1,6 @@
 import Hero from '../components/Hero';
 import TrustSection from '../components/TrustSection';
 import Services from '../components/Services';
-import ProcessTimeline from '../components/ProcessTimeline';
 import EngineeringWorkflow from '../components/EngineeringWorkflow';
 import Industries from '../components/Industries';
 import ProjectsGallery from '../components/ProjectsGallery';

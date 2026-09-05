@@ -3,41 +3,14 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Printer, Send, CheckCircle, XCircle, FileText, User, Building, Phone, Mail } from 'lucide-react';
+import { ArrowLeft, Printer, FileText } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
+import QuotationActionButtons from './QuotationActionButtons';
 
 export const metadata = {
   title: 'Quotation Detail | Admin',
 };
 
-async function updateQuotationStatus(formData) {
-  'use server';
-  const id = formData.get('id');
-  const status = formData.get('status');
-  const inquiryId = formData.get('inquiryId');
-
-  await db.quotation.update({
-    where: { id },
-    data: { status }
-  });
-
-  // Sync to Inquiry CRM pipeline
-  let inquiryStatus = null;
-  if (status === 'ACCEPTED') inquiryStatus = 'WON';
-  else if (status === 'REJECTED') inquiryStatus = 'LOST';
-  else if (status === 'SENT') inquiryStatus = 'NEGOTIATION';
-
-  if (inquiryStatus) {
-    await db.inquiry.update({
-      where: { id: inquiryId },
-      data: { status: inquiryStatus }
-    });
-  }
-
-  revalidatePath(`/admin/quotations/${id}`);
-  revalidatePath(`/admin/quotations`);
-  if (inquiryId) revalidatePath(`/admin/inquiries/${inquiryId}`);
-}
 
 async function createRevision(formData) {
   'use server';
@@ -112,6 +85,7 @@ export default async function QuotationDetailPage(props) {
       items: true,
       inquiry: true,
       user: true,
+      workOrders: true,
       parentQuotation: { select: { id: true, quotationNumber: true, version: true } },
       revisions: { select: { id: true, quotationNumber: true, version: true, status: true, createdAt: true }, orderBy: { version: 'desc' } }
     }
@@ -256,38 +230,14 @@ export default async function QuotationDetailPage(props) {
         <div className="space-y-6">
           <div className="bg-admin-surface rounded-lg shadow-sm border border-admin-border overflow-hidden">
             <div className="p-4 border-b border-admin-border bg-admin-elevated">
-              <h2 className="font-semibold text-admin-heading text-sm">Status Management</h2>
+              <h2 className="font-semibold text-admin-heading text-sm">Status & Pipeline Actions</h2>
             </div>
             <div className="p-4 space-y-2">
-              <form action={updateQuotationStatus}>
-                <input type="hidden" name="id" value={quotation.id} />
-                <input type="hidden" name="inquiryId" value={quotation.inquiryId} />
-                
-                <div className="grid grid-cols-1 gap-2">
-                  {quotation.status === 'DRAFT' && (
-                    <button type="submit" name="status" value="SENT" className="w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
-                      <Send size={16}/> Mark as Sent
-                    </button>
-                  )}
-                  
-                  {['SENT', 'VIEWED'].includes(quotation.status) && (
-                    <>
-                      <button type="submit" name="status" value="ACCEPTED" className="w-full flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
-                        <CheckCircle size={16}/> Mark as Accepted
-                      </button>
-                      <button type="submit" name="status" value="REJECTED" className="w-full flex justify-center items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-medium transition-colors">
-                        <XCircle size={16}/> Mark as Rejected
-                      </button>
-                    </>
-                  )}
+              <QuotationActionButtons
+                quotation={quotation}
+                existingWorkOrder={quotation.workOrders?.[0] || null}
+              />
 
-                  {['ACCEPTED', 'REJECTED', 'EXPIRED'].includes(quotation.status) && (
-                    <p className="text-xs text-admin-muted text-center py-2 italic border border-admin-border rounded bg-admin-elevated">
-                      This quotation is closed.
-                    </p>
-                  )}
-                </div>
-              </form>
 
               {/* Create Revision Form */}
               {['DRAFT', 'SENT', 'VIEWED', 'REJECTED'].includes(quotation.status) && (

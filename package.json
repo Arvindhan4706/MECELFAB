@@ -1,5 +1,5 @@
 {
-  "name": "tharun-company",
+  "name": "mecelfab-industrial-solutions",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint src",
     "postinstall": "prisma generate"
   },
   "dependencies": {

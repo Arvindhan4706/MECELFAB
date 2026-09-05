@@ -1,56 +1,33 @@
 "use client";
-/* eslint-disable react-refresh/only-export-components */
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useState } from 'react';
 
 export const CMSContext = createContext();
 
-const INITIAL_STATS = {
+export const INITIAL_STATS = {
   projectsCompleted: 0,
   industrialClients: 0,
   serviceCategories: 8,
-  safetyCompliance: 0
+  safetyCompliance: 0,
 };
 
 export const INITIAL_PROJECTS = [];
 
 export const CMSProvider = ({ children }) => {
-  const [introState, setIntroState] = useState('playing'); // 'playing' | 'minimizing' | 'done'
-
-  const [stats, setStats] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('MECELFAB_stats');
-      if (saved) return JSON.parse(saved);
-    }
-    return INITIAL_STATS;
-  });
-
-  const [projects, setProjects] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('MECELFAB_projects');
-      if (saved) return JSON.parse(saved);
-    }
-    return INITIAL_PROJECTS;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('MECELFAB_stats', JSON.stringify(stats));
-  }, [stats]);
-
-  useEffect(() => {
-    localStorage.setItem('MECELFAB_projects', JSON.stringify(projects));
-  }, [projects]);
+  const [introState, setIntroState] = useState('done');
+  const [stats, setStats] = useState(INITIAL_STATS);
+  const [projects, setProjects] = useState(INITIAL_PROJECTS);
 
   const updateStats = (newStats) => {
     setStats((prev) => ({
       ...prev,
-      ...newStats
+      ...newStats,
     }));
   };
 
   const addProject = (project) => {
     const newProject = {
       ...project,
-      id: Date.now().toString()
+      id: Date.now().toString(),
     };
     setProjects((prev) => [newProject, ...prev]);
   };
@@ -75,7 +52,7 @@ export const CMSProvider = ({ children }) => {
         editProject,
         deleteProject,
         introState,
-        setIntroState
+        setIntroState,
       }}
     >
       {children}

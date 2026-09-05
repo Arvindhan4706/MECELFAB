@@ -3,9 +3,8 @@ import I18nProvider from '../context/I18nProvider';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SmoothScroller from '../components/SmoothScroller';
-import { ArrowRight } from 'lucide-react';
 import '../index.css';
-import { db } from '@/lib/db';
+import { getCompanyProfile } from '@/lib/companyConfig';
 
 export const metadata = {
   title: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
@@ -33,6 +32,12 @@ export const metadata = {
     description: 'Premier industrial mechanical services, fabrication, generator solutions, rentals, and hydraulic/pneumatic system overhauling.',
     images: ['/images/hero-bg.png'],
   },
+  alternates: {
+    canonical: 'https://mecelfab.com',
+  },
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export const viewport = {
@@ -42,23 +47,40 @@ export const viewport = {
 };
 
 export default async function RootLayout({ children }) {
-  const settings = await db.setting.findMany({
-    where: { key: 'CONTENT_CONTACT' }
-  });
-  
-  const contactContent = settings.length > 0 && settings[0].value 
-    ? JSON.parse(settings[0].value) 
-    : null;
+  const company = await getCompanyProfile();
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: company.legalName,
+    alternateName: company.shortName,
+    url: company.websiteUrl,
+    logo: `${company.websiteUrl}/favicon.svg`,
+    description: company.description,
+    ...(company.email ? { email: company.email } : {}),
+    ...(company.phone ? { telephone: company.phone } : {}),
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: company.country,
+      ...(company.address ? { streetAddress: company.address } : {}),
+    },
+  };
 
   return (
     <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body suppressHydrationWarning>
         <I18nProvider>
           <SmoothScroller>
             <CMSProvider>
-              <Navbar contact={contactContent} />
+              <Navbar contact={company} />
               <main className="flex-grow">{children}</main>
-              <Footer contact={contactContent} />
+              <Footer contact={company} />
               {/* Floating CTA */}
             </CMSProvider>
           </SmoothScroller>

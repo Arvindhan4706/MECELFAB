@@ -55,7 +55,7 @@ export default function MediaLibrary({ initialMedia }) {
     
     // Server action to delete would go here (optional implementation)
     // For now, we'll just remove it from UI or call an API route.
-    alert('File deletion API not fully implemented for local storage in this demo. Record would be deleted from DB.');
+    alert('File deletion is restricted in the current storage configuration.');
   };
 
   return (

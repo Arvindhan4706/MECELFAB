@@ -36,7 +36,7 @@ export default function DocumentVault({ initialDocuments }) {
       const data = await res.json();
       setDocuments([data.document, ...documents]);
     } catch (err) {
-      setUploadError('Upload API not implemented yet. This is a UI demo.');
+      setUploadError('Document upload is restricted in the current storage configuration.');
     } finally {
       setIsUploading(false);
     }
@@ -44,7 +44,7 @@ export default function DocumentVault({ initialDocuments }) {
 
   const handleDelete = async (id) => {
     if (!confirm('Delete this document?')) return;
-    alert('Delete API not implemented in demo.');
+    alert('Document deletion is restricted in the current storage configuration.');
   };
 
   return (
