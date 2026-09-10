@@ -16,13 +16,23 @@ async function createRevision(formData) {
   'use server';
   const id = formData.get('id');
   const session = await getServerSession(authOptions);
-  
+
+  // Auth check — only admin/manager can create revisions
+  if (!session || !['SUPER_ADMIN', 'ADMIN', 'MANAGER'].includes(session.user.role)) {
+    throw new Error('Unauthorized');
+  }
+
   const currentQuotation = await db.quotation.findUnique({
     where: { id },
     include: { items: true }
   });
 
   if (!currentQuotation) return;
+
+  // Cannot revise an ACCEPTED quotation — it is contractually locked
+  if (currentQuotation.status === 'ACCEPTED') {
+    throw new Error('An ACCEPTED quotation cannot be revised. Raise a new quotation instead.');
+  }
 
   const count = await db.quotation.count();
   const currentYear = new Date().getFullYear();
@@ -73,6 +83,7 @@ async function createRevision(formData) {
   revalidatePath(`/admin/quotations`);
   redirect(`/admin/quotations/${newRevision.id}`);
 }
+
 
 export default async function QuotationDetailPage(props) {
   const params = await props.params;

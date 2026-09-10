@@ -6,8 +6,12 @@ export default withAuth(
     const { token } = req.nextauth;
     const { pathname } = req.nextUrl;
 
-    if (pathname === "/admin/login" && token) {
-      return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+    if ((pathname === "/auth/login" || pathname === "/auth/register" || pathname === "/admin/login") && token) {
+      if (token.role === "CUSTOMER") {
+        return NextResponse.redirect(new URL("/", req.url));
+      } else {
+        return NextResponse.redirect(new URL("/admin/dashboard", req.url));
+      }
     }
 
     const isApiRoute = pathname.startsWith("/api/");
@@ -15,8 +19,11 @@ export default withAuth(
     // Role-based protection for /admin and /api/admin routes
     if (pathname.startsWith("/admin") || pathname.startsWith("/api/admin")) {
       if (!token) {
+        if (pathname === "/admin/login") {
+           return NextResponse.redirect(new URL("/auth/login", req.url));
+        }
         if (isApiRoute) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        return NextResponse.redirect(new URL("/admin/login", req.url));
+        return NextResponse.redirect(new URL("/auth/login", req.url));
       }
 
       // Customers should not access admin panel or admin APIs
@@ -46,7 +53,7 @@ export default withAuth(
     if (pathname.startsWith("/portal") || pathname.startsWith("/api/portal")) {
       if (!token) {
         if (isApiRoute) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-        return NextResponse.redirect(new URL("/api/auth/signin?callbackUrl=/portal", req.url));
+        return NextResponse.redirect(new URL("/auth/login?callbackUrl=/portal", req.url));
       }
 
       // Non-customers shouldn't typically access portal unless they are admins impersonating?
@@ -64,11 +71,11 @@ export default withAuth(
       authorized: () => true, // We handle authorization logic above to allow redirects instead of generic 401s
     },
     pages: {
-      signIn: '/admin/login',
+      signIn: '/auth/login',
     }
   }
 );
 
 export const config = {
-  matcher: ['/admin/:path*', '/portal/:path*', '/api/admin/:path*', '/api/portal/:path*'],
+  matcher: ['/admin/:path*', '/portal/:path*', '/api/admin/:path*', '/api/portal/:path*', '/auth/:path*'],
 };

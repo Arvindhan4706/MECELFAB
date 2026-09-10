@@ -4,61 +4,59 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
+import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 import TextReveal from './animations/TextReveal';
 
-const Industries = () => {
+// Default industries if no DB data — visual placeholders only
+const DEFAULT_INDUSTRIES = [
+  {
+    id: '01', title: 'Industrial Manufacturing',
+    desc: 'Precision fabrication, machine foundations, automation and industrial infrastructure for manufacturing plants.',
+    image: '/images/project-fabrication.png',
+    capabilities: ['Equipment Erection', 'Machine Foundations', 'Structural Fabrication'],
+    slug: 'industrial-manufacturing',
+  },
+  {
+    id: '02', title: 'Power & Energy',
+    desc: 'Generator installations, spare parts supply and complete power systems for energy sector clients.',
+    image: '/images/project-electrical.png',
+    capabilities: ['Generator Services', 'Spare Parts', 'Temporary Power'],
+    slug: 'power-energy',
+  },
+  {
+    id: '03', title: 'Industrial Maintenance',
+    desc: 'Overhauling and annual maintenance contracts for hydraulic, pneumatic and turbocharger systems.',
+    image: '/images/project-maintenance.png',
+    capabilities: ['Hydraulic Systems', 'Pneumatic Systems', 'Turbocharger Servicing', 'AMC'],
+    slug: 'industrial-maintenance',
+  },
+  {
+    id: '04', title: 'Commercial / Temporary Power',
+    desc: 'Flexible rental solutions for generators and air compressors across commercial and event applications.',
+    image: '/images/project-commercial.png',
+    capabilities: ['Generator Rental', 'Air Compressor Rental', 'Event Power'],
+    slug: 'commercial-power',
+  },
+];
+
+const Industries = ({ industries: propIndustries }) => {
   const containerRef = useRef(null);
 
-  const industries = [
-    {
-      id: '01',
-      title: 'Industrial Manufacturing',
-      desc: 'Precision fabrication, machine foundations, automation and industrial infrastructure.',
-      image: '/images/project-fabrication.png',
-      capabilities: [
-        'Equipment Erection',
-        'Machine Foundations',
-        'Structural Fabrication'
-      ]
-    },
-    {
-      id: '02',
-      title: 'Power & Energy',
-      desc: 'Generator installations, spare parts and power systems.',
-      image: '/images/project-electrical.png',
-      capabilities: [
-        'Generator Services',
-        'Spare Parts',
-        'Temporary Power'
-      ]
-    },
-    {
-      id: '03',
-      title: 'Industrial Maintenance',
-      desc: 'Overhauling and annual maintenance contracts for mechanical systems.',
-      image: '/images/project-maintenance.png',
-      capabilities: [
-        'Hydraulic Systems',
-        'Pneumatic Systems',
-        'Turbocharger Servicing',
-        'AMC Support'
-      ]
-    },
-    {
-      id: '04',
-      title: 'Commercial / Temporary Power',
-      desc: 'Rental solutions for generators and air compressors.',
-      image: '/images/project-commercial.png',
-      capabilities: [
-        'Generator Rental',
-        'Air Compressor Rental',
-        'Event Power'
-      ]
-    }
-  ];
+  // Use DB industries if passed as props, otherwise use local defaults
+  const industries = propIndustries?.length
+    ? propIndustries.map((ind, i) => ({
+        id: String(i + 1).padStart(2, '0'),
+        title: ind.title,
+        desc: ind.description,
+        image: ind.image || `/images/project-fabrication.png`,
+        capabilities: ind.capabilities ? JSON.parse(ind.capabilities) : [],
+        slug: ind.slug,
+      }))
+    : DEFAULT_INDUSTRIES;
 
   useGSAP(() => {
     // Header reveal
@@ -147,6 +145,17 @@ const Industries = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* View all industries link */}
+        <div className="mt-12 flex justify-center">
+          <Link
+            href="/industries"
+            className="group inline-flex items-center gap-3 px-8 py-3.5 border border-white/10 text-white/40 font-heading text-[11px] tracking-widest uppercase hover:border-white/25 hover:text-white transition-all duration-300"
+          >
+            All Industries
+            <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform duration-300" />
+          </Link>
         </div>
       </div>
     </section>

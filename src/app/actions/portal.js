@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from "next/cache";
 
+import { assertPermission } from '@/lib/permissions';
+
 /**
  * Helper: Strictly authenticate and retrieve the customer record linked to the session.
  * Never trust customerId provided by the client.
@@ -13,6 +15,12 @@ async function getAuthCustomer() {
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
     throw new Error("Unauthorized: Please log in to access the portal.");
+  }
+  
+  try {
+    assertPermission(session.user.role, 'portal:write');
+  } catch (err) {
+    throw new Error("Unauthorized: Customer access only.");
   }
 
   const customer = await db.customer.findUnique({

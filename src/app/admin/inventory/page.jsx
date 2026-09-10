@@ -31,19 +31,35 @@ export default async function InventoryPage({ searchParams }) {
     // Actually Prisma has `where: { quantity: { lte: db.raw('minimumStock') } }` but it's complex. Let's fetch all and filter in memory since demo data is small.
   }
 
-  let parts = await db.part.findMany({
-    where,
-    orderBy: { partNumber: 'asc' }
-  });
-
+  let parts;
   if (filter === 'low_stock') {
-    parts = parts.filter(p => p.quantity <= p.minimumStock);
+    if (search) {
+      parts = await db.$queryRaw`
+        SELECT * FROM "Part" 
+        WHERE quantity <= "minimumStock" 
+        AND ("name" ILIKE ${'%' + search + '%'} OR "partNumber" ILIKE ${'%' + search + '%'} OR "category" ILIKE ${'%' + search + '%'})
+        ORDER BY "partNumber" ASC
+      `;
+    } else {
+      parts = await db.$queryRaw`
+        SELECT * FROM "Part" 
+        WHERE quantity <= "minimumStock" 
+        ORDER BY "partNumber" ASC
+      `;
+    }
+  } else {
+    parts = await db.part.findMany({
+      where,
+      orderBy: { partNumber: 'asc' }
+    });
   }
 
-  // Calculate some basic stats
-  const totalItems = parts.length;
-  const lowStockCount = parts.filter(p => p.quantity <= p.minimumStock).length;
-  const outOfStockCount = parts.filter(p => p.quantity === 0).length;
+  // Calculate stats robustly (avoids pulling entire DB into memory)
+  const totalItems = await db.part.count();
+  const outOfStockCount = await db.part.count({ where: { quantity: 0 } });
+  
+  const lowStockRes = await db.$queryRaw`SELECT COUNT(*)::int as count FROM "Part" WHERE quantity > 0 AND quantity <= "minimumStock"`;
+  const lowStockCount = lowStockRes[0]?.count || 0;
 
   return (
     <div className="pb-12">

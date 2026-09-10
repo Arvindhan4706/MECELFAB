@@ -4,6 +4,8 @@ import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { assertInvoiceEditable, assertQuotationEditable } from "@/lib/financialGuards";
+
 
 /**
  * Helper: Round a number safely to 2 decimal places to prevent floating-point drift.
@@ -28,6 +30,16 @@ async function getAuthUser() {
   if (!user) {
     throw new Error("User record not found.");
   }
+  
+  // Default to requiring quotation write access if no specific permission is passed, 
+  // though we will retrofit the callers eventually. For now, assert the base commercial level.
+  // The matrix allows STAFF and above for most basic ops.
+  try {
+    assertPermission(user.role, 'quotations:read'); 
+  } catch (err) {
+    throw new Error(`Unauthorized: Role '${user.role}' is not permitted to perform commercial operations.`);
+  }
+
   return { session, user };
 }
 
@@ -55,6 +67,13 @@ export async function createQuotationAction(formData) {
 
   if (!customerName || !email || !service || !scopeOfWork) {
     return { success: false, error: "Missing required fields: Customer Name, Email, Service, and Scope of Work." };
+  }
+
+  if (customerName.length > 100 || email.length > 150 || service.length > 200 || scopeOfWork.length > 10000) {
+    return { success: false, error: "Input exceeds maximum allowed length." };
+  }
+  if (phone.length > 20 || address.length > 500 || companyName.length > 200) {
+    return { success: false, error: "Input exceeds maximum allowed length." };
   }
 
   let itemsRaw = formData.get("items");
@@ -187,6 +206,18 @@ export async function updateQuotationStatusAction(quotationId, newStatus) {
   if (!validStatuses.includes(newStatus)) {
     return { success: false, error: `Invalid status: ${newStatus}` };
   }
+
+  // ─── State Machine Enforcement ──────────────────────────────────────────
+  // Terminal statuses (ACCEPTED, REJECTED) cannot be further transitioned
+  // except to EXPIRED. EXPIRED is also terminal.
+  const TERMINAL_STATUSES = ["ACCEPTED", "REJECTED", "EXPIRED"];
+  if (TERMINAL_STATUSES.includes(quotation.status)) {
+    return {
+      success: false,
+      error: `Quotation ${quotation.quotationNumber} is in terminal status '${quotation.status}' and cannot be changed. Create a new revision to proceed.`,
+    };
+  }
+  // ────────────────────────────────────────────────────────────────────────
 
   await db.$transaction(async (tx) => {
     await tx.quotation.update({
@@ -374,6 +405,9 @@ export async function generateInvoiceAction({
   notes = "",
   customItems = null,
 }) {
+  if (notes && notes.length > 5000) {
+    return { success: false, error: "Notes exceed maximum allowed length of 5000 characters." };
+  }
   const { user } = await getAuthUser();
 
   let resolvedCustomerId = customerId;

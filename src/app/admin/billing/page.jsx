@@ -30,6 +30,7 @@ export default async function BillingPage({ searchParams }) {
   const invoices = await db.invoice.findMany({
     where,
     orderBy: { createdAt: 'desc' },
+    take: 100,
     include: {
       customer: true,
       payments: true
@@ -225,3 +226,4 @@ export default async function BillingPage({ searchParams }) {
     </div>
   );
 }
+

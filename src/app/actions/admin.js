@@ -5,12 +5,19 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+import { assertPermission } from '@/lib/permissions';
+
 // Helper to check admin access
-async function checkAdmin() {
+async function checkAdmin(permission = 'settings:write') {
   const session = await getServerSession(authOptions);
-  if (!session || (session.user.role !== 'SUPER_ADMIN' && session.user.role !== 'ADMIN')) {
-    throw new Error('Unauthorized');
+  if (!session) throw new Error('Unauthorized', { cause: err });
+  
+  try {
+    assertPermission(session.user.role, permission);
+  } catch (err) {
+    throw new Error('Unauthorized', { cause: err });
   }
+  
   return session;
 }
 
@@ -172,8 +179,31 @@ export async function updateInquiryStatus(id, status) {
 }
 
 export async function deleteInquiry(id) {
-  await checkAdmin();
+  const session = await checkAdmin();
+
+  // Guard: Do not allow deletion of inquiries linked to commercial records
+  const linked = await db.inquiry.findUnique({
+    where: { id },
+    include: { quotations: { select: { id: true, quotationNumber: true } } }
+  });
+
+  if (linked?.quotations?.length > 0) {
+    const nums = linked.quotations.map(q => q.quotationNumber).join(', ');
+    return { success: false, error: `Cannot delete inquiry: linked quotation(s) exist: ${nums}. Cancel or archive the quotation first.` };
+  }
+
   await db.inquiry.delete({ where: { id } });
+
+  await db.activityLog.create({
+    data: {
+      action: 'INQUIRY_DELETED',
+      entity: 'INQUIRY',
+      entityId: id,
+      userId: session.user.id,
+      details: `Inquiry ${id} permanently deleted by ${session.user.email}`,
+    }
+  });
+
   revalidatePath('/admin/inquiries');
   return { success: true };
 }

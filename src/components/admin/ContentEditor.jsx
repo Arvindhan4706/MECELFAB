@@ -31,7 +31,7 @@ export default function ContentEditor({ initialSettings, saveContentAction }) {
         return {
           companyName: parsed.companyName || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
           phone: parsed.phone || '',
-          email: parsed.email || 'contact@mecelfab.com',
+          email: parsed.email || 'mecelfab@gmail.com',
           address: parsed.address || '',
           workingHours: parsed.workingHours || 'Mon - Sat: 9:00 AM - 6:00 PM IST',
           linkedin: parsed.linkedin || '',
@@ -44,7 +44,7 @@ export default function ContentEditor({ initialSettings, saveContentAction }) {
     return {
       companyName: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
       phone: '',
-      email: 'contact@mecelfab.com',
+      email: 'mecelfab@gmail.com',
       address: '',
       workingHours: 'Mon - Sat: 9:00 AM - 6:00 PM IST',
       linkedin: '',

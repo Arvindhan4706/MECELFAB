@@ -9,11 +9,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-
 const Hero = ({ content }) => {
   const containerRef = useRef(null);
   const bgRef = useRef(null);
 
+  // ─── GSAP intro + parallax ────────────────────────────────────
   useGSAP(() => {
     const tl = gsap.timeline({ delay: 0.05 });
 
@@ -90,8 +90,6 @@ const Hero = ({ content }) => {
       animation: gsap.to(bgRef.current, { y: '22%', ease: 'none' }),
       scrub: true,
     });
-
-    // MECELFAB outline text parallax
     ScrollTrigger.create({
       trigger: containerRef.current,
       start: 'top top',
@@ -107,8 +105,9 @@ const Hero = ({ content }) => {
       id="hero"
       ref={containerRef}
       className="relative w-full min-h-screen flex flex-col justify-between overflow-hidden bg-black"
+      aria-label="MECELFAB Factory Entrance"
     >
-      {/* ─── Background ──────────────────────────────────────── */}
+      {/* ─── Background ──────────────────────────────────────────── */}
       <div ref={bgRef} className="absolute inset-0 z-0 will-change-transform opacity-0">
         <Image
           src="/images/hero-bg.png"
@@ -124,22 +123,22 @@ const Hero = ({ content }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/25" />
       </div>
 
-      {/* ─── Decorative giant outline watermark ──────────────── */}
+      {/* ─── Decorative giant outline watermark ──────────────────── */}
       <div className="hero-outline-text absolute inset-0 z-[1] flex items-center justify-center pointer-events-none overflow-hidden select-none">
         <span
           className="text-white font-heading font-bold uppercase tracking-tighter whitespace-nowrap"
           style={{
-            fontSize: 'clamp(6rem, 22vw, 22rem)',
-            WebkitTextStroke: '1px rgba(255,255,255,0.04)',
+            fontSize: 'clamp(3.5rem, 14vw, 12rem)',
+            WebkitTextStroke: '1px rgba(255,255,255,0.03)',
             color: 'transparent',
-            lineHeight: 1,
+            lineHeight: 0.88,
           }}
         >
           MECELFAB
         </span>
       </div>
 
-      {/* ─── Top strip ───────────────────────────────────────── */}
+      {/* ─── Top strip ───────────────────────────────────────────── */}
       <div className="hero-topstrip relative z-10 flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 pt-28 opacity-0">
         <div className="flex items-center gap-3">
           <div className="w-5 h-[1px] bg-white/40" />
@@ -154,13 +153,13 @@ const Hero = ({ content }) => {
         </div>
       </div>
 
-      {/* ─── Main content ─────────────────────────────────────── */}
+      {/* ─── Main content ─────────────────────────────────────────── */}
       <div className="relative z-10 flex-1 flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-16 py-16">
 
         {/* Mobile ISO Badge */}
         <div className="md:hidden flex items-center justify-center mb-6 opacity-0 hero-tagline">
           <span className="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/60 text-[9px] font-heading tracking-[0.25em] uppercase backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.02)]">
-            ISO 9001 Certified • Made in India
+            ISO 9001 Certified · Made in India
           </span>
         </div>
 
@@ -168,7 +167,7 @@ const Hero = ({ content }) => {
         <div className="overflow-hidden mb-3 md:border-l-[3px] md:border-accent/80 md:pl-6 md:-ml-[27px] flex flex-col items-center md:items-start text-center md:text-left relative">
           <h1
             className="hero-wordmark font-heading font-bold text-white leading-none tracking-tighter uppercase w-full"
-            style={{ fontSize: 'clamp(3.5rem, 15vw, 13rem)', lineHeight: 0.9 }}
+            style={{ fontSize: 'clamp(3.5rem, 14vw, 12rem)', lineHeight: 0.88 }}
           >
             {content?.heroTitle?.split(' ')[0] || 'MECELFAB'}
           </h1>
@@ -239,7 +238,7 @@ const Hero = ({ content }) => {
 
         </div>
 
-        {/* Service pillars — suits a new company */}
+        {/* Service pillars */}
         <div className="hero-stat-container overflow-x-auto md:overflow-visible pb-6 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className="flex md:flex-wrap items-start gap-8 md:gap-14 min-w-max md:min-w-0">
             {[
@@ -261,21 +260,16 @@ const Hero = ({ content }) => {
         </div>
       </div>
 
-      {/* ─── Bottom strip ─────────────────────────────────────── */}
+      {/* ─── Bottom strip ─────────────────────────────────────────── */}
       <div className="hero-bottomstrip relative z-10 flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 pb-10 opacity-0 overflow-hidden">
         {/* Service tags */}
         <div className="flex flex-wrap md:flex-nowrap items-center gap-x-3 gap-y-2 md:gap-5 text-[10px] md:text-xs text-white/40 md:text-white/55 font-heading tracking-[0.15em] md:tracking-[0.18em] uppercase">
-          <span>Fabrication</span>
-          <span className="text-white/20">·</span>
-          <span>Erection</span>
-          <span className="text-white/20">·</span>
-          <span>Generator Services</span>
-          <span className="text-white/20">·</span>
-          <span>Hydraulic Systems</span>
-          <span className="text-white/20">·</span>
-          <span>AMC</span>
-          <span className="text-white/20">·</span>
-          <span>Rentals</span>
+          {['Fabrication', 'Erection', 'Generator Services', 'Hydraulic Systems', 'AMC', 'Rentals', 'Turbocharger'].map((s, i) => (
+            <span key={s} className="flex items-center gap-3">
+              {i > 0 && <span className="text-white/20">·</span>}
+              {s}
+            </span>
+          ))}
         </div>
       </div>
     </section>

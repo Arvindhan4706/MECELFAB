@@ -23,6 +23,6 @@ supabase_schema.sql
 .DS_Store
 *.suo
 *.ntvs*
-*.njsproj
 *.sln
 *.sw?
+test-results/

@@ -66,12 +66,21 @@ export default async function AdminDashboardPage() {
   if (!session) redirect('/admin/login');
 
   // ── CRM KPIs ────────────────────────────────────────────
-  const [newInquiries, openInquiries, quotations, wonInquiries] = await Promise.all([
+  const [newInquiries, openInquiries, quotations, wonInquiries, portalRequests] = await Promise.all([
     db.inquiry.count({ where: { status: 'NEW' } }),
     db.inquiry.count({ where: { status: { in: ['NEW', 'CONTACTED', 'REQUIREMENT_VERIFIED', 'QUOTATION', 'NEGOTIATION'] } } }),
     db.inquiry.count({ where: { status: 'QUOTATION' } }),
     db.inquiry.count({ where: { status: 'WON' } }),
+    // eslint-disable-next-line react-hooks/purity
+    db.inquiry.count({ where: { status: 'NEW', createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } } }),
   ]);
+
+  // Recent portal inquiries (last 5 new ones)
+  const recentPortalInquiries = await db.inquiry.findMany({
+    where: { status: 'NEW' },
+    orderBy: { createdAt: 'desc' },
+    take: 5,
+  });
 
   // ── Operations KPIs ─────────────────────────────────────
   const [activeWorkOrders, scheduledWorkOrders, activeAMCs] = await Promise.all([
@@ -161,7 +170,7 @@ export default async function AdminDashboardPage() {
             <KpiCard label="Follow-ups Today" value={followUpsToday} icon={Calendar}      color="#F59E0B" />
             <KpiCard label="Overdue"         value={overdueFollowUps} icon={AlertTriangle} color="#EF4444" alert />
             <KpiCard label="Quotations"      value={quotations}      icon={FileText}      color="#A78BFA" href="/admin/quotations" />
-            <KpiCard label="Won"             value={wonInquiries}    icon={CheckCircle}   color="#10B981" />
+            <KpiCard label="Portal (7d)"     value={portalRequests}  icon={CheckCircle}   color="#10B981" href="/admin/inquiries" />
           </div>
         </section>
       </ScrollReveal>
@@ -333,6 +342,44 @@ export default async function AdminDashboardPage() {
           </ScrollReveal>
         </div>
       </div>
+
+      {/* ── Recent Portal Requests ─────────────────────────── */}
+      <ScrollReveal delay={0.6}>
+        <div className="bg-admin-surface border border-admin-border rounded-md overflow-hidden">
+          <div className="px-5 py-4 border-b border-admin-border flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MessageSquare size={14} className="text-admin-accent" />
+              <h3 className="text-sm font-bold text-admin-heading">Recent New Requests</h3>
+            </div>
+            {portalRequests > 0 && (
+              <span className="text-[11px] font-bold text-white bg-admin-accent/10 border border-admin-border px-2 py-0.5 rounded-full">
+                {portalRequests} in last 7d
+              </span>
+            )}
+          </div>
+          <div className="divide-y divide-admin-border/50 p-3">
+            {recentPortalInquiries.length > 0 ? recentPortalInquiries.map(inq => (
+              <Link key={inq.id} href={`/admin/inquiries/${inq.id}`}
+                className="py-3 px-2 flex items-start justify-between gap-3 rounded-md hover:bg-admin-elevated transition-colors group cursor-pointer">
+                <div>
+                  <p className="text-xs font-semibold text-admin-heading group-hover:text-admin-accent transition-colors">
+                    {inq.name} <span className="font-normal text-admin-muted">({inq.company || 'Individual'})</span>
+                  </p>
+                  <p className="text-[11px] text-admin-muted mt-0.5">{inq.service || 'General Inquiry'} · {inq.referenceNumber}</p>
+                </div>
+                <span className="text-[10px] font-bold text-sky-400 bg-sky-500/10 border border-sky-500/20 px-2 py-0.5 rounded-full flex-shrink-0">
+                  {new Date(inq.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                </span>
+              </Link>
+            )) : (
+              <div className="py-8 text-center">
+                <CheckCircle size={24} className="text-admin-success mx-auto mb-2 opacity-60" />
+                <p className="text-xs text-admin-muted">No new requests in the inbox</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </ScrollReveal>
     </div>
   );
 }

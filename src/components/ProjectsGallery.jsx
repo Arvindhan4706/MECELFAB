@@ -3,19 +3,33 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Calendar, User } from 'lucide-react';
+import { Calendar, User, ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const IMAGE_FALLBACKS = {
+  'Erection':               '/images/project-erection.png',
+  'Fabrication':            '/images/project-fabrication.png',
+  'Hydraulic & Pneumatic':  '/images/project-maintenance.png',
+  'Generator Services':     '/images/project-electrical.png',
+  'AMC':                    '/images/project-maintenance.png',
+  'Rental':                 '/images/project-commercial.png',
+  'Turbocharger':           '/images/project-maintenance.png',
+  'default':                '/images/project-fabrication.png',
+};
+
 const ProjectsGallery = ({ projects = [] }) => {
   const [activeFilter, setActiveFilter] = useState('All');
   const containerRef = useRef(null);
   const gridRef = useRef(null);
 
-  const categories = ['All', 'Erection', 'Fabrication', 'Hydraulic & Pneumatic', 'Generator Services', 'AMC', 'Rental', 'Turbocharger'];
+  // Derive real categories from DB data
+  const rawCategories = ['All', ...Array.from(new Set(projects.map(p => p.category).filter(Boolean)))];
+  const categories = rawCategories.length > 1 ? rawCategories
+    : ['All', 'Erection', 'Fabrication', 'Hydraulic & Pneumatic', 'Generator Services', 'AMC', 'Rental', 'Turbocharger'];
 
   const filteredProjects = activeFilter === 'All'
     ? projects
@@ -81,7 +95,12 @@ const ProjectsGallery = ({ projects = [] }) => {
         {/* Projects Grid */}
         {filteredProjects.length > 0 ? (
           <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project) => (
+            {filteredProjects.map((project) => {
+              const imgSrc = project.image
+                || IMAGE_FALLBACKS[project.category]
+                || IMAGE_FALLBACKS.default;
+
+              return (
               <div
                 key={project.id}
                 className="group flex flex-col bg-white/[0.02] border border-white/5 rounded-none overflow-hidden hover:border-white/20 transition-colors duration-500"
@@ -89,7 +108,7 @@ const ProjectsGallery = ({ projects = [] }) => {
                 {/* Project Image Wrapper with Clip Path Reveal logic (handled via simple hover for now) */}
                 <div className="relative h-64 overflow-hidden bg-primary-light">
                   <Image
-                    src={project.image}
+                    src={imgSrc}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -140,7 +159,7 @@ const ProjectsGallery = ({ projects = [] }) => {
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-20 bg-white/[0.02] border border-white/5 rounded-lg text-center">

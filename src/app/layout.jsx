@@ -1,10 +1,17 @@
 import { CMSProvider } from '../context/CMSContext';
 import I18nProvider from '../context/I18nProvider';
+import AuthProvider from '../context/AuthProvider';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import SmoothScroller from '../components/SmoothScroller';
 import '../index.css';
 import { getCompanyProfile } from '@/lib/companyConfig';
+import { validateEnv } from '@/lib/validateEnv';
+
+// Validate required environment variables at startup.
+// This will throw clearly if any critical var is missing.
+validateEnv();
+
 
 export const metadata = {
   title: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
@@ -75,16 +82,18 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body suppressHydrationWarning>
-        <I18nProvider>
-          <SmoothScroller>
-            <CMSProvider>
-              <Navbar contact={company} />
-              <main className="flex-grow">{children}</main>
-              <Footer contact={company} />
-              {/* Floating CTA */}
-            </CMSProvider>
-          </SmoothScroller>
-        </I18nProvider>
+        <AuthProvider>
+          <I18nProvider>
+            <SmoothScroller>
+              <CMSProvider>
+                <Navbar contact={company} />
+                <main className="flex-grow">{children}</main>
+                <Footer contact={company} />
+                {/* Floating CTA */}
+              </CMSProvider>
+            </SmoothScroller>
+          </I18nProvider>
+        </AuthProvider>
       </body>
     </html>
   );

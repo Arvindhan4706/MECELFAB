@@ -32,11 +32,11 @@ async function main() {
   const passwordHash = await bcrypt.hash('admin', 10);
   
   await prisma.user.upsert({
-    where: { email: 'admin@mecelfab.com' },
+    where: { email: 'mecelfab@gmail.com' },
     update: {},
     create: {
       name: 'MECELFAB Administrator',
-      email: 'admin@mecelfab.com',
+      email: 'mecelfab@gmail.com',
       password: passwordHash,
       role: 'SUPER_ADMIN'
     }
@@ -67,8 +67,8 @@ async function main() {
   // Unverified/unsupplied fields remain empty strings for clean neutral states
   const defaultContact = {
     companyName: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
-    email: 'contact@mecelfab.com',
-    billingEmail: 'accounts@mecelfab.com',
+    email: 'mecelfab@gmail.com',
+    billingEmail: 'mecelfab@gmail.com',
     phone: '',
     address: '',
     workingHours: 'Mon - Sat: 9:00 AM - 6:00 PM IST',
@@ -103,13 +103,13 @@ async function main() {
   await prisma.setting.upsert({
     where: { key: 'contactEmail' },
     update: {},
-    create: { key: 'contactEmail', value: 'contact@mecelfab.com', type: 'STRING' }
+    create: { key: 'contactEmail', value: 'mecelfab@gmail.com', type: 'STRING' }
   });
 
   await prisma.setting.upsert({
     where: { key: 'billingEmail' },
     update: {},
-    create: { key: 'billingEmail', value: 'accounts@mecelfab.com', type: 'STRING' }
+    create: { key: 'billingEmail', value: 'mecelfab@gmail.com', type: 'STRING' }
   });
 
   console.log('Database initialized successfully with verified MECELFAB infrastructure.');

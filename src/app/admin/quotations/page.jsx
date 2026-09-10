@@ -34,6 +34,7 @@ export default async function QuotationsIndexPage({ searchParams }) {
   const quotations = await db.quotation.findMany({
     where,
     orderBy: { createdAt: 'desc' },
+    take: 100,
     include: {
       inquiry: { select: { referenceNumber: true } }
     }
@@ -156,3 +157,4 @@ export default async function QuotationsIndexPage({ searchParams }) {
     </div>
   );
 }
+

@@ -6,7 +6,7 @@ import { ShieldAlert } from 'lucide-react';
 export default function GlobalError({ error, reset }) {
   useEffect(() => {
     // Log error to monitoring service but don't expose stack traces
-    console.error('Application Error boundary caught an exception.');
+    console.error('Application Error boundary caught an exception:', error);
   }, [error]);
 
   return (

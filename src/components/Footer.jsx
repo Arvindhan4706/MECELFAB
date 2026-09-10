@@ -10,7 +10,7 @@ const Footer = ({ contact }) => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (pathname?.startsWith('/admin')) return null;
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/auth') || pathname?.startsWith('/portal')) return null;
 
   return (
     <footer className="bg-primary pt-24 pb-8 relative">

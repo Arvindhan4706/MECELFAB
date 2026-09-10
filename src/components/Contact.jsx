@@ -96,20 +96,12 @@ const Contact = ({ services = [], content, initialService = '' }) => {
     setIsSubmitting(true);
 
     try {
-      const formDataObj = new FormData();
-      formDataObj.append('fullName', formData.fullName);
-      formDataObj.append('companyName', formData.companyName);
-      formDataObj.append('email', formData.email);
-      formDataObj.append('phone', formData.phone);
-      formDataObj.append('projectLocation', formData.projectLocation);
-      formDataObj.append('serviceRequired', formData.serviceRequired);
-      formDataObj.append('projectDescription', formData.projectDescription);
-      formDataObj.append('expectedTimeline', formData.expectedTimeline);
-      formDataObj.append('preferredContactMethod', formData.preferredContactMethod);
-
       const response = await fetch('/api/contact', {
         method: 'POST',
-        body: formDataObj
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       });
 
       if (response.ok) {
@@ -198,7 +190,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                   <div>
                     <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">OFFICIAL EMAIL</h4>
                     <p className="text-white/80 text-sm font-light leading-relaxed">
-                      {content?.email || 'contact@mecelfab.com'}
+                      {content?.email || 'mecelfab@gmail.com'}
                     </p>
                   </div>
                 </div>
@@ -237,7 +229,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                   Physical yard, fabrication shop, and registered office visits are scheduled in coordination with project managers.
                 </p>
                 <p className="text-secondary text-xs font-light">
-                  For immediate project inquiries, please submit the request form or email <span className="text-white font-medium">{content?.email || 'contact@mecelfab.com'}</span>.
+                  For immediate project inquiries, please submit the request form or email <span className="text-white font-medium">{content?.email || 'mecelfab@gmail.com'}</span>.
                 </p>
               </div>
             )}

@@ -1,31 +1,55 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { checkRateLimit } from '@/lib/rateLimit';
+import { logger } from '@/lib/logger';
 
 export async function POST(req) {
   try {
     const ip = req.headers.get('x-forwarded-for') || req.ip || '127.0.0.1';
-    if (!checkRateLimit(ip)) {
+    // Rate limit: 5 requests per 1 minute for contact API
+    if (!checkRateLimit(ip, 5, 60 * 1000)) {
+      logger.warn('Rate limit exceeded on Contact API', { ip });
       return NextResponse.json({ success: false, message: 'Too many requests. Please try again later.' }, { status: 429 });
     }
 
-    const formData = await req.formData();
+    const data = await req.json();
     
-    const name = formData.get('fullName');
-    const email = formData.get('email');
-    const phone = formData.get('phone');
-    const company = formData.get('companyName');
-    const service = formData.get('serviceRequired');
-    const projectLocation = formData.get('projectLocation');
-    const expectedTimeline = formData.get('expectedTimeline');
-    const projectDescription = formData.get('projectDescription');
+    const name = data.fullName;
+    const email = data.email;
+    const phone = data.phone;
+    const company = data.companyName;
+    const service = data.serviceRequired;
+    const projectLocation = data.projectLocation;
+    const expectedTimeline = data.expectedTimeline;
+    const projectDescription = data.projectDescription;
     
     // Server-side validation
     if (!name || typeof name !== 'string' || !name.trim()) {
       return NextResponse.json({ success: false, message: 'Full name is required.' }, { status: 400 });
     }
+    if (name.length > 100) {
+      return NextResponse.json({ success: false, message: 'Full name is too long.' }, { status: 400 });
+    }
     if (!email || typeof email !== 'string' || !/\S+@\S+\.\S+/.test(email.trim())) {
       return NextResponse.json({ success: false, message: 'Valid email address is required.' }, { status: 400 });
+    }
+    if (email.length > 150) {
+      return NextResponse.json({ success: false, message: 'Email address is too long.' }, { status: 400 });
+    }
+    if (projectDescription && projectDescription.length > 5000) {
+      return NextResponse.json({ success: false, message: 'Project description exceeds maximum length.' }, { status: 400 });
+    }
+    if (phone && phone.length > 20) {
+      return NextResponse.json({ success: false, message: 'Phone number exceeds maximum length.' }, { status: 400 });
+    }
+    if (company && company.length > 200) {
+      return NextResponse.json({ success: false, message: 'Company name exceeds maximum length.' }, { status: 400 });
+    }
+    if (projectLocation && projectLocation.length > 200) {
+      return NextResponse.json({ success: false, message: 'Location exceeds maximum length.' }, { status: 400 });
+    }
+    if (expectedTimeline && expectedTimeline.length > 100) {
+      return NextResponse.json({ success: false, message: 'Timeline exceeds maximum length.' }, { status: 400 });
     }
 
     // We'll keep the raw projectDescription as 'message' in the DB
@@ -52,7 +76,7 @@ export async function POST(req) {
         service: service || null,
         location: projectLocation || null,
         timeline: expectedTimeline || null,
-        preferredContactMethod: formData.get('preferredContactMethod') || 'Email',
+        preferredContactMethod: data.preferredContactMethod || 'Email',
         message,
         documentUrl: null,
         status: 'NEW'
@@ -88,9 +112,24 @@ export async function POST(req) {
       });
     }
 
+    // Import email functions dynamically to avoid edge runtime issues if applicable,
+    // or just import at the top. Since it's a Node API route, we can import it.
+    const { sendAdminInquiryNotification, sendCustomerInquiryConfirmation } = await import('@/lib/email');
+    
+    try {
+      // 1. Send internal notification to admin
+      await sendAdminInquiryNotification(newInquiry);
+      
+      // 2. Send auto-reply to the customer
+      await sendCustomerInquiryConfirmation(email, name, referenceNumber);
+    } catch (emailError) {
+      logger.error('Failed to send inquiry emails', emailError, { referenceNumber });
+      // We don't fail the request if the email fails, since the DB record is already saved
+    }
+
     return NextResponse.json({ success: true, message: 'Inquiry received', referenceNumber });
   } catch (error) {
-    console.error('Contact API Error:', error);
+    logger.error('Contact API Error', error);
     return NextResponse.json({ success: false, message: 'Server error' }, { status: 500 });
   }
 }

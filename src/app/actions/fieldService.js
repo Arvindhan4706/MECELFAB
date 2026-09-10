@@ -5,6 +5,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { revalidatePath } from "next/cache";
 
+import { assertPermission } from '@/lib/permissions';
+
 // ----------------------------------------------------------------------
 // Auth & Role Helpers
 // ----------------------------------------------------------------------
@@ -17,8 +19,9 @@ async function getAuthenticatedUser() {
 }
 
 function checkStaffRole(role) {
-  const allowed = ["SUPER_ADMIN", "ADMIN", "MANAGER", "STAFF"];
-  if (!allowed.includes(role)) {
+  try {
+    assertPermission(role, 'fieldservice:read');
+  } catch (err) {
     throw new Error("Forbidden: Insufficient privileges.");
   }
 }

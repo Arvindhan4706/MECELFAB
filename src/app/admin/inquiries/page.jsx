@@ -29,6 +29,7 @@ export default async function CRMInboxPage({ searchParams }) {
   const inquiries = await db.inquiry.findMany({
     where: whereClause,
     orderBy: { createdAt: 'desc' },
+    take: 100,
     include: { assignedTo: true }
   });
 

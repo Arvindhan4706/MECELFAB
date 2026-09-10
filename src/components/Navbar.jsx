@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,6 +13,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session } = useSession();
   const navRef = useRef(null);
   const menuDrawerRef = useRef(null);
 
@@ -90,7 +92,7 @@ const Navbar = () => {
     return () => window.removeEventListener('keydown', handleEsc);
   }, [isOpen]);
 
-  if (pathname?.startsWith('/admin')) return null;
+  if (pathname?.startsWith('/admin') || pathname?.startsWith('/auth') || pathname?.startsWith('/portal')) return null;
 
   return (
     <>
@@ -124,12 +126,39 @@ const Navbar = () => {
               </Link>
             ))}
             
-            <Link
-              href="/contact"
-              className="ml-4 inline-flex items-center gap-2 px-6 py-2.5 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors"
-            >
-              Request a Service
-            </Link>
+            <div className="w-[1px] h-4 bg-white/20 mx-2" />
+
+            {!session ? (
+              <>
+                <Link
+                  href="/auth/login"
+                  className="text-xs uppercase tracking-widest text-white/60 hover:text-white transition-colors duration-300"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/contact"
+                  className="ml-4 inline-flex items-center gap-2 px-6 py-2.5 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors"
+                >
+                  Request a Service
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/contact"
+                  className="ml-2 inline-flex items-center gap-2 px-6 py-2.5 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors"
+                >
+                  Request a Service
+                </Link>
+                <Link
+                  href={session.user?.role === 'CUSTOMER' ? '/portal' : '/admin/dashboard'}
+                  className="inline-flex items-center gap-2 px-6 py-2.5 border border-white/20 text-white font-heading text-xs tracking-widest uppercase hover:bg-white/10 transition-colors duration-300"
+                >
+                  Dashboard
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -164,14 +193,33 @@ const Navbar = () => {
             </Link>
           ))}
           
-          <Link
-            href="/contact"
-            onClick={() => toggleMenu()}
-            className="mobile-nav-link mt-8 flex w-full items-center justify-between px-6 py-5 bg-white text-black font-heading font-medium text-sm tracking-widest uppercase min-h-[44px]"
-          >
-            Request a Service
-            <ArrowRight size={18} />
-          </Link>
+          {!session ? (
+            <>
+              <Link
+                href="/auth/login"
+                onClick={() => toggleMenu()}
+                className="mobile-nav-link mt-4 flex w-full items-center justify-between px-6 py-4 border border-white/15 text-white font-heading font-light text-sm tracking-widest uppercase min-h-[44px] hover:border-white/30 transition-all"
+              >
+                Login <ArrowRight size={16} />
+              </Link>
+              <Link
+                href="/contact"
+                onClick={() => toggleMenu()}
+                className="mobile-nav-link flex w-full items-center justify-between px-6 py-5 bg-white text-black font-heading font-medium text-sm tracking-widest uppercase min-h-[44px]"
+              >
+                Request a Service
+                <ArrowRight size={18} />
+              </Link>
+            </>
+          ) : (
+            <Link
+              href={session.user?.role === 'CUSTOMER' ? '/portal' : '/admin/dashboard'}
+              onClick={() => toggleMenu()}
+              className="mobile-nav-link mt-8 flex w-full items-center justify-between px-6 py-5 bg-white text-black font-heading font-medium text-sm tracking-widest uppercase min-h-[44px]"
+            >
+              Dashboard <ArrowRight size={18} />
+            </Link>
+          )}
 
           <div className="mobile-nav-link mt-4 pt-6 border-t border-white/10 flex flex-col gap-1.5 opacity-60">
             <span className="text-white text-[10px] font-heading tracking-[0.25em] uppercase">MECELFAB Industrial Solutions</span>

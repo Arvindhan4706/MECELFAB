@@ -274,7 +274,7 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem', alignItems: 'start' }} className="admin-grid">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-12 items-start">
           {/* Left Panel: Forms */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
             
@@ -282,7 +282,7 @@ const AdminDashboard = () => {
             <div className="admin-card">
               <h3 className="admin-title">Manage Statistics Counters</h3>
               <form onSubmit={handleSaveStats}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '1.5rem' }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                   <div className="form-group">
                     <label className="form-label">Projects Completed</label>
                     <input
@@ -339,7 +339,7 @@ const AdminDashboard = () => {
                 {editingId ? 'Edit Project Details' : 'Add New Portfolio Project'}
               </h3>
               <form onSubmit={handleProjectSubmit}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.25rem', marginBottom: '1.5rem' }} className="form-row-2">
+                <div className="grid grid-cols-1 md:grid-cols-[1.2fr_0.8fr] gap-5 mb-6">
                   <div className="form-group">
                     <label className="form-label">Project Title *</label>
                     <input
@@ -369,7 +369,7 @@ const AdminDashboard = () => {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1.25rem', marginBottom: '1.5rem' }} className="form-row-3">
+                <div className="grid grid-cols-1 md:grid-cols-[1fr_0.5fr_0.5fr] gap-5 mb-6">
                   <div className="form-group">
                     <label className="form-label">Client Name *</label>
                     <input
@@ -512,21 +512,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      <style>{`
-        @media (min-width: 768px) {
-          .form-row-2 {
-            grid-template-columns: 1.2fr 0.8fr !important;
-          }
-          .form-row-3 {
-            grid-template-columns: 1fr 0.5fr 0.5fr !important;
-          }
-        }
-        @media (min-width: 992px) {
-          .admin-grid {
-            grid-template-columns: 1.2fr 0.8fr !important;
-          }
-        }
-      `}</style>
+
     </div>
   );
 };

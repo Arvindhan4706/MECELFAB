@@ -2,12 +2,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 import {
   LayoutDashboard, MessageSquare, FileText, Wrench,
-  Briefcase, Activity, Package, Banknote, Settings,
-  Users, Image as ImageIcon, Shield, BookOpen,
+  Briefcase, Activity, Banknote, Settings,
+  Users, Image as ImageIcon, BookOpen, Shield,
   Home, LogOut, ChevronLeft, ChevronRight,
-  Zap, ClipboardList, Building2, Calendar
+  Zap, ClipboardList, Building2
 } from 'lucide-react';
 
 const navGroups = [
@@ -28,10 +29,8 @@ const navGroups = [
     label: 'Operations',
     items: [
       { href: '/admin/work-orders', label: 'Work Orders', icon: Wrench },
-      { href: '/admin/field-service', label: 'Field Service', icon: Calendar },
       { href: '/admin/equipment', label: 'Equipment', icon: Briefcase },
       { href: '/admin/amcs', label: 'AMCs', icon: Activity },
-      { href: '/admin/inventory', label: 'Inventory', icon: Package },
       { href: '/admin/billing', label: 'Billing & Invoices', icon: Banknote },
     ],
   },
@@ -46,12 +45,7 @@ const navGroups = [
     label: 'Content & Media',
     items: [
       { href: '/admin/services', label: 'Services Config', icon: Zap },
-      { href: '/admin/media', label: 'Media Library', icon: ImageIcon },
-      { href: '/admin/documents', label: 'Document Vault', icon: BookOpen },
-      { href: '/admin/content', label: 'Global Content', icon: BookOpen },
       { href: '/admin/testimonials', label: 'Testimonials', icon: MessageSquare },
-      { href: '/admin/industries', label: 'Industries', icon: Building2 },
-      { href: '/admin/certifications', label: 'Certifications', icon: Shield },
     ],
     adminOnly: true,
   },
@@ -59,7 +53,6 @@ const navGroups = [
     label: 'Admin',
     items: [
       { href: '/admin/users', label: 'Users', icon: Users },
-      { href: '/admin/activity', label: 'Activity Log', icon: Activity },
       { href: '/admin/settings', label: 'Settings', icon: Settings },
     ],
     adminOnly: true,
@@ -171,16 +164,14 @@ export default function AdminSidebar({ user }) {
                 </span>
               )}
             </Link>
-            <form action="/api/auth/signout" method="POST">
-              <button
-                type="submit"
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 group cursor-pointer ${collapsed ? 'justify-center' : ''}`}
-                title={collapsed ? 'Sign Out' : undefined}
-              >
-                <LogOut size={17} className="flex-shrink-0" />
-                {!collapsed && <span className="text-sm font-medium">Sign Out</span>}
-              </button>
-            </form>
+            <Link
+              href="/auth/signout"
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 group cursor-pointer ${collapsed ? 'justify-center' : ''}`}
+              title={collapsed ? 'Sign Out' : undefined}
+            >
+              <LogOut size={17} className="flex-shrink-0" />
+              {!collapsed && <span className="text-sm font-medium">Sign Out</span>}
+            </Link>
 
             {/* Collapse Toggle */}
             <button
@@ -296,16 +287,14 @@ export default function AdminSidebar({ user }) {
                     </span>
                   )}
                 </Link>
-                <form action="/api/auth/signout" method="POST">
-                  <button
-                    type="submit"
-                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 group cursor-pointer ${collapsed ? 'justify-center' : ''}`}
-                    title={collapsed ? 'Sign Out' : undefined}
-                  >
-                    <LogOut size={17} className="flex-shrink-0" />
-                    {!collapsed && <span className="text-sm font-medium">Sign Out</span>}
-                  </button>
-                </form>
+                <Link
+                  href="/auth/signout"
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-200 group cursor-pointer ${collapsed ? 'justify-center' : ''}`}
+                  title={collapsed ? 'Sign Out' : undefined}
+                >
+                  <LogOut size={17} className="flex-shrink-0" />
+                  {!collapsed && <span className="text-sm font-medium">Sign Out</span>}
+                </Link>
 
                 {/* Collapse Toggle */}
                 <button

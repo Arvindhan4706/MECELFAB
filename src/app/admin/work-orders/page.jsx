@@ -30,6 +30,7 @@ export default async function WorkOrdersPage({ searchParams }) {
   const workOrders = await db.workOrder.findMany({
     where,
     orderBy: { createdAt: 'desc' },
+    take: 100,
     include: {
       customer: true,
       assignedTo: true,
@@ -165,3 +166,4 @@ export default async function WorkOrdersPage({ searchParams }) {
     </div>
   );
 }
+

@@ -5,8 +5,8 @@ export const DEFAULT_COMPANY_PROFILE = {
   shortName: 'MECELFAB',
   tagline: 'Engineering reliable solutions for industrial growth.',
   description: 'Premier industrial mechanical services, heavy structural fabrication, equipment erection, power solutions, and equipment rental across India.',
-  email: 'contact@mecelfab.com',
-  billingEmail: 'accounts@mecelfab.com',
+  email: 'mecelfab@gmail.com',
+  billingEmail: 'mecelfab@gmail.com',
   phone: '', // Left empty until official number is supplied
   address: '', // Left empty until registered office / plant address is supplied
   workingHours: 'Mon - Sat: 9:00 AM - 6:00 PM IST',

@@ -4,6 +4,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
 import PrintButton from '@/components/admin/PrintButton';
 import { getCompanyProfile } from '@/lib/companyConfig';
+import { assertPermission } from '@/lib/permissions';
 
 export const metadata = {
   title: 'Print Quotation | MECELFAB',
@@ -13,6 +14,12 @@ export default async function (props) {
   const params = await props.params;
   const session = await getServerSession(authOptions);
   if (!session) redirect('/admin/login');
+  
+  try {
+    assertPermission(session.user.role, 'quotations:read');
+  } catch (err) {
+    redirect('/admin/dashboard');
+  }
 
   const quotation = await db.quotation.findUnique({
     where: { id: params.id },

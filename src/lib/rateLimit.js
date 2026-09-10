@@ -1,19 +1,23 @@
-export const rateLimit = new Map();
+export const rateLimitCache = new Map();
 
-// Limits: 5 requests per minute per IP
-export function checkRateLimit(ip) {
+/**
+ * Checks if a given IP has exceeded its rate limit.
+ * @param {string} ip - The IP address of the client.
+ * @param {number} maxRequests - Maximum allowed requests in the time window.
+ * @param {number} windowMs - The time window in milliseconds.
+ * @returns {boolean} - Returns true if the request is allowed, false if rate limited.
+ */
+export function checkRateLimit(ip, maxRequests = 5, windowMs = 60 * 1000) {
   const now = Date.now();
-  const windowMs = 60 * 1000;
-  const maxRequests = 5;
 
-  if (!rateLimit.has(ip)) {
-    rateLimit.set(ip, { count: 1, resetTime: now + windowMs });
+  if (!rateLimitCache.has(ip)) {
+    rateLimitCache.set(ip, { count: 1, resetTime: now + windowMs });
     return true;
   }
 
-  const record = rateLimit.get(ip);
+  const record = rateLimitCache.get(ip);
   if (now > record.resetTime) {
-    rateLimit.set(ip, { count: 1, resetTime: now + windowMs });
+    rateLimitCache.set(ip, { count: 1, resetTime: now + windowMs });
     return true;
   }
 

@@ -201,8 +201,8 @@ export default function AdminHeader({ session, initialNotifications }) {
             onClick={() => { setShowUser(!showUser); setShowNotifs(false); }}
             className={`flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl transition-all duration-200 cursor-pointer border ${showUser ? 'bg-admin-surface border-admin-border' : 'bg-transparent border-transparent hover:bg-admin-surface hover:border-admin-border'} group`}
           >
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-admin-accent to-sky-400 p-[1px] flex-shrink-0">
-              <div className="w-full h-full rounded-[7px] bg-white flex items-center justify-center text-black font-bold text-xs">
+            <div className="w-8 h-8 rounded-lg bg-zinc-800 border border-white/10 flex-shrink-0 flex items-center justify-center overflow-hidden">
+              <div className="w-full h-full bg-zinc-900 flex items-center justify-center text-white font-bold text-xs">
                 {initials}
               </div>
             </div>
@@ -257,15 +257,15 @@ export default function AdminHeader({ session, initialNotifications }) {
                 </div>
                 
                 <div className="p-2 border-t border-admin-border/50 bg-admin-surface/10">
-                  <button
-                    onClick={() => signOut({ callbackUrl: '/admin/login' })}
+                  <Link
+                    href="/auth/signout"
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all cursor-pointer group"
                   >
                     <div className="flex items-center gap-3">
                       <LogOut size={15} className="group-hover:scale-110 transition-transform" />
                       Secure Sign Out
                     </div>
-                  </button>
+                  </Link>
                 </div>
               </motion.div>
             )}

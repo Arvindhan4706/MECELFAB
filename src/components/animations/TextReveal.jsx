@@ -50,10 +50,13 @@ const TextReveal = ({ children, className = "", as: Component = "h2", delay = 0,
           return <span key={index} className="inline-block w-[0.25em]">&nbsp;</span>;
         }
         return (
-          <span key={index} className={`inline-block overflow-hidden align-bottom pb-2 -mb-2 ${splitType === 'word' ? 'mr-[0.25em]' : ''}`}>
-            <span className="reveal-segment inline-block transform translate-y-[120%] opacity-0 origin-bottom-left">
-              {segment}
+          <span key={index} className="inline-block whitespace-pre">
+            <span className="inline-block overflow-hidden align-bottom pb-2 -mb-2">
+              <span className="reveal-segment inline-block transform translate-y-[120%] opacity-0 origin-bottom-left">
+                {segment}
+              </span>
             </span>
+            {splitType === 'word' && index !== segments.length - 1 && ' '}
           </span>
         );
       })}
