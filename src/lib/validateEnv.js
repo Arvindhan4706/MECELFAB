@@ -1,13 +1,16 @@
 /**
  * Environment Variable Validator
  * 
- * Validates all required env vars at startup.
- * The app will throw clearly at boot if a critical variable is missing.
- * Values are NEVER logged — only key names.
+ * Validates environment variables at startup.
+ * Logs warnings for missing optional variables (Google Auth, SMTP) rather than
+ * crashing during static build page collection (e.g. Next.js / Vercel build).
  */
 
-const REQUIRED_VARS = [
+const CRITICAL_VARS = [
   'DATABASE_URL',
+];
+
+const OPTIONAL_VARS = [
   'NEXTAUTH_SECRET',
   'NEXTAUTH_URL',
   'GOOGLE_CLIENT_ID',
@@ -19,11 +22,25 @@ const REQUIRED_VARS = [
 ];
 
 export function validateEnv() {
-  const missing = REQUIRED_VARS.filter((key) => !process.env[key]);
-  
-  if (missing.length > 0) {
-    throw new Error(
-      `[MECELFAB] STARTUP FAILED: Missing required environment variables:\n${missing.map((k) => `  - ${k}`).join('\n')}\n\nPlease set these in your .env file before starting the application.`
+  // Never crash during Next.js static build or prerendering
+  if (
+    process.env.NEXT_PHASE === 'phase-production-build' ||
+    process.env.npm_lifecycle_event === 'build'
+  ) {
+    return;
+  }
+
+  const missingCritical = CRITICAL_VARS.filter((key) => !process.env[key]);
+  if (missingCritical.length > 0) {
+    console.warn(
+      `[MECELFAB] WARNING: Missing critical environment variables:\n${missingCritical.map((k) => `  - ${k}`).join('\n')}`
+    );
+  }
+
+  const missingOptional = OPTIONAL_VARS.filter((key) => !process.env[key]);
+  if (missingOptional.length > 0) {
+    console.warn(
+      `[MECELFAB] NOTICE: Some optional integrations are not configured in environment variables:\n${missingOptional.map((k) => `  - ${k}`).join('\n')}`
     );
   }
 }

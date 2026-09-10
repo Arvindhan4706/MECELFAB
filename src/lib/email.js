@@ -1,14 +1,26 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: process.env.SMTP_SECURE === 'true', 
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+const hasSmtp = Boolean(process.env.SMTP_USER && process.env.SMTP_PASS);
+
+const transporter = hasSmtp
+  ? nodemailer.createTransport({
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true', 
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      },
+    })
+  : null;
+
+const sendMailSafe = async (options) => {
+  if (!transporter) {
+    console.warn('[MECELFAB] SMTP not configured. Email not sent:', options.subject);
+    return;
+  }
+  return transporter.sendMail(options);
+};
 
 export const sendVerificationEmail = async (email, token) => {
   const confirmLink = `${process.env.NEXTAUTH_URL}/auth/verify-email?token=${token}`;
@@ -27,7 +39,7 @@ export const sendVerificationEmail = async (email, token) => {
     `,
   };
 
-  await transporter.sendMail(mailOptions);
+  await sendMailSafe(mailOptions);
 };
 
 export const sendPasswordResetEmail = async (email, token) => {
@@ -47,7 +59,7 @@ export const sendPasswordResetEmail = async (email, token) => {
     `,
   };
 
-  await transporter.sendMail(mailOptions);
+  await sendMailSafe(mailOptions);
 };
 
 export const sendAdminInquiryNotification = async (inquiryData) => {
@@ -100,7 +112,7 @@ export const sendAdminInquiryNotification = async (inquiryData) => {
     `,
   };
 
-  await transporter.sendMail(mailOptions);
+  await sendMailSafe(mailOptions);
 };
 
 export const sendCustomerInquiryConfirmation = async (customerEmail, customerName, referenceNumber) => {
@@ -121,5 +133,5 @@ export const sendCustomerInquiryConfirmation = async (customerEmail, customerNam
     `,
   };
 
-  await transporter.sendMail(mailOptions);
+  await sendMailSafe(mailOptions);
 };
