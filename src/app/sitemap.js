@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 
 export default async function sitemap() {
-  const baseUrl = process.env.NEXTAUTH_URL || 'https://mecelfab.com';
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://mecelfabpvtltd.com';
 
   const staticRoutes = [
     '',

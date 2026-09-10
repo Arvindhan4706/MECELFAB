@@ -7,6 +7,6 @@ export default function robots() {
         disallow: ['/admin/', '/portal/', '/api/'],
       },
     ],
-    sitemap: 'https://mecelfab.com/sitemap.xml',
+    sitemap: 'https://mecelfabpvtltd.com/sitemap.xml',
   };
 }

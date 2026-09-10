@@ -20,7 +20,7 @@ export const DEFAULT_COMPANY_PROFILE = {
   jurisdiction: 'Competent Courts in India',
   linkedin: '',
   twitter: '',
-  websiteUrl: 'https://mecelfab.com',
+  websiteUrl: 'https://mecelfabpvtltd.com',
   country: 'IN'
 };
 
