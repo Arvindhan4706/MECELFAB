@@ -92,7 +92,7 @@ const Testimonials = ({ testimonials = [] }) => {
               exit="exit"
               className="glass-panel"
               style={{
-                padding: '3.5rem 2.5rem',
+                padding: 'clamp(1.5rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2.5rem)',
                 textAlign: 'center',
                 background: 'rgba(21, 48, 91, 0.1)',
                 border: '1px solid rgba(255, 255, 255, 0.04)',
@@ -140,6 +140,7 @@ const Testimonials = ({ testimonials = [] }) => {
             }}
           >
             <button
+              aria-label="Previous testimonial"
               onClick={() => paginate(-1)}
               style={{
                 width: '45px',
@@ -166,6 +167,7 @@ const Testimonials = ({ testimonials = [] }) => {
               <ChevronLeft size={20} />
             </button>
             <button
+              aria-label="Next testimonial"
               onClick={() => paginate(1)}
               style={{
                 width: '45px',

@@ -3,7 +3,10 @@ import { useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ServiceFinder = ({ services = [] }) => {
   const containerRef = useRef(null);
@@ -46,8 +49,8 @@ const ServiceFinder = ({ services = [] }) => {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="py-24 bg-black/50 border-y border-white/5 relative overflow-hidden">
-      <div className="container mx-auto px-6 max-w-5xl relative z-10">
+    <section ref={containerRef} className="section-padding bg-black/50 border-y border-white/5 relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-5xl relative z-10">
         <div className="text-center mb-12">
           <h2 className="sf-heading text-3xl md:text-5xl font-heading font-light text-white tracking-tight">
             WHAT DO YOU NEED HELP WITH?

@@ -55,7 +55,7 @@ const TrustSection = () => {
   }, { scope: ref });
 
   return (
-    <section ref={ref} className="relative bg-black border-t border-white/5 py-20 overflow-hidden">
+    <section ref={ref} className="relative bg-black border-t border-white/5 section-padding overflow-hidden">
       {/* subtle grid texture */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.015]"
@@ -65,7 +65,7 @@ const TrustSection = () => {
         }}
       />
 
-      <div className="relative container mx-auto px-8 max-w-7xl">
+      <div className="relative container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
         {/* top rule */}
         <div className="trust-line w-full h-[1px] bg-gradient-to-r from-white/20 via-white/10 to-transparent mb-14" />
 

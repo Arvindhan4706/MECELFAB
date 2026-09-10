@@ -55,8 +55,8 @@ export default {
         'sidebar-collapsed': '72px',
       },
       fontFamily: {
-        heading: ['Space Grotesk', 'Inter', 'sans-serif'],
-        body: ['Inter', 'sans-serif'],
+        heading: ['var(--font-space-grotesk)', 'Space Grotesk', 'Inter', 'sans-serif'],
+        body: ['var(--font-inter)', 'Inter', 'sans-serif'],
       },
       transitionTimingFunction: {
         'premium': 'cubic-bezier(0.16, 1, 0.3, 1)',

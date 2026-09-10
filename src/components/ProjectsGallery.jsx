@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Calendar, User, ArrowRight } from 'lucide-react';
+import { Calendar, User } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -81,6 +81,7 @@ const ProjectsGallery = ({ projects = [] }) => {
             <button
               key={cat}
               onClick={() => setActiveFilter(cat)}
+              aria-pressed={activeFilter === cat}
               className={`flex-shrink-0 px-6 py-2.5 min-h-[44px] rounded-full text-sm font-heading tracking-widest uppercase transition-all duration-300 ${
                 activeFilter === cat 
                   ? 'bg-white text-primary border border-white' 
@@ -101,9 +102,10 @@ const ProjectsGallery = ({ projects = [] }) => {
                 || IMAGE_FALLBACKS.default;
 
               return (
-              <div
+              <Link
+                href={`/projects/${project.slug}`}
                 key={project.id}
-                className="group flex flex-col bg-white/[0.02] border border-white/5 rounded-none overflow-hidden hover:border-white/20 transition-colors duration-500"
+                className="group flex flex-col bg-white/[0.02] border border-white/5 rounded-lg overflow-hidden hover:border-white/20 transition-colors duration-500"
               >
                 {/* Project Image Wrapper with Clip Path Reveal logic (handled via simple hover for now) */}
                 <div className="relative h-64 overflow-hidden bg-primary-light">
@@ -111,19 +113,24 @@ const ProjectsGallery = ({ projects = [] }) => {
                     src={imgSrc}
                     alt={project.title}
                     fill
+                    loading="lazy"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover object-center transform transition-transform duration-700 group-hover:scale-110"
                   />
                   
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-primary/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 backdrop-blur-sm">
-                    <Link 
-                      href={`/projects/${project.slug}`} 
-                      className="px-8 py-3 bg-white text-primary font-heading uppercase tracking-widest text-sm rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105"
+                  {/* Hover Overlay — hidden on mobile for touch access */}
+                  <div className="absolute inset-0 bg-primary/80 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 backdrop-blur-sm">
+                    <span 
+                      className="px-8 py-3 bg-white text-primary font-heading uppercase tracking-widest text-sm rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:scale-105 pointer-events-none"
                     >
                       View Project
-                    </Link>
+                    </span>
                   </div>
+                  
+                  {/* Mobile-visible CTA */}
+                  <span className="absolute bottom-4 right-4 md:hidden z-10 px-4 py-2 bg-white/10 border border-white/20 text-white text-[10px] font-heading tracking-widest uppercase backdrop-blur-sm">
+                    View →
+                  </span>
                   
                   {/* Category Badge */}
                   <span className="absolute top-4 left-4 bg-primary/90 border border-white/10 text-white px-3 py-1 text-xs font-heading tracking-widest uppercase z-20 backdrop-blur-md">
@@ -158,7 +165,7 @@ const ProjectsGallery = ({ projects = [] }) => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             )})}
           </div>
         ) : (

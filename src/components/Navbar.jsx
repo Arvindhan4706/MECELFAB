@@ -23,6 +23,7 @@ const Navbar = () => {
     { name: 'Services', id: 'services' },
     { name: 'Industries', id: 'industries' },
     { name: 'Projects', id: 'projects' },
+    { name: 'Resources', id: 'resources' },
     { name: 'Contact', id: 'contact' },
   ];
 
@@ -165,7 +166,9 @@ const Navbar = () => {
           <button
             onClick={toggleMenu}
             className="lg:hidden relative z-[101] text-white hover:text-white/70 transition-colors p-3 -mr-3 flex items-center justify-center min-h-[44px] min-w-[44px]"
-            aria-label="Toggle Navigation"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
           >
             {isOpen ? <X size={28} strokeWidth={1.5} /> : <Menu size={28} strokeWidth={1.5} />}
           </button>
@@ -175,7 +178,8 @@ const Navbar = () => {
       {/* Full-screen Mobile Menu Drawer */}
       <div
         ref={menuDrawerRef}
-        className="fixed inset-0 bg-black z-[90] flex flex-col justify-center px-6 sm:px-8 pb-10 opacity-0 pointer-events-none lg:hidden"
+        id="mobile-menu"
+        className="fixed inset-0 bg-black z-[90] flex flex-col justify-center px-6 sm:px-8 pb-10 lg:hidden"
         style={{ display: isOpen ? 'flex' : 'none', pointerEvents: isOpen ? 'auto' : 'none' }}
       >
         <div className="flex flex-col gap-6 w-full max-w-sm mx-auto">

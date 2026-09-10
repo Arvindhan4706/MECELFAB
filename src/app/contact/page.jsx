@@ -2,7 +2,12 @@ import Contact from '../../components/Contact';
 import { db } from '@/lib/db';
 import { getCompanyProfile } from '@/lib/companyConfig';
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 60;
+
+export const metadata = {
+  title: 'Contact Us | MECELFAB Industrial Solutions',
+  description: 'Request a quotation or technical consultation from MECELFAB Industrial Solutions. Phone, email, WhatsApp, and online RFQ form available.',
+};
 
 export default async function ContactPage({ searchParams }) {
   const resolvedParams = await searchParams;

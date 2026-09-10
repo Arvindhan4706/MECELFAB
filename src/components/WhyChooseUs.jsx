@@ -60,7 +60,7 @@ const WhyChooseUs = () => {
     <section
       ref={containerRef}
       id="why-choose-us"
-      className="relative py-28 lg:py-36 bg-[#060606] border-t border-white/5 overflow-hidden"
+      className="relative section-padding bg-[#060606] border-t border-white/5 overflow-hidden"
     >
       {/* Background diagonal rule */}
       <div className="absolute inset-0 pointer-events-none">
@@ -70,7 +70,7 @@ const WhyChooseUs = () => {
         />
       </div>
 
-      <div className="container relative z-10 mx-auto px-8 max-w-7xl">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-20 lg:gap-28 items-start">
 
           {/* Left — headline + CTA */}

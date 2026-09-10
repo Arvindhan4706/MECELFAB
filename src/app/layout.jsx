@@ -7,9 +7,11 @@ import SmoothScroller from '../components/SmoothScroller';
 import '../index.css';
 import { getCompanyProfile } from '@/lib/companyConfig';
 import { validateEnv } from '@/lib/validateEnv';
+import { Inter, Space_Grotesk } from 'next/font/google';
 
-// Validate required environment variables at startup.
-// This will throw clearly if any critical var is missing.
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk', display: 'swap' });
+
 validateEnv();
 
 
@@ -74,7 +76,7 @@ export default async function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -82,12 +84,18 @@ export default async function RootLayout({ children }) {
         />
       </head>
       <body suppressHydrationWarning>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded focus:font-heading focus:text-sm"
+        >
+          Skip to main content
+        </a>
         <AuthProvider>
           <I18nProvider>
             <SmoothScroller>
               <CMSProvider>
                 <Navbar contact={company} />
-                <main className="flex-grow">{children}</main>
+                <main id="main-content" className="flex-grow">{children}</main>
                 <Footer contact={company} />
                 {/* Floating CTA */}
               </CMSProvider>

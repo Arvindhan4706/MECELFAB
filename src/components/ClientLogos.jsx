@@ -1,4 +1,3 @@
-"use client";
 import Image from 'next/image';
 
 const ClientLogos = ({ clients = [] }) => {
@@ -6,7 +5,7 @@ const ClientLogos = ({ clients = [] }) => {
 
   return (
     <section className="py-12 bg-white/[0.02] border-t border-white/5 overflow-hidden">
-      <div className="container mx-auto px-8 max-w-7xl text-center">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl text-center">
         <h4 className="text-secondary text-xs font-heading tracking-widest uppercase mb-8">
           Trusted by Industry Leaders
         </h4>
@@ -21,6 +20,7 @@ const ClientLogos = ({ clients = [] }) => {
                   src={logoSrc}
                   alt={client.name}
                   fill
+                  loading="lazy"
                   className="object-contain"
                   sizes="(max-width: 768px) 50vw, 33vw"
                 />

@@ -4,7 +4,7 @@ export default function robots() {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/admin/', '/portal/', '/api/'],
+        disallow: ['/admin/', '/portal/', '/auth/', '/api/'],
       },
     ],
     sitemap: 'https://mecelfabpvtltd.com/sitemap.xml',

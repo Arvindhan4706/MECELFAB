@@ -27,6 +27,31 @@ const Footer = ({ contact }) => {
             <p className="text-sm text-secondary font-light leading-relaxed mb-6">
               Engineering reliable solutions for industrial growth. Serving fabrication, erection, power distribution, and heavy industrial utility setups across India.
             </p>
+
+            {/* Contact CTAs */}
+            <div className="flex flex-col gap-2 mb-6">
+              {contact?.phone && (
+                <a href={`tel:${contact.phone.replace(/[^0-9+]/g, '')}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300">
+                  {contact.phone}
+                </a>
+              )}
+              {contact?.email && (
+                <a href={`mailto:${contact.email}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300">
+                  {contact.email}
+                </a>
+              )}
+              {contact?.phone && (
+                <a
+                  href={`https://wa.me/${contact.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-secondary text-xs font-light hover:text-white transition-colors duration-300"
+                >
+                  WhatsApp
+                </a>
+              )}
+            </div>
+
             {(contact?.linkedin || contact?.twitter) ? (
               <div className="flex gap-4">
                 {contact?.linkedin && (
@@ -105,23 +130,23 @@ const Footer = ({ contact }) => {
             </h4>
             <ul className="flex flex-col gap-3 text-sm font-light">
               <li>
-                <Link href="/services" className="text-secondary hover:text-white transition-colors duration-300">
+                <Link href="/services/industrial-fabrication" className="text-secondary hover:text-white transition-colors duration-300">
                   Industrial Fabrication
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-secondary hover:text-white transition-colors duration-300">
-                  Equipment Erection
+                <Link href="/services/industrial-erection" className="text-secondary hover:text-white transition-colors duration-300">
+                  Industrial Erection
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-secondary hover:text-white transition-colors duration-300">
-                  Electrical Systems
-                </Link>
-              </li>
-              <li>
-                <Link href="/services" className="text-secondary hover:text-white transition-colors duration-300">
+                <Link href="/services/hydraulic-pneumatic-overhauling" className="text-secondary hover:text-white transition-colors duration-300">
                   Hydraulic Systems
+                </Link>
+              </li>
+              <li>
+                <Link href="/services/generator-rental" className="text-secondary hover:text-white transition-colors duration-300">
+                  Generator Rental
                 </Link>
               </li>
             </ul>
@@ -147,7 +172,7 @@ const Footer = ({ contact }) => {
 
         {/* Bottom Bar */}
         <div className="border-t border-white/5 pt-8 flex flex-col items-center justify-center gap-6 text-xs text-secondary font-light text-center break-words w-full relative">
-          <div className="leading-relaxed">
+          <div className="leading-relaxed break-words">
             &copy; {new Date().getFullYear()} {contact?.legalName || contact?.companyName || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED'}. All rights reserved.
           </div>
           <button

@@ -4,6 +4,11 @@ import { db } from '@/lib/db';
 
 export const revalidate = 60;
 
+export const metadata = {
+  title: 'Our Services | MECELFAB Industrial Solutions',
+  description: 'Explore MECELFAB industrial services — fabrication, erection, hydraulic overhauling, generator spare parts, AMC, generator rental, compressor rental, and turbocharger services.',
+};
+
 export default async function ServicesPage() {
   const services = await db.service.findMany({
     where: { status: 'ACTIVE' },

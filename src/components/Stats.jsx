@@ -68,9 +68,9 @@ const Stats = () => {
   return (
     <section
       id="statistics"
-      className="py-24 lg:py-32 bg-primary border-y border-white/5"
+      className="section-padding bg-primary border-y border-white/5"
     >
-      <div className="container mx-auto px-8 max-w-7xl">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 items-center">
           {statsItems.map((item) => (
             <CounterItem

@@ -109,6 +109,8 @@ const Industries = ({ industries: propIndustries }) => {
                   src={ind.image}
                   alt={`${ind.title} industry`}
                   fill
+                  loading="lazy"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover object-center transform transition-transform duration-700 group-hover:scale-105"
                 />
                 {/* Mobile cinematic gradient */}
@@ -139,7 +141,7 @@ const Industries = ({ industries: propIndustries }) => {
                 </div>
 
                 {/* Explore Button */}
-                <a href="/projects" className="self-start text-secondary-dark font-heading text-sm tracking-widest uppercase hover:text-white transition-colors duration-500">
+                <a href="/projects" className="self-start text-accent font-heading text-sm tracking-widest uppercase hover:text-white transition-colors duration-500">
                   Explore {ind.title.toLowerCase()} Projects
                 </a>
               </div>

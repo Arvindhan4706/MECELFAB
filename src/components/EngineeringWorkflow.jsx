@@ -1,7 +1,10 @@
 'use client';
 import { useRef } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const workflowSteps = [
   { id: '01', title: 'REQUIREMENT', description: 'Understand the service/equipment requirement and initial constraints.' },
@@ -29,7 +32,7 @@ const EngineeringWorkflow = () => {
   }, { scope: containerRef });
 
   return (
-    <section ref={containerRef} className="py-24 bg-black relative">
+    <section ref={containerRef} className="section-padding bg-black relative">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="mb-16">
           <span className="text-accent font-heading tracking-widest text-sm uppercase mb-4 block">How We Work</span>

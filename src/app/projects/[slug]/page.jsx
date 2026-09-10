@@ -49,14 +49,14 @@ export default async function ProjectPage({ params }) {
   const industry = industryMap[project.category] || 'Industrial';
 
   return (
-    <div style={{ paddingTop: '100px', paddingBottom: '100px', backgroundColor: 'var(--bg-dark)' }}>
+    <div style={{ paddingTop: 'clamp(80px, 15vw, 100px)', paddingBottom: 'clamp(60px, 10vw, 100px)', backgroundColor: 'var(--bg-dark)' }}>
       <div className="container">
         <Link href="/#projects" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent)', marginBottom: '2rem', textDecoration: 'none', fontWeight: 600 }}>
           <ArrowLeft size={20} />
           Back to Portfolio
         </Link>
 
-        <div className="glass-panel" style={{ padding: '3rem', background: 'rgba(15, 23, 42, 0.4)', borderRadius: 'var(--radius-lg)' }}>
+        <div className="glass-panel" style={{ padding: 'clamp(1rem, 4vw, 3rem)', background: 'rgba(15, 23, 42, 0.4)', borderRadius: 'var(--radius-lg)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '3rem' }} className="project-grid">
             <div>
               <span className="section-badge">{project.category}</span>
@@ -104,8 +104,8 @@ export default async function ProjectPage({ params }) {
               </div>
             </div>
 
-            <div style={{ position: 'relative', width: '100%', height: '400px', borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: '2rem' }}>
-              <Image src={project.image} alt={project.title} fill style={{ objectFit: 'cover' }} />
+            <div style={{ position: 'relative', width: '100%', height: 'clamp(250px, 50vw, 400px)', borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: '2rem' }}>
+              <Image src={project.image} alt={project.title} fill sizes="(max-width: 768px) 100vw, 768px" style={{ objectFit: 'cover' }} />
             </div>
           </div>
         </div>

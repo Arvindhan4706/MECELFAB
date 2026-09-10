@@ -26,17 +26,6 @@ const getServiceIcon = (slug) => {
 const Services = ({ services = [] }) => {
   const sectionRef = useRef(null);
   const [hoveredId, setHoveredId] = useState(null);
-  const [expandedIds, setExpandedIds] = useState(new Set());
-
-  const toggleExpand = (id, e) => {
-    e.preventDefault();
-    setExpandedIds(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) newSet.delete(id);
-      else newSet.add(id);
-      return newSet;
-    });
-  };
 
   useGSAP(() => {
     gsap.fromTo('.svc-eyebrow',
@@ -73,7 +62,7 @@ const Services = ({ services = [] }) => {
               <div className="w-5 h-[1px] bg-white/30" />
               <span className="text-white/40 text-[10px] font-heading tracking-[0.3em] uppercase">Our Capabilities</span>
             </div>
-            <h2 className="svc-heading text-4xl md:text-5xl lg:text-6xl font-heading font-light text-white tracking-tight leading-tight opacity-0">
+            <h2 className="svc-heading text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white tracking-tight leading-tight opacity-0">
               Eight Disciplines.<br />
               <span className="text-white/35 italic font-serif">One Partner.</span>
             </h2>
@@ -93,15 +82,17 @@ const Services = ({ services = [] }) => {
             const Icon = getServiceIcon(service.slug);
             const displayId = String(index + 1).padStart(2, '0');
             const isHovered = hoveredId === service.id;
-            const isExpanded = expandedIds.has(service.id);
             const capabilities = service.capabilities ? JSON.parse(service.capabilities) : [];
             
             return (
               <div
                 key={service.id}
-                className="svc-row group border border-white/5 lg:border-0 lg:border-t lg:border-white/5 lg:last:border-b opacity-0 bg-white/[0.02] lg:bg-transparent rounded-lg lg:rounded-none overflow-hidden relative"
+                className="svc-row group border border-white/5 lg:border-0 lg:border-t lg:border-white/5 lg:last:border-b opacity-0 bg-white/[0.02] lg:bg-transparent rounded-lg overflow-hidden relative"
                 onMouseEnter={() => setHoveredId(service.id)}
                 onMouseLeave={() => setHoveredId(null)}
+                onFocus={() => setHoveredId(service.id)}
+                onBlur={() => setHoveredId(null)}
+                tabIndex={-1}
               >
                 {/* Mobile Ghost Number */}
                 <div className="absolute top-0 right-4 text-[80px] font-heading font-bold text-white/[0.02] select-none pointer-events-none lg:hidden leading-none pt-4">
@@ -137,8 +128,8 @@ const Services = ({ services = [] }) => {
                       </p>
                     </div>
 
-                    {/* Tags — toggle on mobile, hover on desktop */}
-                    <div className={`flex flex-col gap-3 w-full lg:w-auto lg:max-w-xs transition-all duration-500 ${isExpanded ? 'h-auto mt-2 lg:mt-0 opacity-100' : 'h-0 overflow-hidden lg:h-auto lg:overflow-visible lg:opacity-0 group-hover:opacity-100'} ${isHovered ? 'lg:opacity-100' : ''}`}>
+                    {/* Tags — visible on mobile, hover-reveal on desktop */}
+                    <div className={`flex flex-col gap-3 w-full lg:w-auto lg:max-w-xs transition-all duration-500 lg:h-auto lg:overflow-visible lg:opacity-0 group-hover:opacity-100 ${isHovered ? 'lg:opacity-100' : ''}`}>
                       <div className="flex flex-wrap gap-2 items-start">
                         {capabilities.map((cap) => (
                           <span key={cap} className="px-2.5 py-1 text-[10px] font-heading tracking-widest uppercase border border-white/10 text-white/40 bg-black/20 lg:bg-transparent">
@@ -152,15 +143,15 @@ const Services = ({ services = [] }) => {
                   {/* Arrow CTA & Details Toggle */}
                   <div className="flex-shrink-0 flex items-center justify-between w-full lg:w-auto mt-4 lg:mt-0 pt-4 border-t border-white/5 lg:border-0 lg:pt-0 lg:pl-8">
                     
-                    <button 
-                      onClick={(e) => toggleExpand(service.id, e)}
-                      className="lg:hidden text-[10px] font-heading tracking-[0.2em] uppercase text-accent/80 hover:text-accent flex items-center gap-2 px-2 py-2 -ml-2"
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="text-[10px] font-heading tracking-[0.2em] uppercase text-accent/80 hover:text-accent flex items-center gap-2 px-2 py-2 -ml-2"
                     >
-                      {isExpanded ? 'Hide Details' : 'View Details'}
-                    </button>
+                      View Details
+                    </Link>
 
                     <Link
-                      href="/contact"
+                      href={`/services/${service.slug}`}
                       className={`flex items-center justify-center w-10 h-10 border border-white/10 group-hover:border-white/40 group-hover:bg-white group-hover:text-black text-white/30 transition-all duration-500 rounded-sm ml-auto lg:ml-0`}
                     >
                       <ArrowRight size={15} />

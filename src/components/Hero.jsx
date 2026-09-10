@@ -82,21 +82,23 @@ const Hero = ({ content }) => {
 
 
 
-    // Parallax on scroll
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: 'top top',
-      end: 'bottom top',
-      animation: gsap.to(bgRef.current, { y: '22%', ease: 'none' }),
-      scrub: true,
-    });
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: 'top top',
-      end: 'bottom top',
-      animation: gsap.to('.hero-outline-text', { y: '-8%', ease: 'none' }),
-      scrub: 1.5,
-    });
+    // Parallax on scroll — disabled on mobile (< 768px)
+    if (window.matchMedia('(min-width: 768px)').matches) {
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        animation: gsap.to(bgRef.current, { y: '22%', ease: 'none' }),
+        scrub: true,
+      });
+      ScrollTrigger.create({
+        trigger: containerRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        animation: gsap.to('.hero-outline-text', { y: '-8%', ease: 'none' }),
+        scrub: 1.5,
+      });
+    }
 
   }, { scope: containerRef });
 
@@ -228,7 +230,7 @@ const Hero = ({ content }) => {
               className="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               style={{ boxShadow: '0 0 0 1px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.08)' }}
             />
-            <span className="relative z-10 flex w-full justify-center items-center gap-4 px-8 py-4 border border-white/20 text-white/60 font-heading text-xs md:text-sm tracking-[0.18em] uppercase group-hover:border-white/40 group-hover:text-white transition-all duration-400">
+            <span className="relative z-10 flex w-full justify-center items-center gap-4 px-8 py-4 border border-white/20 text-white/60 font-heading text-xs md:text-sm tracking-[0.18em] uppercase group-hover:border-white/40 group-hover:text-white transition-all duration-300">
               <span>{content?.secondaryCta || 'Our Services'}</span>
               <span className="relative flex items-center justify-center w-6 h-6 border border-white/20 group-hover:border-white/50 transition-colors duration-300 rounded-sm">
                 <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300" />
@@ -261,15 +263,37 @@ const Hero = ({ content }) => {
       </div>
 
       {/* ─── Bottom strip ─────────────────────────────────────────── */}
-      <div className="hero-bottomstrip relative z-10 flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 pb-10 opacity-0 overflow-hidden">
+      <div className="hero-bottomstrip relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 pb-10 opacity-0 overflow-hidden gap-4 sm:gap-0">
         {/* Service tags */}
         <div className="flex flex-wrap md:flex-nowrap items-center gap-x-3 gap-y-2 md:gap-5 text-[10px] md:text-xs text-white/40 md:text-white/55 font-heading tracking-[0.15em] md:tracking-[0.18em] uppercase">
-          {['Fabrication', 'Erection', 'Generator Services', 'Hydraulic Systems', 'AMC', 'Rentals', 'Turbocharger'].map((s, i) => (
-            <span key={s} className="flex items-center gap-3">
-              {i > 0 && <span className="text-white/20">·</span>}
+          {['Fabrication', 'Erection', 'Generator Services', 'Hydraulic Systems', 'AMC', 'Rentals', 'Turbocharger'].map((s) => (
+            <span key={s} className="flex items-center">
               {s}
             </span>
           ))}
+        </div>
+        {/* Contact quick links */}
+        <div className="flex items-center gap-4 text-[10px] md:text-xs font-heading tracking-[0.15em] uppercase shrink-0">
+          {content?.phone && (
+            <a href={`tel:${content.phone.replace(/[^0-9+]/g, '')}`} className="text-white/40 hover:text-white transition-colors duration-300">
+              Call Us
+            </a>
+          )}
+          {content?.email && (
+            <a href={`mailto:${content.email}`} className="text-white/40 hover:text-white transition-colors duration-300">
+              Email
+            </a>
+          )}
+          {content?.phone && (
+            <a
+              href={`https://wa.me/${content.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
+              target="_blank"
+              rel="noreferrer"
+              className="text-white/40 hover:text-white transition-colors duration-300"
+            >
+              WhatsApp
+            </a>
+          )}
         </div>
       </div>
     </section>
