@@ -1,13 +1,10 @@
 "use client";
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { CheckCircle, ShieldAlert, Lightbulb, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const reasons = [
   {
@@ -93,7 +90,7 @@ const WhyChooseUs = () => {
               href="/contact"
               className="group inline-flex items-center gap-3 px-6 py-3.5 bg-white text-black font-heading font-semibold text-xs tracking-[0.2em] uppercase hover:bg-white/90 transition-colors duration-300"
             >
-              Work With Us
+              REQUEST RFQ
               <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
           </div>

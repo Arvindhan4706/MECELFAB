@@ -1,5 +1,18 @@
 export const rateLimitCache = new Map();
 
+const CLEANUP_INTERVAL_MS = 60_000;
+
+let lastCleanup = Date.now();
+
+function evictExpired() {
+  const now = Date.now();
+  if (now - lastCleanup < CLEANUP_INTERVAL_MS) return;
+  lastCleanup = now;
+  for (const [ip, record] of rateLimitCache) {
+    if (now > record.resetTime) rateLimitCache.delete(ip);
+  }
+}
+
 /**
  * Checks if a given IP has exceeded its rate limit.
  * @param {string} ip - The IP address of the client.
@@ -8,6 +21,7 @@ export const rateLimitCache = new Map();
  * @returns {boolean} - Returns true if the request is allowed, false if rate limited.
  */
 export function checkRateLimit(ip, maxRequests = 5, windowMs = 60 * 1000) {
+  evictExpired();
   const now = Date.now();
 
   if (!rateLimitCache.has(ip)) {

@@ -1,10 +1,7 @@
 "use client";
 import { useContext, useEffect, useRef } from 'react';
 import { CMSContext } from '../context/CMSContext';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 const CounterItem = ({ targetValue, label, suffix = '' }) => {
   const countRef = useRef(null);

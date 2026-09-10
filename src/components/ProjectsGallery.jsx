@@ -4,11 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { Calendar, User } from 'lucide-react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const IMAGE_FALLBACKS = {
   'Erection':               '/images/project-erection.png',
@@ -67,9 +64,9 @@ const ProjectsGallery = ({ projects = [] }) => {
           <span className="inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-6 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
             Our Portfolio
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-heading font-light text-white tracking-tight mb-8">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-light text-white tracking-tight mb-8">
             Featured Projects
-          </h2>
+          </h1>
           <p className="text-lg text-secondary font-light leading-relaxed max-w-2xl">
             Explore our recently executed contracts. Filter projects by engineering discipline to inspect our work quality and execution compliance.
           </p>

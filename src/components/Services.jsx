@@ -1,12 +1,9 @@
 "use client";
 import { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 import Link from 'next/link';
 import { ArrowRight, Wrench, Hammer, Droplets, Zap, Clock, Battery, Wind, Settings } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const ICON_MAP = {
   'industrial-erection': Hammer,
@@ -62,10 +59,10 @@ const Services = ({ services = [] }) => {
               <div className="w-5 h-[1px] bg-white/30" />
               <span className="text-white/40 text-[10px] font-heading tracking-[0.3em] uppercase">Our Capabilities</span>
             </div>
-            <h2 className="svc-heading text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white tracking-tight leading-tight opacity-0">
+            <h1 className="svc-heading text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white tracking-tight leading-tight opacity-0">
               Eight Disciplines.<br />
               <span className="text-white/35 italic font-serif">One Partner.</span>
-            </h2>
+            </h1>
           </div>
           <Link
             href="/services"
@@ -82,7 +79,7 @@ const Services = ({ services = [] }) => {
             const Icon = getServiceIcon(service.slug);
             const displayId = String(index + 1).padStart(2, '0');
             const isHovered = hoveredId === service.id;
-            const capabilities = service.capabilities ? JSON.parse(service.capabilities) : [];
+            const capabilities = service.capabilities ? (() => { try { return JSON.parse(service.capabilities); } catch { return []; } })() : [];
             
             return (
               <div

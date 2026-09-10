@@ -7,6 +7,16 @@ export const revalidate = 60;
 export const metadata = {
   title: 'Capabilities | MECELFAB Industrial Solutions',
   description: 'Technical capability matrix across fabrication, erection, maintenance, power, hydraulic, and rental services at MECELFAB.',
+  openGraph: {
+    title: 'Capabilities | MECELFAB Industrial Solutions',
+    description: 'Technical capability matrix across fabrication, erection, maintenance, power, hydraulic, and rental services at MECELFAB.',
+    url: 'https://mecelfabpvtltd.com/capabilities',
+    images: [{ url: '/images/hero-bg.png', width: 1200, height: 630, alt: 'MECELFAB Capabilities' }],
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://mecelfabpvtltd.com/capabilities',
+  },
 };
 
 const CAPABILITY_MATRIX = [
@@ -170,7 +180,7 @@ export default async function CapabilitiesPage() {
             <p className="text-white/50">Our engineering team will assess feasibility and respond with a solution.</p>
           </div>
           <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors">
-            Request Assessment
+            REQUEST RFQ
             <ChevronRight size={14} />
           </Link>
         </div>

@@ -73,6 +73,9 @@ export async function generateMetadata({ params }) {
   return {
     title: `${industry.title} | MECELFAB Industrial Solutions`,
     description: industry.description,
+    alternates: {
+      canonical: `https://mecelfabpvtltd.com/industries/${slug}`,
+    },
   };
 }
 

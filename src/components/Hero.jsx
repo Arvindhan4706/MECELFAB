@@ -4,10 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 const Hero = ({ content }) => {
   const containerRef = useRef(null);
@@ -144,7 +141,7 @@ const Hero = ({ content }) => {
       <div className="hero-topstrip relative z-10 flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 pt-28 opacity-0">
         <div className="flex items-center gap-3">
           <div className="w-5 h-[1px] bg-white/40" />
-          <span className="text-white/40 text-[10px] font-heading tracking-[0.35em] uppercase">
+          <span className="text-white/40 text-[11px] font-heading tracking-[0.35em] uppercase">
             Est. India
           </span>
         </div>
@@ -160,7 +157,7 @@ const Hero = ({ content }) => {
 
         {/* Mobile ISO Badge */}
         <div className="md:hidden flex items-center justify-center mb-6 opacity-0 hero-tagline">
-          <span className="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/60 text-[9px] font-heading tracking-[0.25em] uppercase backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.02)]">
+          <span className="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/60 text-[11px] font-heading tracking-[0.25em] uppercase backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.02)]">
             ISO 9001 Certified · Made in India
           </span>
         </div>
@@ -178,11 +175,11 @@ const Hero = ({ content }) => {
 
         {/* Full legal name + tagline */}
         <div className="hero-tagline flex flex-col md:flex-row items-center md:items-baseline gap-2 md:gap-x-4 mb-8 opacity-0 text-center md:text-left mt-5 md:mt-0">
-          <span className="text-white/40 text-[11px] md:text-sm font-heading tracking-[0.25em] uppercase">
+          <span className="text-white/40 text-xs md:text-sm font-heading tracking-[0.25em] uppercase">
             {content?.heroTitle?.substring(content.heroTitle.indexOf(' ') + 1) || 'Industrial Solutions Pvt. Ltd.'}
           </span>
           <div className="w-[1px] h-3 bg-white/20 hidden md:block" />
-          <span className="text-white/60 text-[11px] md:text-sm font-heading tracking-[0.2em] uppercase italic">
+          <span className="text-white/60 text-xs md:text-sm font-heading tracking-[0.2em] uppercase italic">
             Precision Engineering Excellence
           </span>
         </div>
@@ -241,7 +238,7 @@ const Hero = ({ content }) => {
         </div>
 
         {/* Service pillars */}
-        <div className="hero-stat-container overflow-x-auto md:overflow-visible pb-6 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+        <div className="hero-stat-container overflow-x-auto md:overflow-visible pb-6 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 touch-pan-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className="flex md:flex-wrap items-start gap-8 md:gap-14 min-w-max md:min-w-0">
             {[
               { label: '8 Industrial Services', sub: 'End-to-End Capability' },
@@ -265,7 +262,7 @@ const Hero = ({ content }) => {
       {/* ─── Bottom strip ─────────────────────────────────────────── */}
       <div className="hero-bottomstrip relative z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 pb-10 opacity-0 overflow-hidden gap-4 sm:gap-0">
         {/* Service tags */}
-        <div className="flex flex-wrap md:flex-nowrap items-center gap-x-3 gap-y-2 md:gap-5 text-[10px] md:text-xs text-white/40 md:text-white/55 font-heading tracking-[0.15em] md:tracking-[0.18em] uppercase">
+        <div className="flex flex-wrap md:flex-nowrap items-center gap-x-3 gap-y-2 md:gap-5 text-[11px] md:text-xs text-white/40 md:text-white/55 font-heading tracking-[0.15em] md:tracking-[0.18em] uppercase">
           {['Fabrication', 'Erection', 'Generator Services', 'Hydraulic Systems', 'AMC', 'Rentals', 'Turbocharger'].map((s) => (
             <span key={s} className="flex items-center">
               {s}
@@ -273,14 +270,14 @@ const Hero = ({ content }) => {
           ))}
         </div>
         {/* Contact quick links */}
-        <div className="flex items-center gap-4 text-[10px] md:text-xs font-heading tracking-[0.15em] uppercase shrink-0">
+        <div className="flex items-center gap-4 text-[11px] md:text-xs font-heading tracking-[0.15em] uppercase shrink-0">
           {content?.phone && (
-            <a href={`tel:${content.phone.replace(/[^0-9+]/g, '')}`} className="text-white/40 hover:text-white transition-colors duration-300">
+            <a href={`tel:${content.phone.replace(/[^0-9+]/g, '')}`} className="text-white/40 hover:text-white transition-colors duration-300 py-2">
               Call Us
             </a>
           )}
           {content?.email && (
-            <a href={`mailto:${content.email}`} className="text-white/40 hover:text-white transition-colors duration-300">
+            <a href={`mailto:${content.email}`} className="text-white/40 hover:text-white transition-colors duration-300 py-2">
               Email
             </a>
           )}
@@ -289,7 +286,7 @@ const Hero = ({ content }) => {
               href={`https://wa.me/${content.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
               target="_blank"
               rel="noreferrer"
-              className="text-white/40 hover:text-white transition-colors duration-300"
+              className="text-white/40 hover:text-white transition-colors duration-300 py-2"
             >
               WhatsApp
             </a>

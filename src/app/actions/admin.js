@@ -10,7 +10,7 @@ import { assertPermission } from '@/lib/permissions';
 // Helper to check admin access
 async function checkAdmin(permission = 'settings:write') {
   const session = await getServerSession(authOptions);
-  if (!session) throw new Error('Unauthorized', { cause: err });
+  if (!session) throw new Error('Unauthorized');
   
   try {
     assertPermission(session.user.role, permission);

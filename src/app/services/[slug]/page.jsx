@@ -14,6 +14,9 @@ export async function generateMetadata({ params }) {
   return {
     title: `${service.title} | MECELFAB Industrial Solutions`,
     description: service.description,
+    alternates: {
+      canonical: `https://mecelfabpvtltd.com/services/${slug}`,
+    },
   };
 }
 

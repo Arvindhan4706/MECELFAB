@@ -1,7 +1,42 @@
 "use client";
 
-import { motion } from 'framer-motion';
+import { useRef, useEffect, useState } from 'react';
 import { Eye, Rocket } from 'lucide-react';
+
+const FadeInCard = ({ children, delay = 0 }) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className="glass-panel"
+      style={{
+        padding: '3rem 2rem',
+        textAlign: 'center',
+        background: 'rgba(15, 23, 42, 0.4)',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
+        position: 'relative',
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(30px)',
+        transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
 const VisionMission = () => {
   return (
@@ -14,21 +49,7 @@ const VisionMission = () => {
             gap: '2.5rem'
           }}
         >
-          {/* Vision Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6 }}
-            className="glass-panel"
-            style={{
-              padding: '3rem 2rem',
-              textAlign: 'center',
-              background: 'rgba(15, 23, 42, 0.4)',
-              border: '1px solid rgba(255, 255, 255, 0.05)',
-              position: 'relative'
-            }}
-          >
+          <FadeInCard delay={0}>
             <div style={{
               width: '60px',
               height: '60px',
@@ -42,31 +63,15 @@ const VisionMission = () => {
             }}>
               <Eye size={28} style={{ color: 'var(--accent)' }} />
             </div>
-            
             <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
               Our Vision
             </h3>
-            
             <p style={{ color: '#E2E8F0', fontSize: '1.05rem', lineHeight: 1.6, fontWeight: 400 }}>
               "To advance industrial engineering excellence through mechanical precision, structural resilience, and automated infrastructure solutions."
             </p>
-          </motion.div>
+          </FadeInCard>
 
-          {/* Mission Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-100px' }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="glass-panel"
-            style={{
-              padding: '3rem 2rem',
-              textAlign: 'center',
-              background: 'rgba(15, 23, 42, 0.4)',
-              border: '1px solid rgba(255, 255, 255, 0.05)',
-              position: 'relative'
-            }}
-          >
+          <FadeInCard delay={0.15}>
             <div style={{
               width: '60px',
               height: '60px',
@@ -80,15 +85,13 @@ const VisionMission = () => {
             }}>
               <Rocket size={28} style={{ color: 'var(--accent)' }} />
             </div>
-            
             <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
               Our Mission
             </h3>
-            
             <p style={{ color: '#E2E8F0', fontSize: '1.05rem', lineHeight: 1.6, fontWeight: 400 }}>
               "To architect and execute heavy-mechanical solutions that support our clients' operational success, with focus on safety, quality, and reliable delivery across every project phase."
             </p>
-          </motion.div>
+          </FadeInCard>
         </div>
       </div>
     </section>

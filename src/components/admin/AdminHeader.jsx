@@ -6,7 +6,6 @@ import {
   LogOut, ExternalLink, Clock, Settings, User
 } from 'lucide-react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
 import { signOut } from 'next-auth/react';
 
 // Map pathnames to readable breadcrumbs
@@ -213,14 +212,10 @@ export default function AdminHeader({ session, initialNotifications }) {
             <ChevronDown size={14} className={`text-admin-muted transition-transform duration-300 hidden sm:block ${showUser ? 'rotate-180 text-admin-heading' : 'group-hover:text-admin-text'}`} />
           </button>
 
-          <AnimatePresence>
-            {showUser && (
-              <motion.div
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                transition={{ duration: 0.15, ease: 'easeOut' }}
-                className="absolute right-0 mt-3 w-64 bg-admin-elevated border border-admin-border rounded-2xl shadow-2xl shadow-black/60 overflow-hidden z-50 origin-top-right"
+          <div
+                className={`absolute right-0 mt-3 w-64 bg-admin-elevated border border-admin-border rounded-2xl shadow-2xl shadow-black/60 overflow-hidden z-50 origin-top-right transition-all duration-150 ease-out ${
+                  showUser ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' : 'opacity-0 scale-95 translate-y-1 pointer-events-none'
+                }`}
               >
                 {/* User info header */}
                 <div className="px-5 py-4 border-b border-admin-border/50 bg-admin-surface/30">
@@ -267,10 +262,8 @@ export default function AdminHeader({ session, initialNotifications }) {
                     </div>
                   </Link>
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+              </div>
+          </div>
       </div>
     </header>
   );

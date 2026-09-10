@@ -1,10 +1,7 @@
 'use client';
 import { useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const workflowSteps = [
   { id: '01', title: 'REQUIREMENT', description: 'Understand the service/equipment requirement and initial constraints.' },

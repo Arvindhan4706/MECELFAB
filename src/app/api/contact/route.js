@@ -52,6 +52,23 @@ export async function POST(req) {
       return NextResponse.json({ success: false, message: 'Timeline exceeds maximum length.' }, { status: 400 });
     }
 
+    // Validate service against allowlist
+    const VALID_SERVICES = [
+      'Industrial Erection', 'Industrial Fabrication', 'Hydraulic & Pneumatic System Overhauling',
+      'Industrial Generator Spare Parts', 'AMC — Annual Maintenance Contract',
+      'Industrial Generator Rental', 'Air Compressor Rental', 'Turbocharger Services', 'Other'
+    ];
+    if (service && !VALID_SERVICES.includes(service)) {
+      return NextResponse.json({ success: false, message: 'Invalid service selection.' }, { status: 400 });
+    }
+
+    // Validate preferredContactMethod against allowlist
+    const VALID_CONTACT_METHODS = ['Phone', 'Email', 'WhatsApp'];
+    const contactMethod = data.preferredContactMethod || 'Email';
+    if (!VALID_CONTACT_METHODS.includes(contactMethod)) {
+      return NextResponse.json({ success: false, message: 'Invalid contact method.' }, { status: 400 });
+    }
+
     // We'll keep the raw projectDescription as 'message' in the DB
     const message = projectDescription?.trim() || 'No description provided.';
 
@@ -76,7 +93,7 @@ export async function POST(req) {
         service: service || null,
         location: projectLocation || null,
         timeline: expectedTimeline || null,
-        preferredContactMethod: data.preferredContactMethod || 'Email',
+        preferredContactMethod: contactMethod,
         message,
         documentUrl: null,
         status: 'NEW'

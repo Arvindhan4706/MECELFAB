@@ -9,7 +9,7 @@ import { getCompanyProfile } from '@/lib/companyConfig';
 import { validateEnv } from '@/lib/validateEnv';
 import { Inter, Space_Grotesk } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-inter', display: 'swap' });
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk', display: 'swap' });
 
 validateEnv();
@@ -40,9 +40,6 @@ export const metadata = {
     title: 'MECELFAB INDUSTRIAL SOLUTIONS',
     description: 'Premier industrial mechanical services, fabrication, generator solutions, rentals, and hydraulic/pneumatic system overhauling.',
     images: ['/images/hero-bg.png'],
-  },
-  alternates: {
-    canonical: 'https://mecelfabpvtltd.com',
   },
   icons: {
     icon: '/favicon.svg',

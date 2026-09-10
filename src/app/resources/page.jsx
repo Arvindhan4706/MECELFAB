@@ -7,6 +7,16 @@ export const revalidate = 60;
 export const metadata = {
   title: 'Resources | MECELFAB Industrial Solutions',
   description: 'Download company profiles, certifications, capability statements, technical documents, and FAQs from MECELFAB Industrial Solutions.',
+  openGraph: {
+    title: 'Resources | MECELFAB Industrial Solutions',
+    description: 'Download company profiles, certifications, capability statements, technical documents, and FAQs from MECELFAB Industrial Solutions.',
+    url: 'https://mecelfabpvtltd.com/resources',
+    images: [{ url: '/images/hero-bg.png', width: 1200, height: 630, alt: 'MECELFAB Resources' }],
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://mecelfabpvtltd.com/resources',
+  },
 };
 
 const RESOURCE_SECTIONS = [
@@ -162,7 +172,7 @@ export default async function ResourcesPage() {
             <p className="text-white/50">Contact our team for detailed technical documentation.</p>
           </div>
           <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors">
-            Request Information
+            REQUEST RFQ
             <ChevronRight size={14} />
           </Link>
         </div>

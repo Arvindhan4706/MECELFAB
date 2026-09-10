@@ -90,6 +90,7 @@ const Footer = ({ contact }) => {
               <Link href="/services" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Services</Link>
               <Link href="/industries" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Industries</Link>
               <Link href="/projects" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Projects</Link>
+              <Link href="/resources" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Resources</Link>
               <Link href="/contact" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Contact</Link>
             </div>
           </div>
@@ -118,6 +119,11 @@ const Footer = ({ contact }) => {
               <li>
                 <Link href="/projects" className="text-secondary hover:text-white transition-colors duration-300">
                   Featured Projects
+                </Link>
+              </li>
+              <li>
+                <Link href="/resources" className="text-secondary hover:text-white transition-colors duration-300">
+                  Resources
                 </Link>
               </li>
             </ul>

@@ -7,6 +7,16 @@ export const revalidate = 60;
 export const metadata = {
   title: 'Contact Us | MECELFAB Industrial Solutions',
   description: 'Request a quotation or technical consultation from MECELFAB Industrial Solutions. Phone, email, WhatsApp, and online RFQ form available.',
+  openGraph: {
+    title: 'Contact Us | MECELFAB Industrial Solutions',
+    description: 'Request a quotation or technical consultation from MECELFAB Industrial Solutions. Phone, email, WhatsApp, and online RFQ form available.',
+    url: 'https://mecelfabpvtltd.com/contact',
+    images: [{ url: '/images/hero-bg.png', width: 1200, height: 630, alt: 'Contact MECELFAB' }],
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://mecelfabpvtltd.com/contact',
+  },
 };
 
 export default async function ContactPage({ searchParams }) {

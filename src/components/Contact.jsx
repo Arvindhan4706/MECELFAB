@@ -2,10 +2,7 @@
 import { useState, useRef } from "react";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 const Contact = ({ services = [], content, initialService = '' }) => {
   const containerRef = useRef(null);
@@ -26,6 +23,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [referenceNumber, setReferenceNumber] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const validateForm = () => {
     const errors = {};
@@ -94,6 +92,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
     }
 
     setIsSubmitting(true);
+    setSubmitError('');
 
     try {
       const response = await fetch('/api/contact', {
@@ -123,9 +122,8 @@ const Contact = ({ services = [], content, initialService = '' }) => {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to submit form');
       }
-    } catch (error) {
-      console.error('Contact form error:', error);
-      // Don't set form submitted on error - keep form active for correction
+    } catch (err) {
+      setSubmitError(err?.message || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -149,9 +147,9 @@ const Contact = ({ services = [], content, initialService = '' }) => {
           <span className="inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-6 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
             Start Your Industrial Project
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-heading font-light text-white tracking-tight mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-light text-white tracking-tight mb-6">
             REQUEST A QUOTE
-          </h2>
+          </h1>
           <p className="text-lg text-secondary font-light leading-relaxed max-w-2xl">
             Tell us about your requirements and our team will review your project.
           </p>
@@ -298,6 +296,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       onChange={handleChange}
                       className={`w-full bg-white/5 border ${formErrors.fullName ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
                       placeholder="Contact Person Full Name"
+                      maxLength={100}
                     />
                     {formErrors.fullName && <p className="text-red-500 text-xs mt-1">{formErrors.fullName}</p>}
                   </div>
@@ -311,6 +310,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       onChange={handleChange}
                       className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
                       placeholder="Organization / Enterprise Name"
+                      maxLength={200}
                     />
                     {formErrors.companyName && <p className="text-red-500 text-xs mt-1">{formErrors.companyName}</p>}
                   </div>
@@ -328,6 +328,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       onChange={handleChange}
                       className={`w-full bg-white/5 border ${formErrors.email ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
                       placeholder="corporate.email@company.com"
+                      maxLength={150}
                     />
                     {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
                   </div>
@@ -341,6 +342,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       onChange={handleChange}
                       className={`w-full bg-white/5 border ${formErrors.phone ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
                       placeholder="Contact Telephone Number"
+                      maxLength={20}
                     />
                     {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
                   </div>
@@ -358,17 +360,19 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       onChange={handleChange}
                       className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
                       placeholder="Project Site / City, State"
+                      maxLength={200}
                     />
                     {formErrors.projectLocation && <p className="text-red-500 text-xs mt-1">{formErrors.projectLocation}</p>}
                   </div>
                   <div className="flex flex-col gap-2">
                     <label htmlFor="serviceRequired" className="text-xs font-heading tracking-widest text-secondary uppercase">Service Required *</label>
+                    <div className="relative">
                     <select
                       id="serviceRequired"
                       name="serviceRequired"
                       value={formData.serviceRequired}
                       onChange={handleChange}
-                      className="w-full bg-primary-light border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm appearance-none min-h-[44px]"
+                      className="w-full bg-primary-light border border-white/10 text-white px-4 py-3 pr-10 focus:outline-none focus:border-white/30 transition-colors font-light text-sm appearance-none min-h-[44px]"
                     >
                       <option value="">Select Service Required</option>
                       {services.length > 0 ? (
@@ -389,6 +393,10 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       )}
                       <option value="Other">Other Solutions</option>
                     </select>
+                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                      <svg className="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    </div>
+                    </div>
                     {formErrors.serviceRequired && <p className="text-red-500 text-xs mt-1">{formErrors.serviceRequired}</p>}
                   </div>
                 </div>
@@ -405,6 +413,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       onChange={handleChange}
                       className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
                       placeholder="e.g. 3-4 months"
+                      maxLength={100}
                     />
                     {formErrors.expectedTimeline && <p className="text-red-500 text-xs mt-1">{formErrors.expectedTimeline}</p>}
                   </div>
@@ -439,11 +448,18 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     value={formData.projectDescription}
                     onChange={handleChange}
                     rows="6"
-                    className={`w-full bg-white/5 border ${formErrors.projectDetails ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm resize-y min-h-[44px]`}
+                    className={`w-full bg-white/5 border ${formErrors.projectDescription ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm resize-y min-h-[44px]`}
                     placeholder="Describe your project requirements, scope, specifications, and any special considerations..."
+                    maxLength={5000}
                   />
                   {formErrors.projectDescription && <p className="text-red-500 text-xs mt-1">{formErrors.projectDescription}</p>}
                 </div>
+
+                {submitError && (
+                  <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg" role="alert">
+                    <p className="text-red-400 text-sm">{submitError}</p>
+                  </div>
+                )}
 
                 <button
                   type="submit"

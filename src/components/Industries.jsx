@@ -1,13 +1,10 @@
 "use client";
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
 
 import TextReveal from './animations/TextReveal';
 
@@ -53,7 +50,7 @@ const Industries = ({ industries: propIndustries }) => {
         title: ind.title,
         desc: ind.description,
         image: ind.image || `/images/project-fabrication.png`,
-        capabilities: ind.capabilities ? JSON.parse(ind.capabilities) : [],
+        capabilities: ind.capabilities ? (() => { try { return JSON.parse(ind.capabilities); } catch { return []; } })() : [],
         slug: ind.slug,
       }))
     : DEFAULT_INDUSTRIES;
@@ -91,7 +88,7 @@ const Industries = ({ industries: propIndustries }) => {
           <span className="ind-header-badge inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-6 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
             Markets We Serve
           </span>
-          <TextReveal as="h2" splitType="char" className="text-4xl md:text-5xl lg:text-7xl font-heading font-light text-white tracking-tight">
+          <TextReveal as="h1" splitType="char" className="text-4xl md:text-5xl lg:text-7xl font-heading font-light text-white tracking-tight">
             Industries
           </TextReveal>
         </div>
@@ -141,9 +138,9 @@ const Industries = ({ industries: propIndustries }) => {
                 </div>
 
                 {/* Explore Button */}
-                <a href="/projects" className="self-start text-accent font-heading text-sm tracking-widest uppercase hover:text-white transition-colors duration-500">
+                <Link href="/projects" className="self-start text-accent font-heading text-sm tracking-widest uppercase hover:text-white transition-colors duration-500">
                   Explore {ind.title.toLowerCase()} Projects
-                </a>
+                </Link>
               </div>
             </div>
           ))}

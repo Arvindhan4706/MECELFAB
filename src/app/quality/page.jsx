@@ -7,6 +7,16 @@ export const revalidate = 60;
 export const metadata = {
   title: 'Quality & Safety | MECELFAB Industrial Solutions',
   description: 'ISO 9001:2015 and ISO 45001:2018 certified quality and safety management systems at MECELFAB Industrial Solutions.',
+  openGraph: {
+    title: 'Quality & Safety | MECELFAB Industrial Solutions',
+    description: 'ISO 9001:2015 and ISO 45001:2018 certified quality and safety management systems at MECELFAB Industrial Solutions.',
+    url: 'https://mecelfabpvtltd.com/quality',
+    images: [{ url: '/images/hero-bg.png', width: 1200, height: 630, alt: 'MECELFAB Quality & Safety' }],
+    type: 'website',
+  },
+  alternates: {
+    canonical: 'https://mecelfabpvtltd.com/quality',
+  },
 };
 
 export default async function QualityPage() {

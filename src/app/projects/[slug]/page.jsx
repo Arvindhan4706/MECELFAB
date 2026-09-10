@@ -5,14 +5,18 @@ import { ArrowLeft, Calendar, User, CheckCircle } from 'lucide-react';
 import { db } from '@/lib/db';
 
 export async function generateMetadata({ params }) {
+  const { slug } = await params;
   const project = await db.project.findUnique({
-    where: { slug: params.slug }
+    where: { slug }
   });
   if (!project) return { title: 'Project Not Found' };
 
   return {
     title: `${project.title} | MECELFAB Industrial Solutions`,
     description: project.description,
+    alternates: {
+      canonical: `https://mecelfabpvtltd.com/projects/${slug}`,
+    },
     openGraph: {
       title: project.title,
       description: project.description,
@@ -28,8 +32,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function ProjectPage({ params }) {
+  const { slug } = await params;
   const project = await db.project.findUnique({
-    where: { slug: params.slug }
+    where: { slug }
   });
 
   if (!project) {
@@ -105,7 +110,7 @@ export default async function ProjectPage({ params }) {
             </div>
 
             <div style={{ position: 'relative', width: '100%', height: 'clamp(250px, 50vw, 400px)', borderRadius: 'var(--radius-md)', overflow: 'hidden', marginBottom: '2rem' }}>
-              <Image src={project.image} alt={project.title} fill sizes="(max-width: 768px) 100vw, 768px" style={{ objectFit: 'cover' }} />
+              <Image src={project.image} alt={project.title} fill loading="lazy" sizes="(max-width: 768px) 100vw, 768px" style={{ objectFit: 'cover' }} />
             </div>
           </div>
         </div>

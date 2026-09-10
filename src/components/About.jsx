@@ -1,10 +1,7 @@
 "use client";
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 import TextReveal from './animations/TextReveal';
 
@@ -38,9 +35,9 @@ const About = ({ content }) => {
           Our Foundation
         </div>
 
-        <h2 className="about-animate text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white leading-tight tracking-tight mb-12">
+        <h1 className="about-animate text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white leading-tight tracking-tight mb-12">
           Precision engineering for a <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-secondary">kinetic world</span>.
-        </h2>
+        </h1>
 
         <TextReveal
           as="p"

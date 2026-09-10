@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { assertInvoiceEditable, assertQuotationEditable } from "@/lib/financialGuards";
+import { assertPermission } from "@/lib/permissions";
 
 
 /**

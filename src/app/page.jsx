@@ -24,48 +24,42 @@ export const metadata = {
     locale: 'en_US',
     type: 'website',
   },
+  alternates: {
+    canonical: 'https://mecelfabpvtltd.com',
+  },
 };
 
 export default async function HomePage() {
-  // Fetch active projects and services
-  const projects = await db.project.findMany({
-    where: { status: { not: 'DISABLED' } },
-    orderBy: { createdAt: 'desc' }
-  });
-  const services = await db.service.findMany({
-    where: { status: 'ACTIVE' },
-    orderBy: { createdAt: 'asc' }
-  });
-
-  // Fetch stats and content
-  const settings = await db.setting.findMany({
-    where: { 
-      OR: [
-        { key: { startsWith: 'stats_' } },
-        { key: 'CONTENT_HOMEPAGE' }
-      ]
-    }
-  });
-
-  // Fetch clients and testimonials
-  const clients = await db.client.findMany();
-  const testimonials = await db.testimonial.findMany();
-
-  const stats = {
-    projectsCompleted: settings.find(s => s.key === 'stats_projectsCompleted')?.value || '0',
-    industrialClients: settings.find(s => s.key === 'stats_industrialClients')?.value || '0',
-    serviceCategories: settings.find(s => s.key === 'stats_serviceCategories')?.value || '8',
-    safetyCompliance: settings.find(s => s.key === 'stats_safetyCompliance')?.value || '0',
-  };
+  // Fetch all data in parallel
+  const [projects, services, settings, clients, testimonials] = await Promise.all([
+    db.project.findMany({
+      where: { status: { not: 'DISABLED' } },
+      orderBy: { createdAt: 'desc' }
+    }),
+    db.service.findMany({
+      where: { status: 'ACTIVE' },
+      orderBy: { createdAt: 'asc' }
+    }),
+    db.setting.findMany({
+      where: { 
+        OR: [
+          { key: { startsWith: 'stats_' } },
+          { key: 'CONTENT_HOMEPAGE' }
+        ]
+      }
+    }),
+    db.client.findMany(),
+    db.testimonial.findMany(),
+  ]);
 
   const homepageContent = settings.find(s => s.key === 'CONTENT_HOMEPAGE')?.value 
-    ? JSON.parse(settings.find(s => s.key === 'CONTENT_HOMEPAGE').value) 
+    ? (() => { try { return JSON.parse(settings.find(s => s.key === 'CONTENT_HOMEPAGE').value); } catch { return null; } })()
     : null;
 
   return (
     <>
       <Hero content={homepageContent} />
-      <TrustSection stats={stats} />
+      <TrustSection />
       <Services services={services} />
       <EngineeringWorkflow />
       <Industries />

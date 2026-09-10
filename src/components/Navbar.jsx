@@ -5,10 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -120,10 +117,10 @@ const Navbar = () => {
                 href={`/${link.id}`}
                 className="relative group text-sm uppercase tracking-widest"
               >
-                <span className={`transition-colors duration-300 ${pathname === `/${link.id}` ? 'text-white' : 'text-white/60 hover:text-white'}`}>
+                <span className={`transition-colors duration-300 ${pathname === `/${link.id}` || (link.id && pathname?.startsWith(`/${link.id}/`)) ? 'text-white' : 'text-white/60 hover:text-white'}`}>
                   {link.name}
                 </span>
-                <span className={`absolute -bottom-2 left-0 w-full h-[1px] bg-white transform origin-left transition-transform duration-300 ${pathname === `/${link.id}` ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+                <span className={`absolute -bottom-2 left-0 w-full h-[1px] bg-white transform origin-left transition-transform duration-300 ${pathname === `/${link.id}` || (link.id && pathname?.startsWith(`/${link.id}/`)) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
               </Link>
             ))}
             
@@ -141,7 +138,7 @@ const Navbar = () => {
                   href="/contact"
                   className="ml-4 inline-flex items-center gap-2 px-6 py-2.5 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors"
                 >
-                  Request a Service
+                  REQUEST RFQ
                 </Link>
               </>
             ) : (
@@ -150,7 +147,7 @@ const Navbar = () => {
                   href="/contact"
                   className="ml-2 inline-flex items-center gap-2 px-6 py-2.5 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors"
                 >
-                  Request a Service
+                  REQUEST RFQ
                 </Link>
                 <Link
                   href={session.user?.role === 'CUSTOMER' ? '/portal' : '/admin/dashboard'}
@@ -211,7 +208,7 @@ const Navbar = () => {
                 onClick={() => toggleMenu()}
                 className="mobile-nav-link flex w-full items-center justify-between px-6 py-5 bg-white text-black font-heading font-medium text-sm tracking-widest uppercase min-h-[44px]"
               >
-                Request a Service
+                REQUEST RFQ
                 <ArrowRight size={18} />
               </Link>
             </>
@@ -226,8 +223,8 @@ const Navbar = () => {
           )}
 
           <div className="mobile-nav-link mt-4 pt-6 border-t border-white/10 flex flex-col gap-1.5 opacity-60">
-            <span className="text-white text-[10px] font-heading tracking-[0.25em] uppercase">MECELFAB Industrial Solutions</span>
-            <span className="text-white/50 text-[10px] font-heading tracking-[0.2em] uppercase italic">Precision Engineering Excellence</span>
+            <span className="text-white text-[11px] font-heading tracking-[0.25em] uppercase">MECELFAB Industrial Solutions</span>
+            <span className="text-white/50 text-[11px] font-heading tracking-[0.2em] uppercase italic">Precision Engineering Excellence</span>
           </div>
         </div>
       </div>

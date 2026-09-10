@@ -10,7 +10,7 @@ import { logger } from "@/lib/logger";
 export const authOptions = {
   adapter: PrismaAdapter(db),
   session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_SECRET || "temporary-build-secret-mecelfab-key",
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
       ? [

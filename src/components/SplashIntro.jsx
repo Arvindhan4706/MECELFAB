@@ -1,74 +1,77 @@
 "use client";
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "@/lib/gsap";
 
 const SplashIntro = () => {
-  const [showSplash, setShowSplash] = useState(true);
+  const [mounted, setMounted] = useState(true);
+  const overlayRef = useRef(null);
+  const imgRef = useRef(null);
 
   useEffect(() => {
-    // Hide splash after 0.8 seconds
+    // Animate logo in
+    if (imgRef.current) {
+      gsap.fromTo(imgRef.current,
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" }
+      );
+    }
+
+    // After 1.2s, animate overlay out then remove from DOM
     const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 800);
+      if (overlayRef.current) {
+        gsap.to(overlayRef.current, {
+          opacity: 0,
+          scale: 0.1,
+          duration: 1.0,
+          ease: "power2.inOut",
+          onComplete: () => setMounted(false)
+        });
+      }
+    }, 1200);
+
     return () => clearTimeout(timer);
   }, []);
 
+  if (!mounted) return null;
+
   return (
-    <AnimatePresence>
-      {showSplash && (
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 1 }}
-          exit={{ 
-            opacity: 0,
-            scale: 0.1,
-            x: '-45vw',
-            y: '-45vh',
-            transition: { duration: 1.2, ease: "easeInOut" }
-          }}
+    <div
+      ref={overlayRef}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        backgroundColor: '#070B13',
+        zIndex: 9999,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden'
+      }}
+    >
+      <div style={{
+        position: 'relative',
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <img
+          ref={imgRef}
+          src="/images/logo.jpg"
+          alt="MECELFAB Industrial Solutions Logo"
           style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            backgroundColor: '#070B13',
-            zIndex: 9999, // ensures it sits above everything
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden'
+            maxWidth: '80%',
+            maxHeight: '80%',
+            objectFit: 'contain',
+            borderRadius: '8px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+            opacity: 0
           }}
-        >
-          {/* Logo Reveal Image */}
-          <div style={{
-            position: 'relative',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <motion.img
-              src="/images/logo.jpg"
-              alt="MECELFAB Industrial Solutions Logo"
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              style={{
-                maxWidth: '80%',
-                maxHeight: '80%',
-                objectFit: 'contain',
-                borderRadius: '8px',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
-              }}
-            />
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        />
+      </div>
+    </div>
   );
 };
 
 export default SplashIntro;
-
