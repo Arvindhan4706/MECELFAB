@@ -150,7 +150,7 @@ const Services = ({ services = [] }) => {
                   {/* Content */}
                   <div className="flex-1 flex flex-col lg:flex-row lg:items-start gap-5 lg:gap-12 w-full">
                     <div className="flex-1">
-                      <h3 className="text-xl lg:text-2xl font-heading font-light text-white/90 lg:text-white/70 group-hover:text-white tracking-tight mb-2 transition-colors duration-500 pr-8 lg:pr-0">
+                      <h3 className="text-lg lg:text-2xl font-heading font-light text-white/90 lg:text-white/70 group-hover:text-white tracking-tight mb-2 transition-colors duration-500 pr-8 lg:pr-0 line-clamp-2">
                         {service.title}
                       </h3>
                       <p className="text-sm text-white/50 lg:text-white/30 group-hover:text-white/55 font-light leading-relaxed max-w-lg transition-colors duration-500">

@@ -326,11 +326,11 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                 </div>
                 <h3 className="text-2xl font-light text-white mb-2 uppercase tracking-widest">REQUEST RECEIVED</h3>
                 <p className="text-white/60 text-sm font-light mb-6 max-w-md mx-auto">
-                  Your requirement has been submitted to the MECELFAB team. Our engineering team will review your requirements.
+                  Your enquiry has been recorded. Our team will review the requirement and contact you through your selected communication method.
                 </p>
                 <div className="bg-white/5 border border-white/10 p-6 rounded-lg mb-8 max-w-sm mx-auto">
                   <p className="text-xs text-secondary font-heading uppercase tracking-widest mb-2">Reference Number</p>
-                  <p className="text-2xl text-white font-medium">{referenceNumber}</p>
+                  <p className="text-2xl text-white font-medium tracking-wider">{referenceNumber}</p>
                 </div>
 
                 <div className="max-w-sm mx-auto mb-10 text-left">
@@ -350,18 +350,18 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                   </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                   <Link
-                    href="/services"
-                    className="px-6 py-3 border border-white/20 text-white font-heading text-xs tracking-widest uppercase hover:bg-white hover:text-primary transition-colors duration-300"
+                    href="/"
+                    className="px-5 py-3 border border-white/20 text-white font-heading text-xs tracking-widest uppercase hover:bg-white hover:text-primary transition-colors duration-300 min-h-[44px] inline-flex items-center"
                   >
-                    Back to Services
+                    Return Home
                   </Link>
                   <button
                     onClick={() => setIsSubmitted(false)}
-                    className="px-6 py-3 bg-white text-primary font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors duration-300"
+                    className="px-5 py-3 bg-white text-primary font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors duration-300 min-h-[44px]"
                   >
-                    Submit Another Request
+                    Submit Another
                   </button>
                 </div>
               </div>
@@ -405,6 +405,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       className={`w-full bg-white/5 border ${formErrors.fullName ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
                       placeholder="Contact Person Full Name"
                       maxLength={100}
+                      autoComplete="name"
                     />
                     {formErrors.fullName && <p className="text-red-500 text-xs mt-1">{formErrors.fullName}</p>}
                   </div>
@@ -419,6 +420,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
                       placeholder="Organization / Enterprise Name"
                       maxLength={200}
+                      autoComplete="organization"
                     />
                     {formErrors.companyName && <p className="text-red-500 text-xs mt-1">{formErrors.companyName}</p>}
                   </div>
@@ -439,6 +441,8 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       className={`w-full bg-white/5 border ${formErrors.email ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
                       placeholder="corporate.email@company.com"
                       maxLength={150}
+                      autoComplete="email"
+                      inputMode="email"
                     />
                     {formErrors.email && <p className="text-red-500 text-xs mt-1">{formErrors.email}</p>}
                   </div>
@@ -446,13 +450,15 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     <label htmlFor="phone" className="text-xs font-heading tracking-widest text-secondary uppercase">Phone *</label>
                     <input
                       id="phone"
-                      type="text"
+                      type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
                       className={`w-full bg-white/5 border ${formErrors.phone ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
                       placeholder="Contact Telephone Number"
                       maxLength={20}
+                      autoComplete="tel"
+                      inputMode="tel"
                     />
                     {formErrors.phone && <p className="text-red-500 text-xs mt-1">{formErrors.phone}</p>}
                   </div>
@@ -485,25 +491,26 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     value={formData.serviceRequired}
                     onChange={handleChange}
                     className="w-full bg-primary-light border border-white/10 text-white px-4 py-3 pr-10 focus:outline-none focus:border-white/30 transition-colors font-light text-sm appearance-none min-h-[44px]"
+                    style={{ color: '#fff', backgroundColor: 'rgba(15,23,42,0.4)' }}
                   >
-                    <option value="">Select Service Required</option>
+                    <option value="" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Select Service Required</option>
                     {services.length > 0 ? (
                       services.map((service, index) => (
-                        <option key={index} value={service.title}>{service.title}</option>
+                        <option key={index} value={service.title} style={{ backgroundColor: '#1e293b', color: '#fff' }}>{service.title}</option>
                       ))
                     ) : (
                       <>
-                        <option value="Industrial Erection">Industrial Erection</option>
-                        <option value="Industrial Fabrication">Industrial Fabrication</option>
-                        <option value="Hydraulic & Pneumatic System Overhauling">Hydraulic & Pneumatic System Overhauling</option>
-                        <option value="Industrial Generator Spare Parts">Industrial Generator Spare Parts</option>
-                        <option value="AMC — Annual Maintenance Contract">AMC — Annual Maintenance Contract</option>
-                        <option value="Industrial Generator Rental">Industrial Generator Rental</option>
-                        <option value="Air Compressor Rental">Air Compressor Rental</option>
-                        <option value="Turbocharger Services">Turbocharger Services</option>
+                        <option value="Industrial Erection" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Industrial Erection</option>
+                        <option value="Industrial Fabrication" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Industrial Fabrication</option>
+                        <option value="Hydraulic & Pneumatic System Overhauling" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Hydraulic & Pneumatic System Overhauling</option>
+                        <option value="Industrial Generator Spare Parts" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Industrial Generator Spare Parts</option>
+                        <option value="AMC — Annual Maintenance Contract" style={{ backgroundColor: '#1e293b', color: '#fff' }}>AMC — Annual Maintenance Contract</option>
+                        <option value="Industrial Generator Rental" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Industrial Generator Rental</option>
+                        <option value="Air Compressor Rental" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Air Compressor Rental</option>
+                        <option value="Turbocharger Services" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Turbocharger Services</option>
                       </>
                     )}
-                    <option value="Other">Other Solutions</option>
+                    <option value="Other" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Other Solutions</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <svg className="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
@@ -562,8 +569,8 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     name="projectDescription"
                     value={formData.projectDescription}
                     onChange={handleChange}
-                    rows="6"
-                    className={`w-full bg-white/5 border ${formErrors.projectDescription ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm resize-y min-h-[44px]`}
+                    rows="4"
+                    className={`w-full bg-white/5 border ${formErrors.projectDescription ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm resize-y min-h-[100px]`}
                     placeholder="Describe your project requirements, scope, specifications, and any special considerations..."
                     maxLength={5000}
                   />
@@ -585,10 +592,11 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                                 value={formData.serviceDetails[field.key] || ''}
                                 onChange={(e) => handleServiceDetailChange(field.key, e.target.value)}
                                 className="w-full bg-white/5 border border-white/10 text-white px-3 py-2.5 pr-8 text-sm font-light focus:outline-none focus:border-white/30 transition-colors appearance-none min-h-[44px]"
+                                style={{ color: '#fff', backgroundColor: 'rgba(255,255,255,0.05)' }}
                               >
-                                <option value="">Select...</option>
+                                <option value="" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Select...</option>
                                 {field.options.map((opt) => (
-                                  <option key={opt} value={opt}>{opt}</option>
+                                  <option key={opt} value={opt} style={{ backgroundColor: '#1e293b', color: '#fff' }}>{opt}</option>
                                 ))}
                               </select>
                               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">

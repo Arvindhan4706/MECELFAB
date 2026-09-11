@@ -16,7 +16,7 @@ const Footer = ({ contact }) => {
     <footer className="bg-primary pt-24 pb-8 relative">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
       <div className="container px-4 sm:px-6 md:px-8 mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-10 lg:gap-12 mb-12 md:mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 mb-12 md:mb-16">
           {/* Brand Info */}
           <div>
             <div className="flex items-center gap-3 mb-6">
@@ -29,14 +29,14 @@ const Footer = ({ contact }) => {
             </p>
 
             {/* Contact CTAs */}
-            <div className="flex flex-col gap-2 mb-6">
+            <div className="flex flex-col gap-1 mb-6">
               {contact?.phone && (
-                <a href={`tel:${contact.phone.replace(/[^0-9+]/g, '')}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300">
+                <a href={`tel:${contact.phone.replace(/[^0-9+]/g, '')}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-2 min-h-[44px] inline-flex items-center">
                   {contact.phone}
                 </a>
               )}
               {contact?.email && (
-                <a href={`mailto:${contact.email}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300">
+                <a href={`mailto:${contact.email}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-2 min-h-[44px] inline-flex items-center">
                   {contact.email}
                 </a>
               )}
@@ -45,7 +45,7 @@ const Footer = ({ contact }) => {
                   href={`https://wa.me/${contact.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-secondary text-xs font-light hover:text-white transition-colors duration-300"
+                  className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-2 min-h-[44px] inline-flex items-center"
                 >
                   WhatsApp
                 </a>

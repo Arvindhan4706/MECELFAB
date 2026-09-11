@@ -40,7 +40,7 @@ const Testimonials = ({ testimonials = [] }) => {
   const isVisible = displayIndex >= 0;
 
   return (
-    <section id="testimonials" className="section section-bg-dark" style={{ position: 'relative', overflow: 'hidden' }}>
+    <section id="testimonials" className="section-padding bg-black border-t border-white/5" style={{ position: 'relative', overflow: 'hidden' }}>
       <div style={{
         position: 'absolute', top: '20%', left: '10%',
         width: '300px', height: '300px',
@@ -66,7 +66,7 @@ const Testimonials = ({ testimonials = [] }) => {
           </div>
 
           <div
-            className="glass-panel"
+            className="bg-white/[0.02] border border-white/5 rounded-xl"
             style={{
               padding: 'clamp(1.5rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2.5rem)',
               textAlign: 'center',

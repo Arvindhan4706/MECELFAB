@@ -138,7 +138,7 @@ const Industries = ({ industries: propIndustries }) => {
                 </div>
 
                 {/* Explore Button */}
-                <Link href={`/industries/${ind.slug}`} className="self-start text-accent font-heading text-sm tracking-widest uppercase hover:text-white transition-colors duration-500">
+                <Link href={`/industries/${ind.slug}`} className="self-start text-accent font-heading text-sm tracking-widest uppercase hover:text-white transition-colors duration-500 py-3 min-h-[44px] inline-flex items-center">
                   View {ind.title} Details
                 </Link>
               </div>

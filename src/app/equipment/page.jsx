@@ -73,7 +73,7 @@ const EQUIPMENT_CATEGORIES = [
     items: [
       { name: 'Generator AMC', range: 'Comprehensive plans', brands: 'Preventive + breakdown coverage' },
       { name: 'Hydraulic System AMC', range: 'Scheduled maintenance', brands: 'Oil analysis, seal replacement, testing' },
-      { name: 'Emergency Breakdown', range: '24/7 response', brands: 'Pan-India deployment' },
+      { name: 'Emergency Breakdown', range: '24/7 response', brands: 'Multi-site deployment' },
     ],
   },
 ];

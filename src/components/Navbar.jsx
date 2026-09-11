@@ -104,7 +104,7 @@ const Navbar = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 pt-[max(1rem,env(safe-area-inset-top))] pb-4 md:pb-6 ${isOpen ? 'bg-transparent' : ''}`}
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 pt-[max(1rem,env(safe-area-inset-top))] pb-4 md:pb-6 ${isOpen ? 'lg:block hidden' : ''}`}
       >
         <div className="container flex items-center justify-between mx-auto px-4 sm:px-6 md:px-8">
           <Link 
@@ -167,15 +167,15 @@ const Navbar = () => {
             )}
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle — hidden when menu is open (close button is in drawer) */}
           <button
             onClick={toggleMenu}
-            className="lg:hidden relative z-[101] text-white hover:text-white/70 transition-colors p-3 -mr-3 flex items-center justify-center min-h-[44px] min-w-[44px]"
-            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            className={`lg:hidden relative z-[101] text-white hover:text-white/70 transition-colors p-3 -mr-3 flex items-center justify-center min-h-[44px] min-w-[44px] ${isOpen ? 'hidden' : ''}`}
+            aria-label="Open navigation menu"
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
           >
-            {isOpen ? <X size={28} strokeWidth={1.5} /> : <Menu size={28} strokeWidth={1.5} />}
+            <Menu size={28} strokeWidth={1.5} />
           </button>
         </div>
       </nav>
@@ -184,16 +184,27 @@ const Navbar = () => {
       <div
         ref={menuDrawerRef}
         id="mobile-menu"
-        className="fixed inset-0 bg-black z-[90] flex flex-col justify-center px-6 sm:px-8 pb-10 lg:hidden"
+        className="fixed inset-0 bg-black z-[90] flex flex-col px-6 sm:px-8 pb-10 lg:hidden"
         style={{ display: isOpen ? 'flex' : 'none', pointerEvents: isOpen ? 'auto' : 'none' }}
       >
-        <div className="flex flex-col gap-6 w-full max-w-sm mx-auto">
+        {/* Close button at top */}
+        <div className="flex justify-end pt-[max(1rem,env(safe-area-inset-top))]">
+          <button
+            onClick={toggleMenu}
+            className="text-white hover:text-white/70 transition-colors p-3 flex items-center justify-center min-h-[44px] min-w-[44px]"
+            aria-label="Close navigation menu"
+          >
+            <X size={28} strokeWidth={1.5} />
+          </button>
+        </div>
+
+        <div className="flex flex-col gap-4 w-full max-w-sm mx-auto overflow-y-auto flex-1 pt-4 pb-8">
           {navLinks.map((link, index) => (
             <Link
               key={link.id}
               href={`/${link.id}`}
               onClick={() => toggleMenu()}
-              className="mobile-nav-link group flex items-baseline gap-4 text-white font-heading font-light text-3xl md:text-4xl tracking-wider uppercase border-b border-white/10 pb-4 pl-4 border-l-2 border-l-transparent hover:border-l-accent hover:pl-6 hover:text-white/90 transition-all duration-300"
+              className="mobile-nav-link group flex items-baseline gap-3 text-white font-heading font-light text-2xl md:text-3xl tracking-wider uppercase border-b border-white/10 pb-3 pl-4 border-l-2 border-l-transparent hover:border-l-accent hover:pl-6 hover:text-white/90 transition-all duration-300"
             >
               <span className="text-sm text-white/30 font-medium mt-1 transition-colors duration-300 group-hover:text-accent/60">
                 {String(index + 1).padStart(2, '0')}
@@ -232,7 +243,7 @@ const Navbar = () => {
 
           <div className="mobile-nav-link mt-4 pt-6 border-t border-white/10 flex flex-col gap-1.5 opacity-60">
             <span className="text-white text-[11px] font-heading tracking-[0.25em] uppercase">MECELFAB Industrial Solutions</span>
-            <span className="text-white/50 text-[11px] font-heading tracking-[0.2em] uppercase italic">Precision Engineering Excellence</span>
+            <span className="text-white/50 text-[11px] font-heading tracking-[0.2em] uppercase italic">            Precision Fabrication & Erection</span>
           </div>
         </div>
       </div>

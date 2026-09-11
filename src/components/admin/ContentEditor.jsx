@@ -9,8 +9,8 @@ export default function ContentEditor({ initialSettings, saveContentAction }) {
 
   // Parse initial JSON strings into state
   const [homepage, setHomepage] = useState(initialSettings.find(s => s.key === 'CONTENT_HOMEPAGE')?.value ? JSON.parse(initialSettings.find(s => s.key === 'CONTENT_HOMEPAGE').value) : {
-    heroTitle: 'ENGINEERING EXCELLENCE IN HEAVY INDUSTRIES',
-    heroDescription: 'MECELFAB delivers world-class industrial fabrication, erection, and mechanical services with unyielding commitment to safety and precision.',
+    heroTitle: 'INDUSTRIAL FABRICATION & ERECTION',
+    heroDescription: 'MECELFAB delivers industrial fabrication, erection, and mechanical services with commitment to safety and precision.',
     heroCta: 'REQUEST RFQ',
     secondaryCta: 'Our Services',
     aboutHeading: 'WHO WE ARE'

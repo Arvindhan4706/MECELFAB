@@ -6,7 +6,6 @@ import { FileCheck, Shield, ClipboardCheck, AlertTriangle } from 'lucide-react';
 
 const QualitySafety = () => {
   const containerRef = useRef(null);
-  const bgRef = useRef(null);
 
   const complianceCards = [
     {
@@ -32,15 +31,6 @@ const QualitySafety = () => {
   ];
 
   useGSAP(() => {
-    // Parallax
-    ScrollTrigger.create({
-      trigger: containerRef.current,
-      start: 'top bottom',
-      end: 'bottom top',
-      animation: gsap.fromTo(bgRef.current, { y: '-10%' }, { y: '10%', ease: 'none' }),
-      scrub: true,
-    });
-
     // Staggered texts
     gsap.fromTo('.qs-text',
       { opacity: 0, x: -30 },
@@ -68,13 +58,6 @@ const QualitySafety = () => {
 
   return (
     <section ref={containerRef} id="quality-safety" className="relative section-padding bg-primary-light overflow-hidden">
-      {/* Parallax Background Gradient */}
-      <div 
-        ref={bgRef}
-        className="absolute inset-0 z-0 pointer-events-none opacity-50"
-        style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(30,58,138,0.1) 100%)' }}
-      />
-      
       <div className="container relative z-10 mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           

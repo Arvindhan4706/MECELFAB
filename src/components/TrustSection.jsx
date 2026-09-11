@@ -27,7 +27,7 @@ const pillars = [
     icon: TrendingUp,
     label: 'Project Delivery',
     value: 'On-Time',
-    sub: 'Commissioning Guarantee',
+    sub: 'Documented Handover',
   },
 ];
 
@@ -39,13 +39,6 @@ const TrustSection = () => {
       { opacity: 0, y: 36 },
       {
         opacity: 1, y: 0, duration: 0.9, stagger: 0.12, ease: 'power3.out',
-        scrollTrigger: { trigger: ref.current, start: 'top 85%' },
-      }
-    );
-    gsap.fromTo('.trust-line',
-      { scaleX: 0 },
-      {
-        scaleX: 1, duration: 1.2, ease: 'power3.out', transformOrigin: 'left',
         scrollTrigger: { trigger: ref.current, start: 'top 85%' },
       }
     );

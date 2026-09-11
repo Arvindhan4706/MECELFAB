@@ -79,24 +79,6 @@ const Hero = ({ content }) => {
 
 
 
-    // Parallax on scroll — disabled on mobile (< 768px)
-    if (window.matchMedia('(min-width: 768px)').matches) {
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        animation: gsap.to(bgRef.current, { y: '22%', ease: 'none' }),
-        scrub: true,
-      });
-      ScrollTrigger.create({
-        trigger: containerRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        animation: gsap.to('.hero-outline-text', { y: '-8%', ease: 'none' }),
-        scrub: 1.5,
-      });
-    }
-
   }, { scope: containerRef });
 
   return (
@@ -242,7 +224,7 @@ const Hero = ({ content }) => {
           <div className="flex md:flex-wrap items-start gap-8 md:gap-14 min-w-max md:min-w-0">
             {[
               { label: '8 Service Lines', sub: 'Fabrication to Commissioning' },
-              { label: 'Pan-India Deployment', sub: 'Site-to-Site Mobilization' },
+              { label: 'Multi-Site Deployment', sub: 'Site-to-Site Mobilization' },
               { label: 'ISO 9001:2015', sub: 'Audited QMS' },
               { label: 'Safety-First', sub: 'Zero LTI Target' },
             ].map(({ label, sub }) => (

@@ -38,11 +38,11 @@ export default function MobileActionBar({ phone, whatsapp }) {
           {phoneClean && (
             <a
               href={`tel:${phoneClean}`}
-              className="flex-1 flex items-center justify-center gap-2 py-3 bg-white/5 border border-white/10 rounded-lg text-white text-xs font-heading tracking-wider uppercase hover:bg-white/10 transition-colors min-h-[44px]"
+              className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-3 bg-white/5 border border-white/10 rounded-lg text-white text-[10px] sm:text-xs font-heading tracking-wider uppercase hover:bg-white/10 transition-colors min-h-[44px]"
               aria-label="Call us"
             >
               <Phone size={15} />
-              <span>Call</span>
+              <span className="hidden xs:inline">Call</span>
             </a>
           )}
           {whatsappClean && (
@@ -50,24 +50,24 @@ export default function MobileActionBar({ phone, whatsapp }) {
               href={`https://wa.me/${whatsappClean}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
               target="_blank"
               rel="noreferrer"
-              className="flex-1 flex items-center justify-center gap-2 py-3 bg-[#25D366]/10 border border-[#25D366]/20 rounded-lg text-[#25D366] text-xs font-heading tracking-wider uppercase hover:bg-[#25D366]/20 transition-colors min-h-[44px]"
+              className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-3 bg-[#25D366]/10 border border-[#25D366]/20 rounded-lg text-[#25D366] text-[10px] sm:text-xs font-heading tracking-wider uppercase hover:bg-[#25D366]/20 transition-colors min-h-[44px]"
               aria-label="Chat on WhatsApp"
             >
               <MessageCircle size={15} />
-              <span>WhatsApp</span>
+              <span className="hidden sm:inline">WhatsApp</span>
             </a>
           )}
           <a
             href="/contact"
-            className="flex-1 flex items-center justify-center gap-2 py-3 bg-white text-primary rounded-lg text-xs font-heading tracking-wider uppercase hover:bg-white/90 transition-colors min-h-[44px]"
+            className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-3 bg-white text-primary rounded-lg text-[10px] sm:text-xs font-heading tracking-wider uppercase hover:bg-white/90 transition-colors min-h-[44px]"
             aria-label="Request RFQ"
           >
             <FileText size={15} />
-            <span>REQUEST RFQ</span>
+            <span className="hidden xs:inline">RFQ</span>
           </a>
           <button
             onClick={() => setDismissed(true)}
-            className="p-3 text-white/40 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="p-3 text-white/40 hover:text-white transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center shrink-0"
             aria-label="Dismiss action bar"
           >
             <X size={16} />

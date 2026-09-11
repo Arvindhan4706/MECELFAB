@@ -10,26 +10,26 @@ const reasons = [
   {
     icon: CheckCircle,
     num: '01',
-    title: 'Industrial Experience',
-    desc: 'Established company with hands-on work in heavy manufacturing and power-sector facilities.',
+    title: 'Multi-Discipline Execution',
+    desc: 'Fabrication, erection, and maintenance under one contract — no need to coordinate multiple contractors.',
   },
   {
     icon: ShieldAlert,
     num: '02',
-    title: 'Mechanical Expertise',
-    desc: 'Work in structural fabrication, mechanical erection, and complete system installation including alignment and commissioning.',
+    title: 'Documented Safety',
+    desc: 'Risk assessments, toolbox talks, permit-to-work systems, and PPE requirements enforced on every site.',
   },
   {
     icon: Lightbulb,
     num: '03',
-    title: 'Equipment Support',
-    desc: 'Complete generator and compressor rental, spare-part supply and breakdown response.',
+    title: 'Equipment Availability',
+    desc: 'In-house fleet of cranes, compressors, generators, and hydraulic test benches — no third-party dependency.',
   },
   {
     icon: Calendar,
     num: '04',
-    title: 'Planned Maintenance',
-    desc: 'Scheduled AMC contracts for generators and compressors to reduce unplanned breakdowns.',
+    title: 'Rapid Response',
+    desc: 'Breakdown support and emergency mobilization with defined response times for AMC customers.',
   },
 ];
 
@@ -78,12 +78,12 @@ const WhyChooseUs = () => {
             </div>
 
             <h2 className="text-4xl md:text-5xl font-heading font-light text-white tracking-tight leading-tight mb-8">
-              Fabrication. Erection.<br />
-              <span className="text-white/30 italic font-serif">Maintenance.</span>
+              Why MECELFAB<br />
+              <span className="text-white/30 italic font-serif">for your next project.</span>
             </h2>
 
             <p className="text-sm md:text-base text-white/45 font-light leading-relaxed mb-10 max-w-sm">
-              We handle fabrication, safe erection, maintenance callouts, and equipment rental from our project offices.
+              We combine fabrication, erection, and maintenance capability with documented safety procedures and in-house equipment — reducing coordination overhead and response time.
             </p>
 
             <Link
