@@ -375,7 +375,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     <button
                       type="button"
                       onClick={() => setFormStage(1)}
-                      className={`px-3 py-1.5 min-h-[36px] transition-colors ${formStage === 1 ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
+                      className={`px-3 py-2 min-h-[44px] transition-colors ${formStage === 1 ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
                     >
                       Quick
                     </button>
@@ -383,7 +383,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     <button
                       type="button"
                       onClick={() => setFormStage(2)}
-                      className={`px-3 py-1.5 min-h-[36px] transition-colors ${formStage === 2 ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
+                      className={`px-3 py-2 min-h-[44px] transition-colors ${formStage === 2 ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
                     >
                       Detailed
                     </button>
@@ -402,7 +402,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}
-                      className={`w-full bg-white/5 border ${formErrors.fullName ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
+                      className={`w-full bg-white/5 border ${formErrors.fullName ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-base min-h-[44px]`}
                       placeholder="Contact Person Full Name"
                       maxLength={100}
                       autoComplete="name"
@@ -417,7 +417,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       name="companyName"
                       value={formData.companyName}
                       onChange={handleChange}
-                      className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
+                      className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-base min-h-[44px]"
                       placeholder="Organization / Enterprise Name"
                       maxLength={200}
                       autoComplete="organization"
@@ -438,7 +438,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className={`w-full bg-white/5 border ${formErrors.email ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
+                      className={`w-full bg-white/5 border ${formErrors.email ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-base min-h-[44px]`}
                       placeholder="corporate.email@company.com"
                       maxLength={150}
                       autoComplete="email"
@@ -454,7 +454,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className={`w-full bg-white/5 border ${formErrors.phone ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]`}
+                      className={`w-full bg-white/5 border ${formErrors.phone ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-base min-h-[44px]`}
                       placeholder="Contact Telephone Number"
                       maxLength={20}
                       autoComplete="tel"
@@ -473,7 +473,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     name="projectLocation"
                     value={formData.projectLocation}
                     onChange={handleChange}
-                    className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
+                    className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-base min-h-[44px]"
                     placeholder="Project Site / City, State"
                     maxLength={200}
                   />
@@ -531,7 +531,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                       name="expectedTimeline"
                       value={formData.expectedTimeline}
                       onChange={handleChange}
-                      className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
+                      className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-base min-h-[44px]"
                       placeholder="e.g. 3-4 months"
                       maxLength={100}
                     />
@@ -570,7 +570,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     value={formData.projectDescription}
                     onChange={handleChange}
                     rows="4"
-                    className={`w-full bg-white/5 border ${formErrors.projectDescription ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm resize-y min-h-[100px]`}
+                    className={`w-full bg-white/5 border ${formErrors.projectDescription ? 'border-red-500' : 'border-white/10'} text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-base resize-y min-h-[100px]`}
                     placeholder="Describe your project requirements, scope, specifications, and any special considerations..."
                     maxLength={5000}
                   />
@@ -591,7 +591,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                                 id={field.key}
                                 value={formData.serviceDetails[field.key] || ''}
                                 onChange={(e) => handleServiceDetailChange(field.key, e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 text-white px-3 py-2.5 pr-8 text-sm font-light focus:outline-none focus:border-white/30 transition-colors appearance-none min-h-[44px]"
+                                className="w-full bg-white/5 border border-white/10 text-white px-3 py-2.5 pr-8 text-base font-light focus:outline-none focus:border-white/30 transition-colors appearance-none min-h-[44px]"
                                 style={{ color: '#fff', backgroundColor: 'rgba(255,255,255,0.05)' }}
                               >
                                 <option value="" style={{ backgroundColor: '#1e293b', color: '#fff' }}>Select...</option>
@@ -610,7 +610,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                               value={formData.serviceDetails[field.key] || ''}
                               onChange={(e) => handleServiceDetailChange(field.key, e.target.value)}
                               placeholder={field.placeholder}
-                              className="w-full bg-white/5 border border-white/10 text-white px-3 py-2.5 text-sm font-light focus:outline-none focus:border-white/30 transition-colors min-h-[44px]"
+                              className="w-full bg-white/5 border border-white/10 text-white px-3 py-2.5 text-base font-light focus:outline-none focus:border-white/30 transition-colors min-h-[44px]"
                             />
                           )}
                         </div>

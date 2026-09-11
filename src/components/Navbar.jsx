@@ -198,7 +198,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        <div className="flex flex-col gap-4 w-full max-w-sm mx-auto overflow-y-auto flex-1 pt-4 pb-8">
+        <div className="flex flex-col gap-4 w-full max-w-sm mx-auto overflow-y-auto flex-1 pt-4 pb-8" style={{ paddingBottom: 'max(2rem, calc(2rem + env(safe-area-inset-bottom)))' }}>
           {navLinks.map((link, index) => (
             <Link
               key={link.id}

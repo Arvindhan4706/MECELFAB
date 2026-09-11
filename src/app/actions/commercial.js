@@ -38,7 +38,7 @@ async function getAuthUser() {
   try {
     assertPermission(user.role, 'quotations:read'); 
   } catch (err) {
-    throw new Error(`Unauthorized: Role '${user.role}' is not permitted to perform commercial operations.`);
+    throw new Error(`Unauthorized: Role '${user.role}' is not permitted to perform commercial operations.`, { cause: err });
   }
 
   return { session, user };

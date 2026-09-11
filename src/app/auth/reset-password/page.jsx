@@ -117,6 +117,7 @@ function ResetPasswordForm() {
               type={showPw ? 'text' : 'password'}
               required
               minLength={8}
+              autoComplete="new-password"
               placeholder="Enter new password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -125,7 +126,7 @@ function ResetPasswordForm() {
               style={{
                 width: '100%',
                 padding: '11px 40px 11px 40px',
-                fontSize: '14px',
+                fontSize: '16px',
                 color: TEXT,
                 background: focused ? '#161616' : '#0f0f0f',
                 border: `1px solid ${focused ? BORDER_FOCUS : BORDER}`,
@@ -140,9 +141,10 @@ function ResetPasswordForm() {
               tabIndex={-1}
               style={{
                 position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
-                background: 'none', border: 'none', padding: '4px',
+                background: 'none', border: 'none', padding: '8px',
                 cursor: 'pointer', color: MUTED,
                 display: 'flex', alignItems: 'center',
+                minWidth: '44px', minHeight: '44px', justifyContent: 'center',
               }}
             >
               {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
@@ -157,13 +159,14 @@ function ResetPasswordForm() {
             marginTop: '4px',
             width: '100%',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-            padding: '12px 20px',
-            fontSize: '14px', fontWeight: 600,
+            padding: '14px 20px',
+            fontSize: '16px', fontWeight: 600,
             color: BG,
             background: (loading || !password) ? '#d4d4d4' : WHITE,
             border: 'none', borderRadius: '6px',
             cursor: (loading || !password) ? 'not-allowed' : 'pointer',
             transition: 'all 0.15s ease',
+            minHeight: '44px',
           }}
         >
           {loading ? (

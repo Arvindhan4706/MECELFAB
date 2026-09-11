@@ -53,10 +53,9 @@ export async function POST(req) {
       },
     });
 
-    const { v4: uuidv4 } = await import('uuid');
     const { sendVerificationEmail } = await import('@/lib/email');
     
-    const token = uuidv4();
+    const token = crypto.randomUUID();
     const expires = new Date(new Date().getTime() + 1000 * 60 * 60 * 24); // 24 hours
 
     await db.verificationToken.create({
@@ -70,7 +69,7 @@ export async function POST(req) {
     await sendVerificationEmail(email, token);
 
     return NextResponse.json(
-      { message: 'Account created successfully', userId: user.id },
+      { message: 'Account created successfully' },
       { status: 201 }
     );
   } catch (error) {

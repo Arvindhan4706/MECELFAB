@@ -1,15 +1,21 @@
 "use server";
 import { db } from "@/lib/db";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { headers } from "next/headers";
 
 const VALID_SERVICES = [
   'Industrial Erection', 'Industrial Fabrication', 'Hydraulic & Pneumatic System Overhauling',
   'Industrial Generator Spare Parts', 'AMC — Annual Maintenance Contract',
   'Industrial Generator Rental', 'Air Compressor Rental', 'Turbocharger Services', 'Other'
 ];
-const VALID_CONTACT_METHODS = ['Phone', 'Email', 'WhatsApp'];
 
 export async function submitInquiry(formData) {
+  const hdrs = headers();
+  const ip = hdrs.get('x-forwarded-for')?.split(',')[0]?.trim() || hdrs.get('x-real-ip') || '127.0.0.1';
+  if (!checkRateLimit(`action:${ip}`, 3, 60 * 1000)) {
+    return { error: 'Too many requests. Please try again later.' };
+  }
+
   const name = formData.get('name');
   const email = formData.get('email');
   const phone = formData.get('phone');

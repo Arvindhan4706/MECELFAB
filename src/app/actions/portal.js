@@ -20,7 +20,7 @@ async function getAuthCustomer() {
   try {
     assertPermission(session.user.role, 'portal:write');
   } catch (err) {
-    throw new Error("Unauthorized: Customer access only.");
+    throw new Error("Unauthorized: Customer access only.", { cause: err });
   }
 
   const customer = await db.customer.findUnique({

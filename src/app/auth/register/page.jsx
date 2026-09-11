@@ -60,7 +60,7 @@ function FormInput({ id, label, type = 'text', name, required, placeholder, auto
           style={{
             width: '100%',
             padding: `11px ${children ? '44px' : '13px'} 11px ${Icon ? '40px' : '13px'}`,
-            fontSize: '14px',
+            fontSize: '16px',
             color: TEXT,
             background: focused ? '#161616' : '#0f0f0f',
             border: `1px solid ${focused ? BORDER_FOCUS : BORDER}`,
@@ -207,10 +207,10 @@ export default function RegisterPage() {
             disabled={googleLoading || loading}
             style={{
               width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-              padding: '11px 20px', fontSize: '14px', fontWeight: 500, color: WHITE,
+              padding: '14px 20px', fontSize: '16px', fontWeight: 500, color: WHITE,
               background: '#1a1a1a', border: `1px solid ${BORDER}`, borderRadius: '6px',
               cursor: (googleLoading || loading) ? 'not-allowed' : 'pointer', transition: 'background 0.15s ease',
-              marginBottom: '20px',
+              marginBottom: '20px', minHeight: '44px',
             }}
           >
             <svg viewBox="0 0 24 24" width="16" height="16" xmlns="http://www.w3.org/2000/svg">
@@ -230,17 +230,17 @@ export default function RegisterPage() {
 
           <form onSubmit={handleSubmit} noValidate autoComplete="off" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <FormInput
-              id="name" label="Full Name" type="text" name="name" required autoComplete="new-password" placeholder="John Doe" icon={UserIcon}
+              id="name" label="Full Name" type="text" name="name" required autoComplete="name" placeholder="John Doe" icon={UserIcon}
             />
             <FormInput
-              id="email" label="Email Address" type="email" name="email" required autoComplete="new-password" placeholder="john@example.com" icon={Mail}
+              id="email" label="Email Address" type="email" name="email" required autoComplete="email" placeholder="john@example.com" icon={Mail}
             />
             <FormInput
               id="password" label="Password" type={showPw ? 'text' : 'password'} name="password" required autoComplete="new-password" placeholder="Create a strong password" icon={Lock}
             >
               <button
                 type="button" onClick={() => setShowPw(v => !v)} tabIndex={-1}
-                style={{ background: 'none', border: 'none', padding: '4px', cursor: 'pointer', color: MUTED, display: 'flex', alignItems: 'center' }}
+                style={{ background: 'none', border: 'none', padding: '8px', cursor: 'pointer', color: MUTED, display: 'flex', alignItems: 'center', minWidth: '44px', minHeight: '44px', justifyContent: 'center' }}
               >
                 {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
               </button>
@@ -250,7 +250,7 @@ export default function RegisterPage() {
             >
               <button
                 type="button" onClick={() => setShowPwConfirm(v => !v)} tabIndex={-1}
-                style={{ background: 'none', border: 'none', padding: '4px', cursor: 'pointer', color: MUTED, display: 'flex', alignItems: 'center' }}
+                style={{ background: 'none', border: 'none', padding: '8px', cursor: 'pointer', color: MUTED, display: 'flex', alignItems: 'center', minWidth: '44px', minHeight: '44px', justifyContent: 'center' }}
               >
                 {showPwConfirm ? <EyeOff size={14} /> : <Eye size={14} />}
               </button>
@@ -260,8 +260,8 @@ export default function RegisterPage() {
               type="submit" disabled={loading || googleLoading}
               style={{
                 marginTop: '4px', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                padding: '12px 20px', fontSize: '14px', fontWeight: 600, color: BG, background: loading ? '#d4d4d4' : WHITE,
-                border: 'none', borderRadius: '6px', cursor: (loading || googleLoading) ? 'not-allowed' : 'pointer',
+                padding: '14px 20px', fontSize: '16px', fontWeight: 600, color: BG, background: loading ? '#d4d4d4' : WHITE,
+                border: 'none', borderRadius: '6px', cursor: (loading || googleLoading) ? 'not-allowed' : 'pointer', minHeight: '44px',
               }}
             >
               {loading ? 'Creating account...' : 'Create Account'}

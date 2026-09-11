@@ -61,7 +61,7 @@ function FormInput({ id, label, type = 'text', name, required, defaultValue, pla
           style={{
             width: '100%',
             padding: `11px ${children ? '44px' : '13px'} 11px ${Icon ? '40px' : '13px'}`,
-            fontSize: '14px',
+            fontSize: '16px',
             color: TEXT,
             background: focused ? '#161616' : '#0f0f0f',
             border: `1px solid ${focused ? BORDER_FOCUS : BORDER}`,
@@ -190,7 +190,7 @@ function LoginFormContent() {
           type="email"
           name="email"
           required
-          autoComplete="new-password"
+          autoComplete="email"
           placeholder="Enter your email"
           icon={Mail}
         />
@@ -202,7 +202,7 @@ function LoginFormContent() {
           type={showPw ? 'text' : 'password'}
           name="password"
           required
-          autoComplete="new-password"
+          autoComplete="current-password"
           placeholder="Enter your password"
           icon={Lock}
         >
@@ -212,15 +212,16 @@ function LoginFormContent() {
             tabIndex={-1}
             aria-label={showPw ? 'Hide password' : 'Show password'}
             style={{
-              background: 'none', border: 'none', padding: '4px',
+              background: 'none', border: 'none', padding: '8px',
               cursor: 'pointer', color: MUTED,
               display: 'flex', alignItems: 'center',
               transition: 'color 0.15s ease',
+              minWidth: '44px', minHeight: '44px', justifyContent: 'center',
             }}
             onMouseEnter={e => e.currentTarget.style.color = '#888'}
             onMouseLeave={e => e.currentTarget.style.color = MUTED}
           >
-            {showPw ? <EyeOff size={14} /> : <Eye size={14} />}
+            {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
         </FormInput>
         <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '-8px' }}>
@@ -238,14 +239,15 @@ function LoginFormContent() {
             marginTop: '4px',
             width: '100%',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-            padding: '12px 20px',
-            fontSize: '14px', fontWeight: 600,
+            padding: '14px 20px',
+            fontSize: '16px', fontWeight: 600,
             color: BG,
             background: loading ? '#d4d4d4' : WHITE,
             border: 'none', borderRadius: '6px',
             cursor: (loading || googleLoading) ? 'not-allowed' : 'pointer',
             transition: 'background 0.15s ease, box-shadow 0.15s ease',
             letterSpacing: '-0.01em',
+            minHeight: '44px',
           }}
           onMouseEnter={e => { if (!loading && !googleLoading) e.currentTarget.style.background = '#e8e8e8'; }}
           onMouseLeave={e => { if (!loading && !googleLoading) e.currentTarget.style.background = WHITE; }}
@@ -282,14 +284,15 @@ function LoginFormContent() {
         style={{
           width: '100%',
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
-          padding: '12px 20px',
-          fontSize: '14px', fontWeight: 500,
+          padding: '14px 20px',
+          fontSize: '16px', fontWeight: 500,
           color: WHITE,
           background: 'transparent',
           border: `1px solid ${BORDER_FOCUS}`,
           borderRadius: '6px',
           cursor: (loading || googleLoading) ? 'not-allowed' : 'pointer',
           transition: 'all 0.15s ease',
+          minHeight: '44px',
         }}
         onMouseEnter={e => { if (!loading && !googleLoading) e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; }}
         onMouseLeave={e => { if (!loading && !googleLoading) e.currentTarget.style.background = 'transparent'; }}

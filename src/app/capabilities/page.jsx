@@ -129,7 +129,7 @@ export default async function CapabilitiesPage() {
                   </div>
                   <div>
                     <h2 className="text-2xl font-heading font-light text-white">{section.service}</h2>
-                    <Link href={`/services/${section.slug}`} className="text-white/30 text-xs font-heading tracking-widest uppercase hover:text-white/60 transition-colors">
+                    <Link href={`/services/${section.slug}`} className="text-white/30 text-xs font-heading tracking-widest uppercase hover:text-white/60 transition-colors py-2 min-h-[44px] inline-flex items-center">
                       View Service Details
                     </Link>
                   </div>

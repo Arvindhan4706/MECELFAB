@@ -283,7 +283,8 @@ textarea.form-control {
 
 /* Fix global page padding under navbar */
 .page-wrapper {
-  padding-top: 4rem; /* Reduced from 100px to match new navbar height */
+  padding-top: 4.5rem; /* 72px — safe on notched iPhones with navbar */
+  padding-bottom: 5rem; /* Extra bottom padding for MobileActionBar overlap */
 }
 
 /* Fluid section padding */

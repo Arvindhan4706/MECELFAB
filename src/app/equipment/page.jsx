@@ -118,9 +118,9 @@ export default function EquipmentPage() {
                   <div className="flex flex-col gap-3">
                     {cat.items.map((item) => (
                       <div key={item.name} className="p-3 bg-white/[0.02] border border-white/5 rounded-lg">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="text-white text-sm font-light">{item.name}</span>
-                          <span className="text-secondary text-xs font-light">{item.range}</span>
+                        <div className="flex items-center justify-between mb-1 gap-2">
+                          <span className="text-white text-sm font-light truncate">{item.name}</span>
+                          <span className="text-secondary text-xs font-light shrink-0">{item.range}</span>
                         </div>
                         <p className="text-white/40 text-xs font-light">{item.brands}</p>
                       </div>

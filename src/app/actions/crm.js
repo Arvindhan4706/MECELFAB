@@ -6,12 +6,13 @@ import { revalidatePath } from 'next/cache';
 
 export async function addInquiryNote(formData) {
   const session = await getServerSession(authOptions);
-  if (!session || session.user?.role === 'CUSTOMER') throw new Error('Unauthorized');
+  if (!session || session.user?.role === 'CUSTOMER') return { error: 'Unauthorized' };
 
   const inquiryId = formData.get('inquiryId');
   const noteText = formData.get('note');
 
-  if (!noteText || !inquiryId) return;
+  if (!noteText || !inquiryId) return { error: 'Missing required fields' };
+  if (typeof noteText !== 'string' || noteText.length > 2000) return { error: 'Note is too long' };
 
   await db.inquiryNote.create({
     data: {
@@ -36,12 +37,12 @@ export async function addInquiryNote(formData) {
 
 export async function updateInquiryStatus(formData) {
   const session = await getServerSession(authOptions);
-  if (!session || session.user?.role === 'CUSTOMER') throw new Error('Unauthorized');
+  if (!session || session.user?.role === 'CUSTOMER') return { error: 'Unauthorized' };
 
   const inquiryId = formData.get('inquiryId');
   const status = formData.get('status');
 
-  if (!status || !inquiryId) return;
+  if (!status || !inquiryId) return { error: 'Missing required fields' };
 
   await db.inquiry.update({
     where: { id: inquiryId },

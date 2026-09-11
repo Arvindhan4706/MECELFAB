@@ -62,7 +62,7 @@ const About = ({ content }) => {
             Who We Are
           </div>
           <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            What We Do
+            Who We Are
           </h3>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
             MECELFAB Industrial Solutions provides fabrication, installation, and maintenance work for industrial facilities. Our team of qualified engineers and skilled technicians handles project execution from planning through installation and commissioning.
@@ -86,11 +86,11 @@ const About = ({ content }) => {
             </div>
             <div className="text-left">
               <h4 className="font-heading text-lg text-white mb-3">Automation</h4>
-              <p className="text-secondary text-sm font-light">PLC programming, SCADA systems, and robotic integration</p>
+              <p className="text-secondary text-sm font-light">PLC programming and SCADA systems</p>
             </div>
             <div className="text-left">
               <h4 className="font-heading text-lg text-white mb-3">Fabrication</h4>
-              <p className="text-secondary text-sm font-light">Precision welding, CNC machining, and structural assembly</p>
+              <p className="text-secondary text-sm font-light">Precision welding and structural assembly</p>
             </div>
             <div className="text-left">
               <h4 className="font-heading text-lg text-white mb-3">Installation</h4>
@@ -128,17 +128,14 @@ const About = ({ content }) => {
             </div>
           </div>
 
-          {/* Leadership */}
+          {/* How We Work */}
           <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-4 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
-            Leadership
+            How We Work
           </div>
           <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Leadership
+            How We Work
           </h3>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            {content?.values || 'Precision fabrication. Documented safety procedures. Project accountability. Work completed to spec.'}
-          </p>
-          <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-3xl">
             Our team consists of qualified engineers with professional experience in industrial fabrication, automation, and infrastructure projects. We maintain a policy of using only verified team member information and do not publish individual profiles without explicit consent.
           </p>
 
@@ -160,9 +157,9 @@ const About = ({ content }) => {
             </div>
           </div>
 
-          {/* Company Timeline */}
+          {/* Our Practice */}
           <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-4 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
-            Company Timeline
+            Our Practice
           </div>
           <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
             Our Practice

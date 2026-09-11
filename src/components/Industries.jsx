@@ -121,7 +121,7 @@ const Industries = ({ industries: propIndustries }) => {
 
               {/* Details */}
               <div className="p-5 sm:p-6 flex flex-col flex-grow relative z-20">
-                <h3 className="text-xl font-heading font-light text-white mb-3 drop-shadow-md">
+                <h3 className="text-lg sm:text-xl font-heading font-light text-white mb-3 drop-shadow-md line-clamp-2">
                   {ind.title}
                 </h3>
                 <p className="text-secondary text-sm flex-grow leading-relaxed mb-4">

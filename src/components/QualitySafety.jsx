@@ -76,13 +76,13 @@ const QualitySafety = () => {
               Safety procedures are enforced on all fabrication and field sites. Engineers coordinate with safety officers to ensure work meets specified standards and documented requirements.
             </p>
 
-            <div className="qs-text flex gap-8 pt-8 border-t border-white/5">
+            <div className="qs-text flex flex-wrap gap-8 pt-8 border-t border-white/5">
               <div>
-                <div className="text-4xl font-heading font-light text-white mb-1">Safety-First</div>
+                <div className="text-2xl sm:text-4xl font-heading font-light text-white mb-1">Safety-First</div>
                 <div className="text-xs text-secondary tracking-widest uppercase font-semibold">Workforce Tracked</div>
               </div>
-              <div className="pl-8 border-l border-white/5">
-                <div className="text-4xl font-heading font-light text-white mb-1">Zero LTI Target</div>
+              <div className="pl-0 sm:pl-8 border-l-0 sm:border-l border-white/5">
+                <div className="text-2xl sm:text-4xl font-heading font-light text-white mb-1">Zero LTI Target</div>
                 <div className="text-xs text-secondary tracking-widest uppercase font-semibold">Incident-Based</div>
               </div>
             </div>

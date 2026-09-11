@@ -158,7 +158,7 @@ const Hero = ({ content }) => {
         {/* Full legal name + tagline */}
         <div className="hero-tagline flex flex-col md:flex-row items-center md:items-baseline gap-2 md:gap-x-4 mb-8 opacity-0 text-center md:text-left mt-5 md:mt-0">
           <span className="text-white/40 text-xs md:text-sm font-heading tracking-[0.25em] uppercase">
-            {content?.heroTitle?.substring(content.heroTitle.indexOf(' ') + 1) || 'Industrial Solutions Pvt. Ltd.'}
+            {content?.heroTitle?.substring(content.heroTitle.indexOf(' ') + 1) || 'INDUSTRIAL SOLUTIONS PRIVATE LIMITED'}
           </span>
           <div className="w-[1px] h-3 bg-white/20 hidden md:block" />
           <span className="text-white/60 text-xs md:text-sm font-heading tracking-[0.2em] uppercase italic">

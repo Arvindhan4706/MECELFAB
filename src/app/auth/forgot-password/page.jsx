@@ -98,6 +98,8 @@ export default function ForgotPasswordPage() {
                 <input
                   type="email"
                   required
+                  autoComplete="email"
+                  inputMode="email"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -106,7 +108,7 @@ export default function ForgotPasswordPage() {
                   style={{
                     width: '100%',
                     padding: '11px 13px 11px 40px',
-                    fontSize: '14px',
+                    fontSize: '16px',
                     color: TEXT,
                     background: focused ? '#161616' : '#0f0f0f',
                     border: `1px solid ${focused ? BORDER_FOCUS : BORDER}`,
@@ -125,13 +127,14 @@ export default function ForgotPasswordPage() {
                 marginTop: '4px',
                 width: '100%',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                padding: '12px 20px',
-                fontSize: '14px', fontWeight: 600,
+                padding: '14px 20px',
+                fontSize: '16px', fontWeight: 600,
                 color: BG,
                 background: (loading || !email) ? '#d4d4d4' : WHITE,
                 border: 'none', borderRadius: '6px',
                 cursor: (loading || !email) ? 'not-allowed' : 'pointer',
                 transition: 'all 0.15s ease',
+                minHeight: '44px',
               }}
             >
               {loading ? (

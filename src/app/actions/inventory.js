@@ -22,7 +22,7 @@ function checkStaffRole(role) {
   try {
     assertPermission(role, 'inventory:read');
   } catch (err) {
-    throw new Error("Forbidden: Insufficient privileges.");
+    throw new Error("Forbidden: Insufficient privileges.", { cause: err });
   }
 }
 
