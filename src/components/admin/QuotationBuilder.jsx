@@ -149,7 +149,7 @@ export default function QuotationBuilder({ inquiry, saveQuotationAction }) {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {items.map((item, index) => (
+                {items.map((item, _index) => (
                   <tr key={item.id} className="hover:bg-gray-50/50">
                     <td className="p-3">
                       <input type="text" required value={item.description} onChange={(e) => handleItemChange(item.id, 'description', e.target.value)} placeholder="Item description" className="w-full border-gray-300 border rounded px-3 py-2 text-sm focus:border-blue-500 focus:outline-none" />

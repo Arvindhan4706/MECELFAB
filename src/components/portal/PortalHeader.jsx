@@ -11,7 +11,7 @@ const PAGE_TITLES = {
   '/portal/billing':      'Billing',
 };
 
-export default function PortalHeader({ customerName }) {
+export default function PortalHeader({ customerName: _customerName }) {
   const pathname = usePathname();
   const title = PAGE_TITLES[pathname] || 'Portal';
 

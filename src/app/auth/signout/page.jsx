@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { LogOut, ArrowLeft, Home, Shield } from 'lucide-react';
 
@@ -14,7 +13,6 @@ const WHITE    = '#ffffff';
 
 export default function SignOutPage() {
   const { data: session } = useSession();
-  const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const firstName = session?.user?.name?.split(' ')[0] || 'there';

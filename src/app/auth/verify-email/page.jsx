@@ -43,7 +43,7 @@ function VerifyEmailLogic() {
         } else {
           setStatus({ type: 'error', message: data.message || 'Verification failed.' });
         }
-      } catch (err) {
+      } catch {
         setStatus({ type: 'error', message: 'Failed to verify email.' });
       }
     };

@@ -11,7 +11,6 @@ import {
 
 /* ─── Design tokens ─────────────────────────────────────── */
 const BG       = '#0a0a0a';
-const SURFACE  = '#111111';
 const BORDER   = '#1e1e1e';
 const BORDER_FOCUS = '#4a4a4a';
 const TEXT     = '#ffffff';

@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, User, Phone, MapPin, Calendar, Clock, Wrench } from 'lucide-react';
+import { ArrowLeft, User, Phone, MapPin, Clock, Wrench } from 'lucide-react';
 import TechnicianVisitForm from './TechnicianVisitForm';
 
 export const metadata = {

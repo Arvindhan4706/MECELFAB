@@ -50,7 +50,7 @@ export const authOptions = {
     })
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account, _profile }) {
       if (account.provider === "google") {
         // Prevent ATO by checking if email already exists
         const existingUser = await db.user.findUnique({
@@ -75,7 +75,7 @@ export const authOptions = {
       }
       return true;
     },
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token, user, _trigger, _session }) {
       // Pass the role & id from user to token
       if (user) {
         token.role = user.role || "CUSTOMER"; // Default to CUSTOMER if not set (for OAuth creation)

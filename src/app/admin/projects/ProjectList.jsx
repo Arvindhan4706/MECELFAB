@@ -102,7 +102,7 @@ export default function ProjectList({ initialProjects }) {
       try {
         await deleteProject(id);
         setProjects(projects.filter(p => p.id !== id));
-      } catch (error) {
+      } catch {
         alert('Failed to delete project.');
       }
     }

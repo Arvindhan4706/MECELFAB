@@ -2,7 +2,7 @@ import { db } from '@/lib/db';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import Link from 'next/link';
-import { FileText, CheckCircle, AlertTriangle, Clock, Download, Eye } from 'lucide-react';
+import { FileText, Download } from 'lucide-react';
 
 export const metadata = { title: 'Quotations | MECELFAB Portal' };
 

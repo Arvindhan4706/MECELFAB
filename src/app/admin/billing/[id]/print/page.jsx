@@ -17,7 +17,7 @@ export default async function InvoicePrintPage(props) {
   
   try {
     assertPermission(session.user.role, 'billing:read');
-  } catch (err) {
+  } catch {
     redirect('/admin/dashboard');
   }
 

@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Phone, Mail, FileText, Calendar, User, Clock, MessageSquare, Plus, CheckCircle, Send, XCircle } from 'lucide-react';
+import { ArrowLeft, Phone, Mail, FileText, Calendar, User, Clock, MessageSquare, Plus, CheckCircle } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
 
 export const metadata = {
@@ -415,7 +415,7 @@ export default async function (props) {
               <h2 className="font-semibold text-admin-heading text-sm flex items-center gap-2"><Clock size={16}/> Activity Timeline</h2>
             </div>
             <div className="p-4 space-y-4 max-h-[300px] overflow-y-auto">
-              {activityLogs.map((log, index) => (
+              {activityLogs.map((log, _index) => (
                 <div key={log.id} className="relative pl-4 border-l-2 border-admin-border">
                   <div className="absolute w-2 h-2 bg-gray-400 rounded-full -left-[5px] top-1.5 border-2 border-white"></div>
                   <p className="text-xs font-semibold text-admin-heading">{log.action.replace('_', ' ')}</p>

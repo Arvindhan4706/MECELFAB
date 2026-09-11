@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import Link from 'next/link';
 import { ArrowRight, Wrench, Hammer, Droplets, Zap, Clock, Battery, Wind, Settings } from 'lucide-react';
 

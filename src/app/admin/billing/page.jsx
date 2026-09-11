@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Banknote, Search, Plus, Calendar, ArrowRight, IndianRupee } from 'lucide-react';
+import { Banknote, Search, Plus, ArrowRight, IndianRupee } from 'lucide-react';
 
 export const metadata = {
   title: 'Billing & Invoices | Admin | MECELFAB',

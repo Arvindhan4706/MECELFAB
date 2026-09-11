@@ -66,7 +66,7 @@ export default async function AdminDashboardPage() {
   if (!session) redirect('/admin/login');
 
   // ── CRM KPIs ────────────────────────────────────────────
-  const [newInquiries, openInquiries, quotations, wonInquiries, portalRequests] = await Promise.all([
+  const [newInquiries, openInquiries, quotations, _wonInquiries, portalRequests] = await Promise.all([
     db.inquiry.count({ where: { status: 'NEW' } }),
     db.inquiry.count({ where: { status: { in: ['NEW', 'CONTACTED', 'REQUIREMENT_VERIFIED', 'QUOTATION', 'NEGOTIATION'] } } }),
     db.inquiry.count({ where: { status: 'QUOTATION' } }),

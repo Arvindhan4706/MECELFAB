@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -53,7 +53,7 @@ const Navbar = () => {
     });
   }, [isOpen]);
 
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
     const nextState = !isOpen;
     setIsOpen(nextState);
     
@@ -85,7 +85,7 @@ const Navbar = () => {
         yPercent: -100, opacity: 0, duration: 0.5, ease: 'power3.in'
       });
     }
-  };
+  }, [isOpen]);
 
   // Handle ESC key to close mobile menu
   useEffect(() => {
@@ -96,7 +96,7 @@ const Navbar = () => {
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [isOpen]);
+  }, [isOpen, toggleMenu]);
 
   if (pathname?.startsWith('/admin') || pathname?.startsWith('/auth') || pathname?.startsWith('/portal')) return null;
 

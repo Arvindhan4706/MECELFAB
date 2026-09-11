@@ -17,7 +17,7 @@ export default async function (props) {
   
   try {
     assertPermission(session.user.role, 'quotations:read');
-  } catch (err) {
+  } catch {
     redirect('/admin/dashboard');
   }
 

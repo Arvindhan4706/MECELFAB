@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { Calendar, User } from 'lucide-react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
 
 const IMAGE_FALLBACKS = {

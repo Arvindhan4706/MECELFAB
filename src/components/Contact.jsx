@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 
 const SERVICE_FIELDS = {
   'Industrial Generator Rental': [

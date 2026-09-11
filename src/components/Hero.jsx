@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 
 const Hero = ({ content }) => {
   const containerRef = useRef(null);

@@ -1,13 +1,12 @@
 "use client";
 
 import { useState } from 'react';
-import { Mail, Phone, Calendar, Trash2, CheckCircle, Clock } from 'lucide-react';
+import { Mail, Phone, Trash2, CheckCircle, Clock } from 'lucide-react';
 import { updateInquiryStatus, deleteInquiry } from '@/app/actions/admin';
 
 export default function InquiryList({ initialInquiries }) {
   const [inquiries, setInquiries] = useState(initialInquiries);
   const [selectedInquiry, setSelectedInquiry] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const handleStatusChange = async (id, newStatus) => {
     try {

@@ -46,7 +46,7 @@ export async function POST(req) {
     const url = `/uploads/${filename}`;
 
     // Save to database
-    const media = await db.media.create({
+    await db.media.create({
       data: {
         filename,
         url,

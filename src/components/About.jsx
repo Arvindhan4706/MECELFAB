@@ -1,9 +1,26 @@
 "use client";
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
+import { Settings, Zap, Wrench, Shield, Clock, Target, Award, CheckCircle, FileCheck } from 'lucide-react';
 
 import TextReveal from './animations/TextReveal';
+
+const disciplines = [
+  { icon: Wrench, name: 'Mechanical Engineering', desc: 'Structural analysis, machine design, and fabrication processes' },
+  { icon: Zap, name: 'Electrical Engineering', desc: 'Power distribution, control systems, and automation integration' },
+  { icon: Settings, name: 'Automation', desc: 'PLC programming and SCADA systems' },
+  { icon: Target, name: 'Fabrication', desc: 'Precision welding and structural assembly' },
+  { icon: Wrench, name: 'Installation', desc: 'Equipment erection, mechanical alignment, and system commissioning' },
+  { icon: Clock, name: 'Project Management', desc: 'CPM scheduling, resource allocation, and quality control' },
+];
+
+const values = [
+  { label: 'PRECISION', desc: 'Exact measurements and tight tolerances in all work', icon: Target },
+  { label: 'SAFETY', desc: 'Commitment to workplace safety with adherence to industry standards', icon: Shield },
+  { label: 'ACCOUNTABILITY', desc: 'Full transparency and ownership of project outcomes', icon: CheckCircle },
+  { label: 'DELIVERY', desc: 'On-time completion with verified performance', icon: Clock },
+];
 
 const About = ({ content }) => {
   const sectionRef = useRef(null);
@@ -17,7 +34,7 @@ const About = ({ content }) => {
         y: 0,
         opacity: 1,
         duration: 1,
-        stagger: 0.15,
+        stagger: 0.12,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -29,147 +46,174 @@ const About = ({ content }) => {
 
   return (
     <section ref={sectionRef} id="about" className="section-padding bg-primary border-t border-white/5 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl text-center">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl">
 
-        <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-8 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
-          Our Foundation
+        {/* ═══════════════════════════════════════════
+            1. OUR FOUNDATION
+        ═══════════════════════════════════════════ */}
+        <div className="text-center mb-20 md:mb-28">
+          <h2 className="about-animate text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white leading-tight tracking-tight mb-8">
+            Our Foundation
+          </h2>
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-8" />
+          <TextReveal
+            as="p"
+            delay={0.1}
+            className="text-base md:text-lg text-secondary font-light leading-relaxed max-w-3xl mx-auto"
+          >
+            {content?.mission || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED is an industrial engineering company. We were founded by mechanical and mechatronics engineers and focus on heavy structural fabrication, equipment installation, and maintenance services.'}
+          </TextReveal>
         </div>
 
-        <h1 className="about-animate text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white leading-tight tracking-tight mb-12">
-          Precision engineering for <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-secondary">industrial operations</span>.
-        </h1>
-
-        <TextReveal
-          as="p"
-          delay={0.1}
-          className="text-lg md:text-xl text-secondary font-light leading-relaxed mb-8 max-w-3xl mx-auto"
-        >
-          {content?.mission || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED is an industrial engineering company. We were founded by mechanical and mechatronics engineers and focus on heavy structural fabrication, equipment installation, and maintenance services.'}
-        </TextReveal>
-
-        <TextReveal
-          as="p"
-          delay={0.2}
-          className="text-lg md:text-xl text-secondary font-light leading-relaxed mb-16 max-w-3xl mx-auto"
-        >
-          {content?.vision || 'Our work covers heavy metal fabrication, structural erection, and maintenance of pneumatic and hydraulic systems. We build and maintain industrial facilities and mechanical systems to reduce downtime.'}
-        </TextReveal>
-
-        {/* Enhanced Sections per Master Prompt */}
-        <div className="text-left mb-20">
-          {/* Who We Are */}
-          <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-4 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
+        {/* ═══════════════════════════════════════════
+            2. WHO WE ARE
+        ═══════════════════════════════════════════ */}
+        <div className="mb-24 md:mb-32">
+          <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
             Who We Are
+          </h2>
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="about-animate text-secondary text-base md:text-lg font-light leading-relaxed mb-8">
+              {content?.vision || 'Our work covers heavy metal fabrication, structural erection, and maintenance of pneumatic and hydraulic systems. We build and maintain industrial facilities and mechanical systems to reduce downtime.'}
+            </p>
+            <div className="about-animate flex items-start gap-4 p-5 bg-white/[0.02] border border-white/5 rounded-lg text-left">
+              <div className="w-10 h-10 rounded-full bg-white/[0.05] flex items-center justify-center shrink-0 mt-0.5">
+                <Award size={18} className="text-white/60" />
+              </div>
+              <p className="text-secondary text-sm font-light leading-relaxed">
+                MECELFAB handles fabrication, erection, and maintenance projects for industrial clients. We focus on completing work to specification, on schedule, and at the agreed cost.
+              </p>
+            </div>
           </div>
-          <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Who We Are
-          </h3>
-          <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            MECELFAB Industrial Solutions provides fabrication, installation, and maintenance work for industrial facilities. Our team of qualified engineers and skilled technicians handles project execution from planning through installation and commissioning.
-          </p>
+        </div>
 
-          {/* Our Capabilities */}
-          <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-4 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
+        {/* ═══════════════════════════════════════════
+            3. OUR CAPABILITIES
+        ═══════════════════════════════════════════ */}
+        <div className="mb-24 md:mb-32">
+          <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
             Our Capabilities
+          </h2>
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {disciplines.map((d) => (
+              <div
+                key={d.name}
+                className="about-animate group flex items-start gap-3 p-5 bg-white/[0.02] border border-white/5 rounded-lg hover:border-white/10 transition-colors duration-300"
+              >
+                <div className="w-10 h-10 rounded-md bg-white/[0.04] flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-white/[0.06] transition-colors">
+                  <d.icon size={18} className="text-white/50 group-hover:text-white/70 transition-colors" />
+                </div>
+                <div>
+                  <h4 className="font-heading text-sm text-white mb-1">{d.name}</h4>
+                  <p className="text-secondary text-xs font-light leading-relaxed">{d.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
-          <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Engineering Disciplines
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <div className="text-left">
-              <h4 className="font-heading text-lg text-white mb-3">Mechanical Engineering</h4>
-              <p className="text-secondary text-sm font-light">Structural analysis, machine design, and fabrication processes</p>
-            </div>
-            <div className="text-left">
-              <h4 className="font-heading text-lg text-white mb-3">Electrical Engineering</h4>
-              <p className="text-secondary text-sm font-light">Power distribution, control systems, and automation integration</p>
-            </div>
-            <div className="text-left">
-              <h4 className="font-heading text-lg text-white mb-3">Automation</h4>
-              <p className="text-secondary text-sm font-light">PLC programming and SCADA systems</p>
-            </div>
-            <div className="text-left">
-              <h4 className="font-heading text-lg text-white mb-3">Fabrication</h4>
-              <p className="text-secondary text-sm font-light">Precision welding and structural assembly</p>
-            </div>
-            <div className="text-left">
-              <h4 className="font-heading text-lg text-white mb-3">Installation</h4>
-              <p className="text-secondary text-sm font-light">Equipment erection, mechanical alignment, and system commissioning</p>
-            </div>
-            <div className="text-left">
-              <h4 className="font-heading text-lg text-white mb-3">Project Management</h4>
-              <p className="text-secondary text-sm font-light">CPM scheduling, resource allocation, and quality control</p>
-            </div>
-          </div>
-
-          {/* Our Values */}
-          <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-4 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
-            Our Values
-          </div>
-          <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            How We Work
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
-            <div className="text-left">
-              <h4 className="font-heading text-xl text-white mb-2">PRECISION</h4>
-              <p className="text-secondary text-sm font-light">Exact measurements and tight tolerances in all work</p>
-            </div>
-            <div className="text-left">
-              <h4 className="font-heading text-xl text-white mb-2">SAFETY</h4>
-              <p className="text-secondary text-sm font-light">Commitment to workplace safety with adherence to industry standards</p>
-            </div>
-            <div className="text-left">
-              <h4 className="font-heading text-xl text-white mb-2">ACCOUNTABILITY</h4>
-              <p className="text-secondary text-sm font-light">Full transparency and ownership of project outcomes</p>
-            </div>
-            <div className="text-left">
-              <h4 className="font-heading text-xl text-white mb-2">DELIVERY</h4>
-              <p className="text-secondary text-sm font-light">On-time completion with verified performance</p>
-            </div>
-          </div>
-
-          {/* How We Work */}
-          <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-4 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
-            How We Work
-          </div>
-          <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            How We Work
-          </h3>
-          <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            Our team consists of qualified engineers with professional experience in industrial fabrication, automation, and infrastructure projects. We maintain a policy of using only verified team member information and do not publish individual profiles without explicit consent.
-          </p>
-
-          {/* Certifications */}
-          <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-4 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
-            Certifications
-          </div>
-          <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Verified Standards Compliance
-          </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white/[0.02] border border-white/5 rounded-lg p-6">
-              <h4 className="font-heading text-lg text-white mb-3">ISO 9001:2015</h4>
-              <p className="text-secondary text-sm font-light">Quality Management Systems</p>
-            </div>
-            <div className="bg-white/[0.02] border border-white/5 rounded-lg p-6">
-              <h4 className="font-heading text-lg text-white mb-3">ISO 45001:2018</h4>
-              <p className="text-secondary text-sm font-light">Occupational Health and Safety</p>
-            </div>
-          </div>
-
-          {/* Our Practice */}
-          <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-4 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
-            Our Practice
-          </div>
-          <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Our Practice
-          </h3>
-          <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            MECELFAB handles fabrication, erection, and maintenance projects for industrial clients. We focus on completing work to specification, on schedule, and at the agreed cost.
-          </p>
         </div>
 
-        <div className="about-animate text-white text-base md:text-lg font-light uppercase tracking-widest border-y border-white/10 py-8 mt-16">
+        {/* ═══════════════════════════════════════════
+            4. OUR VALUES
+        ═══════════════════════════════════════════ */}
+        <div className="mb-24 md:mb-32">
+          <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
+            Our Values
+          </h2>
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {values.map((v) => (
+              <div
+                key={v.label}
+                className="about-animate text-center p-6 bg-white/[0.02] border border-white/5 rounded-lg hover:border-white/10 transition-colors duration-300"
+              >
+                <div className="w-12 h-12 rounded-full bg-white/[0.04] flex items-center justify-center mx-auto mb-4">
+                  <v.icon size={20} className="text-white/50" />
+                </div>
+                <h4 className="font-heading text-base text-white mb-2 tracking-wide">{v.label}</h4>
+                <p className="text-secondary text-sm font-light leading-relaxed">{v.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════
+            5. CERTIFICATIONS
+        ═══════════════════════════════════════════ */}
+        <div className="mb-24 md:mb-32">
+          <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
+            Certifications
+          </h2>
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div className="about-animate flex items-center gap-5 p-6 bg-white/[0.02] border border-white/5 rounded-lg">
+              <div className="w-14 h-14 rounded-lg bg-white/[0.04] flex items-center justify-center shrink-0">
+                <Award size={24} className="text-white/50" />
+              </div>
+              <div>
+                <h4 className="font-heading text-lg text-white mb-1">ISO 9001:2015</h4>
+                <p className="text-secondary text-sm font-light">Quality Management Systems</p>
+              </div>
+            </div>
+            <div className="about-animate flex items-center gap-5 p-6 bg-white/[0.02] border border-white/5 rounded-lg">
+              <div className="w-14 h-14 rounded-lg bg-white/[0.04] flex items-center justify-center shrink-0">
+                <Shield size={24} className="text-white/50" />
+              </div>
+              <div>
+                <h4 className="font-heading text-lg text-white mb-1">ISO 45001:2018</h4>
+                <p className="text-secondary text-sm font-light">Occupational Health and Safety</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════
+            6. OUR TEAM
+        ═══════════════════════════════════════════ */}
+        <div className="mb-24 md:mb-32">
+          <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
+            Our Team
+          </h2>
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="about-animate text-secondary text-base md:text-lg font-light leading-relaxed">
+              Our team consists of qualified engineers with professional experience in industrial fabrication, automation, and infrastructure projects. We maintain a policy of using only verified team member information and do not publish individual profiles without explicit consent.
+            </p>
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════
+            7. QUALITY ASSURANCE
+        ═══════════════════════════════════════════ */}
+        <div className="mb-20 md:mb-28">
+          <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
+            Quality Assurance
+          </h2>
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="max-w-3xl mx-auto">
+            <div className="about-animate grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+              <div className="p-5 bg-white/[0.02] border border-white/5 rounded-lg">
+                <FileCheck size={24} className="text-white/50 mx-auto mb-3" />
+                <h4 className="font-heading text-sm text-white mb-2">Documented Procedures</h4>
+                <p className="text-secondary text-xs font-light leading-relaxed">Every project follows verified work procedures with recorded checkpoints</p>
+              </div>
+              <div className="p-5 bg-white/[0.02] border border-white/5 rounded-lg">
+                <CheckCircle size={24} className="text-white/50 mx-auto mb-3" />
+                <h4 className="font-heading text-sm text-white mb-2">Inspection & Testing</h4>
+                <p className="text-secondary text-xs font-light leading-relaxed">Systematic quality checks at each fabrication and erection stage</p>
+              </div>
+              <div className="p-5 bg-white/[0.02] border border-white/5 rounded-lg">
+                <Shield size={24} className="text-white/50 mx-auto mb-3" />
+                <h4 className="font-heading text-sm text-white mb-2">Standards Compliance</h4>
+                <p className="text-secondary text-xs font-light leading-relaxed">Work executed to ISO 9001 and project-specific quality requirements</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ─── Bottom tagline ─── */}
+        <div className="about-animate text-center text-white text-base md:text-lg font-light uppercase tracking-[0.2em] border-y border-white/10 py-8">
           Fabrication. Erection. Maintenance.
         </div>
 

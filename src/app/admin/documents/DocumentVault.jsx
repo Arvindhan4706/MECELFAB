@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Upload, X, Trash2, FileText, Download, CheckCircle, Shield } from 'lucide-react';
+import { Upload, Trash2, FileText, Download, Shield } from 'lucide-react';
 
 export default function DocumentVault({ initialDocuments }) {
   const [documents, setDocuments] = useState(initialDocuments);
@@ -35,14 +35,14 @@ export default function DocumentVault({ initialDocuments }) {
       
       const data = await res.json();
       setDocuments([data.document, ...documents]);
-    } catch (err) {
+    } catch {
       setUploadError('Document upload is restricted in the current storage configuration.');
     } finally {
       setIsUploading(false);
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     if (!confirm('Delete this document?')) return;
     alert('Document deletion is restricted in the current storage configuration.');
   };

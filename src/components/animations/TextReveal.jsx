@@ -1,7 +1,7 @@
 "use client";
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 
 const TextReveal = ({ children, className = "", as: Component = "h2", delay = 0, splitType = "word" }) => {
   const containerRef = useRef(null);

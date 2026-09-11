@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Search, Filter, KanbanSquare, ArrowRight } from 'lucide-react';
+import { Search, KanbanSquare, ArrowRight } from 'lucide-react';
 
 export const metadata = {
   title: 'CRM Inbox | Admin',

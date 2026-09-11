@@ -3,10 +3,9 @@ import { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import {
   Bell, Check, ChevronDown,
-  LogOut, ExternalLink, Clock, Settings, User
+  LogOut, ExternalLink, Clock, Settings
 } from 'lucide-react';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
 
 // Map pathnames to readable breadcrumbs
 const breadcrumbMap = {

@@ -21,7 +21,7 @@ export async function GET() {
   try {
     await db.$queryRaw`SELECT 1`;
     checks.database = { status: 'ok' };
-  } catch (err) {
+  } catch {
     checks.database = { status: 'error', message: 'Database unreachable' };
     overallStatus = 'degraded';
   }

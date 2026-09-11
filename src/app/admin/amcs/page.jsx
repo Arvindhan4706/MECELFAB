@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { FileText, Search, Plus, Calendar, CheckCircle, AlertTriangle } from 'lucide-react';
+import { FileText, Search, Plus, Calendar } from 'lucide-react';
 
 export const metadata = {
   title: 'AMCs | Admin | MECELFAB',

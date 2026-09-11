@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { Wrench, Search, Plus, Calendar, User, Clock, ArrowRight } from 'lucide-react';
+import { Wrench, Search, Plus, Calendar, ArrowRight } from 'lucide-react';
 
 export const metadata = {
   title: 'Work Orders | Admin | MECELFAB',

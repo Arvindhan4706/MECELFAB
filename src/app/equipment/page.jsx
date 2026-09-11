@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Wrench, Zap, Wind, Droplets, Settings, Hammer, Battery, Clock, ChevronRight } from 'lucide-react';
+import { Zap, Wind, Droplets, Settings, Hammer, Clock, ChevronRight } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export const metadata = {

@@ -47,7 +47,7 @@ function ResetPasswordForm() {
       } else {
         setStatus({ type: 'error', message: data.message || 'Something went wrong' });
       }
-    } catch (err) {
+    } catch {
       setStatus({ type: 'error', message: 'Failed to reset password' });
     } finally {
       setLoading(false);

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, CheckCircle, ChevronRight } from 'lucide-react';
+import { CheckCircle, ChevronRight } from 'lucide-react';
 import { db } from '@/lib/db';
 import Breadcrumbs from '@/components/Breadcrumbs';
 

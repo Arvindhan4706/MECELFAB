@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
 const Testimonials = ({ testimonials = [] }) => {
@@ -8,7 +8,7 @@ const Testimonials = ({ testimonials = [] }) => {
   const [displayIndex, setDisplayIndex] = useState(0);
   const timeoutRef = useRef(null);
 
-  const goTo = (newIndex, auto = false) => {
+  const goTo = useCallback((newIndex, _auto = false) => {
     if (isAnimating || testimonials.length <= 1) return;
     setIsAnimating(true);
     // Phase 1: fade out
@@ -19,7 +19,7 @@ const Testimonials = ({ testimonials = [] }) => {
       setDisplayIndex(newIndex);
       timeoutRef.current = setTimeout(() => setIsAnimating(false), 500);
     }, 500);
-  };
+  }, [isAnimating, testimonials.length]);
 
   useEffect(() => {
     if (!testimonials || testimonials.length <= 1) return;
@@ -28,7 +28,7 @@ const Testimonials = ({ testimonials = [] }) => {
       goTo(next, true);
     }, 6000);
     return () => clearInterval(timer);
-  }, [current, testimonials, isAnimating]);
+  }, [current, testimonials, isAnimating, goTo]);
 
   useEffect(() => {
     return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };

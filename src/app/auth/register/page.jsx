@@ -11,12 +11,10 @@ import {
 
 /* ─── Design tokens ─────────────────────────────────────── */
 const BG       = '#0a0a0a';
-const SURFACE  = '#111111';
 const BORDER   = '#1e1e1e';
 const BORDER_FOCUS = '#4a4a4a';
 const TEXT     = '#ffffff';
 const MUTED    = '#a3a3a3';
-const DIMMED   = '#333333';
 const WHITE    = '#ffffff';
 
 /* ─── Input component ────────────────────────────────────── */
@@ -142,7 +140,7 @@ export default function RegisterPage() {
         router.push('/');
         router.refresh();
       }
-    } catch (err) {
+    } catch {
       setError('A network error occurred. Please try again.');
       setLoading(false);
     }

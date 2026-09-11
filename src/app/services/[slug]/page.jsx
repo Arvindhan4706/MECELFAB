@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { db } from '@/lib/db';
-import { ArrowLeft, CheckCircle, Shield, ChevronRight, HelpCircle } from 'lucide-react';
+import { CheckCircle, Shield, ChevronRight, HelpCircle } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 export async function generateMetadata({ params }) {

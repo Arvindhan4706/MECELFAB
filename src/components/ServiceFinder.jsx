@@ -2,7 +2,7 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
 
 const ServiceFinder = ({ services = [] }) => {

@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { ShieldAlert } from 'lucide-react';
 
-export default function GlobalError({ error, reset }) {
+export default function GlobalError({ error: _error, reset }) {
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-6 text-center">
       <div className="max-w-md w-full bg-white/[0.02] border border-white/5 rounded-2xl p-8 backdrop-blur-xl">

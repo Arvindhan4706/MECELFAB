@@ -1,7 +1,7 @@
 'use client';
 import { AlertCircle, RotateCcw } from 'lucide-react';
 
-export default function GlobalError({ error, reset }) {
+export default function GlobalError({ error: _error, reset }) {
   return (
     <html>
       <body>

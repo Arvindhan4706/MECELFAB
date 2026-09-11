@@ -5,37 +5,18 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
   Lock, Mail, AlertCircle, ArrowRight, Eye, EyeOff,
-  Shield, CheckCircle2, Layers, FileText, Wrench, Users,
-  Activity, Package
+  Shield, CheckCircle2
 } from 'lucide-react';
 
 /* ─── Design tokens ─────────────────────────────────────── */
 const BG       = '#0a0a0a';
-const SURFACE  = '#111111';
 const BORDER   = '#1e1e1e';
 const BORDER_FOCUS = '#3a3a3a';
 const TEXT     = '#e2e2e2';
 const MUTED    = '#525252';
-const DIMMED   = '#2a2a2a';
 const WHITE    = '#ffffff';
 
 /* ─── Platform capabilities list ────────────────────────── */
-const CAPABILITIES = [
-  { icon: Users,    label: 'CRM & Lead Management',      desc: 'Inquiries, follow-ups, pipeline tracking' },
-  { icon: Wrench,   label: 'Work Order Management',       desc: 'Scheduling, dispatch, and completion tracking' },
-  { icon: Activity, label: 'AMC & Service Contracts',     desc: 'Renewals, SLA alerts, and equipment history' },
-  { icon: FileText, label: 'Billing & Invoicing',         desc: 'Quotations, GST invoices, payment records' },
-  { icon: Package,  label: 'Inventory & Document Vault',  desc: 'Parts tracking, certifications, and media' },
-];
-
-/* ─── Subtle crosshatch background ─────────────────────── */
-const GRID_STYLE = {
-  backgroundImage: `
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
-  `,
-  backgroundSize: '32px 32px',
-};
 
 /* ─── Input component ────────────────────────────────────── */
 function FormInput({ id, label, type = 'text', name, required, defaultValue, placeholder, icon: Icon, children }) {
@@ -231,8 +212,7 @@ export default function LoginAdminPage() {
               type="email"
               name="email"
               required
-              defaultValue="admin@mecelfab.com"
-              placeholder="admin@mecelfab.com"
+              placeholder="Enter your email"
               icon={Mail}
             />
 

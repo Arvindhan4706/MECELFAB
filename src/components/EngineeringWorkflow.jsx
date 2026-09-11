@@ -1,6 +1,6 @@
 'use client';
 import { useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import { useGSAP } from '@gsap/react';
 
 const workflowSteps = [
@@ -39,7 +39,7 @@ const EngineeringWorkflow = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {workflowSteps.map((step, index) => (
+          {workflowSteps.map((step, _index) => (
             <div key={step.id} className="wf-card p-8 border border-white/10 bg-white/[0.02] relative group hover:bg-white/[0.05] hover:border-white/20 transition-all duration-300">
               <div className="absolute top-0 right-4 text-[80px] font-heading font-bold text-white/[0.02] select-none pointer-events-none leading-none pt-4 group-hover:text-white/[0.04] transition-colors">
                 {step.id}

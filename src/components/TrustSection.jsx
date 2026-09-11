@@ -1,7 +1,7 @@
 "use client";
 import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import { Award, ShieldCheck, Cog, TrendingUp } from 'lucide-react';
 
 const pillars = [

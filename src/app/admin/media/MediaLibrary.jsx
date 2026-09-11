@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { Upload, X, Trash2, Copy, FileIcon, ImageIcon, CheckCircle } from 'lucide-react';
+import { Upload, Trash2, Copy, FileIcon, ImageIcon, CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 
 export default function MediaLibrary({ initialMedia }) {
@@ -37,7 +37,7 @@ export default function MediaLibrary({ initialMedia }) {
 
       const data = await res.json();
       setMediaList([data.media, ...mediaList]);
-    } catch (err) {
+    } catch {
       setUploadError('Failed to upload file.');
     } finally {
       setIsUploading(false);
@@ -50,7 +50,7 @@ export default function MediaLibrary({ initialMedia }) {
     setTimeout(() => setCopiedUrl(''), 2000);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (_id) => {
     if (!confirm('Delete this file? This action cannot be undone and may break links on your site.')) return;
     
     // Server action to delete would go here (optional implementation)

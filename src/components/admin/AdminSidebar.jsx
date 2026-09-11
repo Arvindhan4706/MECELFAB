@@ -2,11 +2,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { signOut } from 'next-auth/react';
 import {
   LayoutDashboard, MessageSquare, FileText, Wrench,
   Briefcase, Activity, Banknote, Settings,
-  Users, Image as ImageIcon, BookOpen, Shield,
+  Users, Shield,
   Home, LogOut, ChevronLeft, ChevronRight,
   Zap, ClipboardList, Building2
 } from 'lucide-react';
