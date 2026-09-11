@@ -89,10 +89,15 @@ const CAPABILITY_MATRIX = [
 ];
 
 export default async function CapabilitiesPage() {
-  const services = await db.service.findMany({
-    where: { status: 'ACTIVE' },
-    orderBy: { createdAt: 'asc' },
-  });
+  let services = [];
+  try {
+    services = await db.service.findMany({
+      where: { status: 'ACTIVE' },
+      orderBy: { createdAt: 'asc' },
+    });
+  } catch {
+    // DB unavailable — render with empty services
+  }
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-24">

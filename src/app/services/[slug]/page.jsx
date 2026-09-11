@@ -2,12 +2,18 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { db } from '@/lib/db';
 import { ArrowLeft, CheckCircle, Shield, ChevronRight, HelpCircle } from 'lucide-react';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const service = await db.service.findUnique({
-    where: { slug, status: 'ACTIVE' }
-  });
+  let service;
+  try {
+    service = await db.service.findUnique({
+      where: { slug, status: 'ACTIVE' }
+    });
+  } catch {
+    return { title: 'Service | MECELFAB' };
+  }
 
   if (!service) return { title: 'Service Not Found' };
 
@@ -16,6 +22,11 @@ export async function generateMetadata({ params }) {
     description: service.description,
     alternates: {
       canonical: `https://mecelfabpvtltd.com/services/${slug}`,
+    },
+    openGraph: {
+      title: `${service.title} | MECELFAB`,
+      description: service.description,
+      images: [{ url: '/images/hero-bg.png', width: 1200, height: 630, alt: service.title }],
     },
   };
 }
@@ -32,9 +43,14 @@ function parseFaq(str) {
 
 export default async function ServicePage({ params }) {
   const { slug } = await params;
-  const service = await db.service.findUnique({
-    where: { slug, status: 'ACTIVE' }
-  });
+  let service;
+  try {
+    service = await db.service.findUnique({
+      where: { slug, status: 'ACTIVE' }
+    });
+  } catch {
+    service = null;
+  }
 
   if (!service) {
     notFound();
@@ -47,15 +63,56 @@ export default async function ServicePage({ params }) {
   const industriesServed = parseJson(service.industriesServed);
   const faq = parseFaq(service.faq);
 
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.title,
+    description: service.description,
+    provider: {
+      '@type': 'Organization',
+      name: 'MECELFAB Industrial Solutions',
+      url: 'https://mecelfabpvtltd.com',
+    },
+    areaServed: 'IN',
+    serviceType: service.title,
+  };
+
+  const faqSchema = faq.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map(f => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.answer,
+      },
+    })),
+  } : null;
+
+  // Find related services (same category, excluding current)
+  const allServices = await db.service.findMany({
+    where: { status: 'ACTIVE', NOT: { slug } },
+    select: { title: true, slug: true, description: true },
+    take: 3,
+  });
+
   return (
     <div className="min-h-screen bg-black">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       {/* 01 — Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 border-b border-white/5">
         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl">
-          <Link href="/services" className="inline-flex items-center gap-2 text-white/40 mb-8 hover:text-white transition-colors font-heading text-xs uppercase tracking-widest">
-            <ArrowLeft size={14} />
-            All Services
-          </Link>
+          <Breadcrumbs items={[{ label: 'Services', href: '/services' }, { label: service.title }]} />
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-light text-white tracking-tight leading-tight mb-6">
               {service.title}
@@ -258,7 +315,7 @@ export default async function ServicePage({ params }) {
                     <HelpCircle size={16} className="text-white/30 mt-0.5 shrink-0" />
                     <h3 className="text-white text-sm font-medium leading-relaxed">{item.question}</h3>
                   </div>
-                  <p className="text-secondary text-sm font-light leading-relaxed pl-0 md:pl-7">{item.a}</p>
+                   <p className="text-secondary text-sm font-light leading-relaxed pl-0 md:pl-7">{item.answer}</p>
                 </div>
               ))}
             </div>
@@ -289,6 +346,30 @@ export default async function ServicePage({ params }) {
           </div>
         </div>
       </section>
+
+      {/* Related Services */}
+      {allServices.length > 0 && (
+        <section className="py-16 md:py-20 border-t border-white/5">
+          <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl">
+            <h2 className="text-2xl md:text-3xl font-heading font-light text-white mb-10">Related Services</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {allServices.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/services/${s.slug}`}
+                  className="group p-6 bg-white/[0.02] border border-white/5 rounded-xl hover:border-white/15 transition-colors duration-300"
+                >
+                  <h3 className="font-heading font-light text-white mb-2 group-hover:text-accent transition-colors">{s.title}</h3>
+                  <p className="text-secondary text-sm font-light line-clamp-2">{s.description}</p>
+                  <span className="inline-flex items-center gap-1 text-secondary text-xs font-heading tracking-widest uppercase mt-4 group-hover:text-white transition-colors">
+                    Learn more <ChevronRight size={12} />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

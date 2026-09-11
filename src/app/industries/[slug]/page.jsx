@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, CheckCircle, ChevronRight } from 'lucide-react';
 import { db } from '@/lib/db';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const DEFAULT_INDUSTRIES = {
   'industrial-manufacturing': {
@@ -65,7 +66,12 @@ const DEFAULT_INDUSTRIES = {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
 
-  let industry = await db.industry.findUnique({ where: { slug, status: 'PUBLISHED' } });
+  let industry;
+  try {
+    industry = await db.industry.findUnique({ where: { slug, status: 'PUBLISHED' } });
+  } catch {
+    industry = null;
+  }
   if (!industry) industry = DEFAULT_INDUSTRIES[slug];
 
   if (!industry) return { title: 'Industry Not Found' };
@@ -76,14 +82,25 @@ export async function generateMetadata({ params }) {
     alternates: {
       canonical: `https://mecelfabpvtltd.com/industries/${slug}`,
     },
+    openGraph: {
+      title: `${industry.title} | MECELFAB`,
+      description: industry.description,
+      images: [{ url: '/images/hero-bg.png', width: 1200, height: 630, alt: industry.title }],
+    },
   };
 }
 
 export default async function IndustryDetailPage({ params }) {
   const { slug } = await params;
 
-  let industry = await db.industry.findUnique({ where: { slug, status: 'PUBLISHED' } });
-  let isDb = true;
+  let industry = null;
+  let isDb = false;
+  try {
+    industry = await db.industry.findUnique({ where: { slug, status: 'PUBLISHED' } });
+    isDb = true;
+  } catch {
+    // DB unavailable — fall through to DEFAULT_INDUSTRIES
+  }
 
   if (!industry) {
     industry = DEFAULT_INDUSTRIES[slug];
@@ -113,10 +130,7 @@ export default async function IndustryDetailPage({ params }) {
       {/* Hero */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-24 border-b border-white/5">
         <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl">
-          <Link href="/industries" className="inline-flex items-center gap-2 text-white/40 mb-8 hover:text-white transition-colors font-heading text-xs uppercase tracking-widest">
-            <ArrowLeft size={14} />
-            All Industries
-          </Link>
+          <Breadcrumbs items={[{ label: 'Industries', href: '/industries' }, { label: industry.title }]} />
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-light text-white tracking-tight leading-tight mb-6">
               {industry.title}

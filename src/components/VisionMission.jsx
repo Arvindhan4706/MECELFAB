@@ -63,7 +63,7 @@ const VisionMission = () => {
             }}>
               <Eye size={28} style={{ color: 'var(--accent)' }} />
             </div>
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 300, marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
               Our Vision
             </h3>
             <p style={{ color: '#E2E8F0', fontSize: '1.05rem', lineHeight: 1.6, fontWeight: 400 }}>
@@ -85,7 +85,7 @@ const VisionMission = () => {
             }}>
               <Rocket size={28} style={{ color: 'var(--accent)' }} />
             </div>
-            <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 300, marginBottom: '1rem', fontFamily: 'var(--font-heading)' }}>
               Our Mission
             </h3>
             <p style={{ color: '#E2E8F0', fontSize: '1.05rem', lineHeight: 1.6, fontWeight: 400 }}>

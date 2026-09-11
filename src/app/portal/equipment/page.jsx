@@ -161,7 +161,7 @@ export default async function CustomerEquipmentPage() {
                       </div>
                     ) : (
                       <p className="text-[11px] text-gray-400 italic">
-                        On-demand service support available. Contact us to enroll this machine into an AMC plan.
+                        On-demand service support available. Contact Us to enroll this machine into an AMC plan.
                       </p>
                     )}
                   </div>

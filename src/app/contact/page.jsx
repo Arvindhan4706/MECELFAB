@@ -23,14 +23,19 @@ export default async function ContactPage({ searchParams }) {
   const resolvedParams = await searchParams;
   const initialServiceSlug = resolvedParams?.service || '';
 
-  const services = await db.service.findMany({
-    where: { status: 'ACTIVE' },
-    select: { title: true, slug: true }
-  });
-
-  const initialService = services.find(s => s.slug === initialServiceSlug)?.title || '';
-
-  const company = await getCompanyProfile();
+  let services = [];
+  let initialService = '';
+  let company = {};
+  try {
+    services = await db.service.findMany({
+      where: { status: 'ACTIVE' },
+      select: { title: true, slug: true }
+    });
+    initialService = services.find(s => s.slug === initialServiceSlug)?.title || '';
+    company = await getCompanyProfile();
+  } catch {
+    // DB unavailable — render with empty data
+  }
 
   return (
     <div className="page-wrapper">

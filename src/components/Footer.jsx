@@ -86,12 +86,13 @@ const Footer = ({ contact }) => {
               Explore
             </h4>
             <div className="flex flex-wrap gap-2">
-              <Link href="/about" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">About</Link>
-              <Link href="/services" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Services</Link>
-              <Link href="/industries" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Industries</Link>
-              <Link href="/projects" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Projects</Link>
-              <Link href="/resources" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Resources</Link>
-              <Link href="/contact" className="px-4 py-2 bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Contact</Link>
+              <Link href="/about" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">About</Link>
+              <Link href="/services" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Services</Link>
+              <Link href="/industries" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Industries</Link>
+              <Link href="/projects" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Projects</Link>
+              <Link href="/resources" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Resources</Link>
+              <Link href="/equipment" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Equipment</Link>
+              <Link href="/contact" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Contact</Link>
             </div>
           </div>
 
@@ -124,6 +125,11 @@ const Footer = ({ contact }) => {
               <li>
                 <Link href="/resources" className="text-secondary hover:text-white transition-colors duration-300">
                   Resources
+                </Link>
+              </li>
+              <li>
+                <Link href="/equipment" className="text-secondary hover:text-white transition-colors duration-300">
+                  Equipment Catalog
                 </Link>
               </li>
             </ul>

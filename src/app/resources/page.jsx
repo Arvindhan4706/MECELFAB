@@ -64,10 +64,15 @@ const RESOURCE_SECTIONS = [
 ];
 
 export default async function ResourcesPage() {
-  const certifications = await db.certification.findMany({
-    where: { status: 'PUBLISHED' },
-    orderBy: { createdAt: 'desc' },
-  });
+  let certifications = [];
+  try {
+    certifications = await db.certification.findMany({
+      where: { status: 'PUBLISHED' },
+      orderBy: { createdAt: 'desc' },
+    });
+  } catch {
+    // DB unavailable — render with empty certifications
+  }
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-24">

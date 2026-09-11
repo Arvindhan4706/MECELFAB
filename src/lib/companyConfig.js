@@ -1,4 +1,5 @@
 import { db } from './db';
+import { logger } from './logger';
 
 export const DEFAULT_COMPANY_PROFILE = {
   legalName: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
@@ -56,6 +57,10 @@ function sanitizeValue(val, fallback = '') {
  * Strips any residual synthetic/placeholder data and returns clean values.
  */
 export async function getCompanyProfile() {
+  // Cache for 60 seconds to avoid per-request DB hit
+  if (getCompanyProfile._cache && Date.now() - getCompanyProfile._cacheTime < 60000) {
+    return getCompanyProfile._cache;
+  }
   try {
     const rawSettings = await db.setting.findMany({
       where: {
@@ -178,7 +183,7 @@ export async function getCompanyProfile() {
       DEFAULT_COMPANY_PROFILE.twitter
     );
 
-    return {
+    const profile = {
       legalName,
       shortName: DEFAULT_COMPANY_PROFILE.shortName,
       tagline: DEFAULT_COMPANY_PROFILE.tagline,
@@ -201,8 +206,11 @@ export async function getCompanyProfile() {
       websiteUrl: DEFAULT_COMPANY_PROFILE.websiteUrl,
       country: DEFAULT_COMPANY_PROFILE.country
     };
+    getCompanyProfile._cache = profile;
+    getCompanyProfile._cacheTime = Date.now();
+    return profile;
   } catch (err) {
-    console.error('Error fetching company profile:', err);
+    logger.error('Error fetching company profile:', err);
     return { ...DEFAULT_COMPANY_PROFILE };
   }
 }

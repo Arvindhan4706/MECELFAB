@@ -166,13 +166,38 @@ const ProjectsGallery = ({ projects = [] }) => {
             )})}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-20 bg-white/[0.02] border border-white/5 rounded-lg text-center">
-            <h3 className="text-2xl md:text-3xl font-heading font-light text-white mb-4">
-              PROJECTS COMING SOON
-            </h3>
-            <p className="text-secondary font-light max-w-lg mx-auto">
-              Our project portfolio is currently being updated with our latest industrial executions. Check back soon for verified case studies.
-            </p>
+          <div className="py-12">
+            <div className="bg-white/[0.02] border border-white/5 rounded-lg p-8 md:p-12 text-center mb-8">
+              <h3 className="text-2xl md:text-3xl font-heading font-light text-white mb-4">
+                Project Experience & Capabilities
+              </h3>
+              <p className="text-secondary font-light max-w-2xl mx-auto mb-8">
+                Our verified project portfolio is being compiled. Below is an overview of the sectors, project types, and service disciplines we execute.
+              </p>
+              <Link href="/contact" className="inline-flex items-center gap-2 px-6 py-3 bg-white text-primary font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors duration-300">
+                REQUEST RFQ
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { title: 'Sectors', items: ['Industrial Manufacturing', 'Power & Energy', 'Oil & Gas', 'Infrastructure', 'Commercial Facilities'] },
+                { title: 'Project Types', items: ['Equipment Installation', 'Structural Fabrication', 'Shutdown Maintenance', 'System Overhauling', 'Temporary Power Solutions'] },
+                { title: 'Service Disciplines', items: ['Fabrication & Erection', 'Hydraulic & Pneumatic Systems', 'Generator Services & Rental', 'Turbocharger Maintenance', 'Annual Maintenance Contracts'] },
+              ].map((group) => (
+                <div key={group.title} className="bg-white/[0.02] border border-white/5 rounded-lg p-6">
+                  <h4 className="font-heading text-sm text-secondary uppercase tracking-widest mb-4">{group.title}</h4>
+                  <ul className="flex flex-col gap-2">
+                    {group.items.map((item) => (
+                      <li key={item} className="flex items-center gap-2 text-white/70 text-sm font-light">
+                        <span className="w-1 h-1 rounded-full bg-accent shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

@@ -29,14 +29,14 @@ const About = ({ content }) => {
 
   return (
     <section ref={sectionRef} id="about" className="section-padding bg-primary border-t border-white/5 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-4xl text-center">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl text-center">
 
         <div className="about-animate inline-block text-secondary text-sm font-heading tracking-widest uppercase mb-8 relative after:hidden md:after:block after:content-[''] after:absolute after:top-1/2 after:-right-12 after:w-8 after:h-[1px] after:bg-secondary/50">
           Our Foundation
         </div>
 
         <h1 className="about-animate text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white leading-tight tracking-tight mb-12">
-          Precision engineering for a <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-secondary">kinetic world</span>.
+          Precision engineering for <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-secondary">industrial operations</span>.
         </h1>
 
         <TextReveal
@@ -44,7 +44,7 @@ const About = ({ content }) => {
           delay={0.1}
           className="text-lg md:text-xl text-secondary font-light leading-relaxed mb-8 max-w-3xl mx-auto"
         >
-          {content?.mission || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED is a premier industrial engineering and infrastructure solutions partner. Founded by leading mechanical and mechatronics engineers, we specialize in the intersection of heavy structural fabrication, automated systems, and high-precision electromechanical integration.'}
+          {content?.mission || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED is a specialized industrial engineering and infrastructure solutions partner. Founded by mechanical and mechatronics engineers, we focus on heavy structural fabrication, equipment installation, and industrial maintenance services.'}
         </TextReveal>
 
         <TextReveal
@@ -52,7 +52,7 @@ const About = ({ content }) => {
           delay={0.2}
           className="text-lg md:text-xl text-secondary font-light leading-relaxed mb-16 max-w-3xl mx-auto"
         >
-          {content?.vision || 'Our expertise spans end-to-end heavy metal fabrication, rigorous structural erection, and the maintenance of highly complex pneumatic and hydraulic systems. We do not just build facilities; we engineer automated, fault-tolerant ecosystems designed to maximize uptime and operational efficiency for the most demanding industries.'}
+          {content?.vision || 'Our expertise covers heavy metal fabrication, structural erection, and the maintenance of pneumatic and hydraulic systems. We build facilities and engineer reliable systems designed to maximize uptime and operational efficiency across industrial environments.'}
         </TextReveal>
 
         {/* Enhanced Sections per Master Prompt */}
@@ -65,7 +65,7 @@ const About = ({ content }) => {
             Industrial Engineering Excellence
           </h3>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            MECELFAB Industrial Solutions delivers integrated fabrication, installation and automation solutions for industrial environments. Our team of certified engineers and skilled technicians provides end-to-end project execution from concept to commissioning.
+            MECELFAB Industrial Solutions delivers fabrication, installation and maintenance solutions for industrial environments. Our team of qualified engineers and skilled technicians handles project execution from planning through installation and commissioning.
           </p>
 
           {/* Our Capabilities */}
@@ -116,7 +116,7 @@ const About = ({ content }) => {
             </div>
             <div className="text-left">
               <h4 className="font-heading text-xl text-white mb-2">SAFETY</h4>
-              <p className="text-secondary text-sm font-light">Zero-harm culture with certified safety protocols</p>
+              <p className="text-secondary text-sm font-light">Commitment to workplace safety with adherence to industry standards</p>
             </div>
             <div className="text-left">
               <h4 className="font-heading text-xl text-white mb-2">ACCOUNTABILITY</h4>
@@ -139,7 +139,7 @@ const About = ({ content }) => {
             {content?.values || 'Safety, Quality, Integrity, Innovation'}
           </p>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-3xl">
-            Our team consists of certified professional engineers with decades of combined experience in industrial fabrication, automation, and infrastructure projects. We maintain a policy of using only verified team member information and do not publish individual profiles without explicit consent.
+            Our team consists of qualified engineers with professional experience in industrial fabrication, automation, and infrastructure projects. We maintain a policy of using only verified team member information and do not publish individual profiles without explicit consent.
           </p>
 
           {/* Certifications */}
@@ -165,15 +165,15 @@ const About = ({ content }) => {
             Company Timeline
           </div>
           <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Established Engineering Practice
+            Our Practice
           </h3>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            MECELFAB Industrial Solutions has been providing integrated engineering solutions to industrial clients since its establishment. We focus on delivering verified project outcomes rather than publishing speculative timelines.
+            MECELFAB Industrial Solutions delivers integrated engineering solutions to industrial clients. We focus on delivering verified project outcomes and building lasting client relationships.
           </p>
         </div>
 
         <div className="about-animate text-white text-base md:text-lg font-light uppercase tracking-widest border-y border-white/10 py-8 mt-16">
-          Building Trust. Delivering Quality. Driving Progress.
+          Building Trust. Delivering Quality. Engineering Reliability.
         </div>
 
       </div>

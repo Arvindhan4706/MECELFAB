@@ -5,6 +5,13 @@ import { gsap, ScrollTrigger } from '@/lib/gsap';
 import Link from 'next/link';
 import { ArrowRight, Wrench, Hammer, Droplets, Zap, Clock, Battery, Wind, Settings } from 'lucide-react';
 
+const CATEGORY_MAP = {
+  'Engineering': ['industrial-fabrication', 'industrial-erection'],
+  'Maintenance': ['hydraulic-pneumatic-overhauling', 'turbocharger-services', 'amc'],
+  'Power': ['generator-spare-parts', 'generator-rental'],
+  'Equipment': ['air-compressor-rental'],
+};
+
 const ICON_MAP = {
   'industrial-erection': Hammer,
   'industrial-fabrication': Wrench,
@@ -23,6 +30,13 @@ const getServiceIcon = (slug) => {
 const Services = ({ services = [] }) => {
   const sectionRef = useRef(null);
   const [hoveredId, setHoveredId] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const categories = ['All', ...Object.keys(CATEGORY_MAP)];
+
+  const filteredServices = activeCategory === 'All'
+    ? services
+    : services.filter(s => CATEGORY_MAP[activeCategory]?.includes(s.slug));
 
   useGSAP(() => {
     gsap.fromTo('.svc-eyebrow',
@@ -73,9 +87,28 @@ const Services = ({ services = [] }) => {
           </Link>
         </div>
 
+        {/* Category Filters */}
+        {services.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-8 md:mb-12">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-2 min-h-[44px] rounded-full text-xs font-heading tracking-widest uppercase transition-all duration-300 ${
+                  activeCategory === cat
+                    ? 'bg-white text-primary border border-white'
+                    : 'bg-transparent text-secondary border border-white/10 hover:border-white/30 hover:text-white'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Services List */}
         <div className="svc-list grid grid-cols-1 md:grid-cols-2 lg:flex lg:flex-col gap-6 lg:gap-0">
-          {services.map((service, index) => {
+          {filteredServices.map((service, index) => {
             const Icon = getServiceIcon(service.slug);
             const displayId = String(index + 1).padStart(2, '0');
             const isHovered = hoveredId === service.id;
@@ -142,14 +175,14 @@ const Services = ({ services = [] }) => {
                     
                     <Link
                       href={`/services/${service.slug}`}
-                      className="text-[10px] font-heading tracking-[0.2em] uppercase text-accent/80 hover:text-accent flex items-center gap-2 px-2 py-2 -ml-2"
+                      className="text-[10px] font-heading tracking-[0.2em] uppercase text-accent/80 hover:text-accent flex items-center gap-2 px-2 py-3 -ml-2 min-h-[44px]"
                     >
                       View Details
                     </Link>
 
                     <Link
                       href={`/services/${service.slug}`}
-                      className={`flex items-center justify-center w-10 h-10 border border-white/10 group-hover:border-white/40 group-hover:bg-white group-hover:text-black text-white/30 transition-all duration-500 rounded-sm ml-auto lg:ml-0`}
+                      className={`flex items-center justify-center w-11 h-11 border border-white/10 group-hover:border-white/40 group-hover:bg-white group-hover:text-black text-white/30 transition-all duration-500 rounded-sm ml-auto lg:ml-0`}
                     >
                       <ArrowRight size={15} />
                     </Link>

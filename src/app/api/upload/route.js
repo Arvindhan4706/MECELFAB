@@ -20,7 +20,7 @@ export async function POST(req) {
     }
 
     // Security: Validate MIME types
-    const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    const allowedMimes = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
     if (!allowedMimes.includes(file.type)) {
       return NextResponse.json({ error: 'Invalid file type.' }, { status: 400 });
     }
@@ -57,7 +57,7 @@ export async function POST(req) {
       }
     });
 
-    return NextResponse.json({ message: 'Success', url, media });
+    return NextResponse.json({ message: 'Success', url });
   } catch (error) {
     console.error('Error uploading file:', error);
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 });

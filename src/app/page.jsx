@@ -30,27 +30,31 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  // Fetch all data in parallel
-  const [projects, services, settings, clients, testimonials] = await Promise.all([
-    db.project.findMany({
-      where: { status: { not: 'DISABLED' } },
-      orderBy: { createdAt: 'desc' }
-    }),
-    db.service.findMany({
-      where: { status: 'ACTIVE' },
-      orderBy: { createdAt: 'asc' }
-    }),
-    db.setting.findMany({
-      where: { 
-        OR: [
-          { key: { startsWith: 'stats_' } },
-          { key: 'CONTENT_HOMEPAGE' }
-        ]
-      }
-    }),
-    db.client.findMany(),
-    db.testimonial.findMany(),
-  ]);
+  let projects = [], services = [], settings = [], clients = [], testimonials = [];
+  try {
+    [projects, services, settings, clients, testimonials] = await Promise.all([
+      db.project.findMany({
+        where: { status: { not: 'DISABLED' } },
+        orderBy: { createdAt: 'desc' }
+      }),
+      db.service.findMany({
+        where: { status: 'ACTIVE' },
+        orderBy: { createdAt: 'asc' }
+      }),
+      db.setting.findMany({
+        where: { 
+          OR: [
+            { key: { startsWith: 'stats_' } },
+            { key: 'CONTENT_HOMEPAGE' }
+          ]
+        }
+      }),
+      db.client.findMany(),
+      db.testimonial.findMany(),
+    ]);
+  } catch {
+    // DB unavailable — render with empty data
+  }
 
   const homepageContent = settings.find(s => s.key === 'CONTENT_HOMEPAGE')?.value 
     ? (() => { try { return JSON.parse(settings.find(s => s.key === 'CONTENT_HOMEPAGE').value); } catch { return null; } })()

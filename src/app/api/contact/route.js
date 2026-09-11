@@ -12,16 +12,17 @@ export async function POST(req) {
       return NextResponse.json({ success: false, message: 'Too many requests. Please try again later.' }, { status: 429 });
     }
 
-    const data = await req.json();
+    const formData = await req.formData();
     
-    const name = data.fullName;
-    const email = data.email;
-    const phone = data.phone;
-    const company = data.companyName;
-    const service = data.serviceRequired;
-    const projectLocation = data.projectLocation;
-    const expectedTimeline = data.expectedTimeline;
-    const projectDescription = data.projectDescription;
+    const name = formData.get('fullName');
+    const email = formData.get('email');
+    const phone = formData.get('phone');
+    const company = formData.get('companyName');
+    const service = formData.get('serviceRequired');
+    const projectLocation = formData.get('projectLocation');
+    const expectedTimeline = formData.get('expectedTimeline');
+    const projectDescription = formData.get('projectDescription');
+    const serviceDetailsRaw = formData.get('serviceDetails');
     
     // Server-side validation
     if (!name || typeof name !== 'string' || !name.trim()) {
@@ -64,23 +65,43 @@ export async function POST(req) {
 
     // Validate preferredContactMethod against allowlist
     const VALID_CONTACT_METHODS = ['Phone', 'Email', 'WhatsApp'];
-    const contactMethod = data.preferredContactMethod || 'Email';
+    const contactMethod = formData.get('preferredContactMethod') || 'Email';
     if (!VALID_CONTACT_METHODS.includes(contactMethod)) {
       return NextResponse.json({ success: false, message: 'Invalid contact method.' }, { status: 400 });
     }
 
-    // We'll keep the raw projectDescription as 'message' in the DB
-    const message = projectDescription?.trim() || 'No description provided.';
+    // Parse service-specific details
+    let serviceDetails = null;
+    if (serviceDetailsRaw) {
+      try {
+        serviceDetails = JSON.parse(serviceDetailsRaw);
+      } catch {
+        // Ignore malformed service details
+      }
+    }
 
-    // Generate Collision-Resistant Reference Number
-    // Example: MEC-REQ-2026-0001
+    // We'll keep the raw projectDescription as 'message' in the DB
+    let message = projectDescription?.trim() || 'No description provided.';
+
+    // Append service-specific details to message
+    if (serviceDetails && Object.keys(serviceDetails).length > 0) {
+      const detailsStr = Object.entries(serviceDetails)
+        .filter(([, v]) => v)
+        .map(([k, v]) => `${k.replace(/([A-Z])/g, ' $1').trim()}: ${v}`)
+        .join('\n');
+      if (detailsStr) {
+        message += `\n\nService-Specific Details:\n${detailsStr}`;
+      }
+    }
+
+    // Generate Reference Number with random suffix to prevent enumeration
+    // Example: MEC-REQ-2026-A3F7
     const currentYear = new Date().getFullYear();
-    const count = await db.inquiry.count();
-    let refSeq = count + 1;
-    let referenceNumber = `MEC-REQ-${currentYear}-${String(refSeq).padStart(4, '0')}`;
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+    let referenceNumber = `MEC-REQ-${currentYear}-${randomSuffix}`;
     while (await db.inquiry.findUnique({ where: { referenceNumber } })) {
-      refSeq++;
-      referenceNumber = `MEC-REQ-${currentYear}-${String(refSeq).padStart(4, '0')}`;
+      const retrySuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+      referenceNumber = `MEC-REQ-${currentYear}-${retrySuffix}`;
     }
 
     const newInquiry = await db.inquiry.create({

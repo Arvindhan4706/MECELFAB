@@ -21,13 +21,17 @@ export const metadata = {
 };
 
 export default async function AboutPage() {
-  const settings = await db.setting.findMany({
-    where: { key: 'CONTENT_ABOUT' }
-  });
-  
-  const aboutContent = settings.length > 0 && settings[0].value 
-    ? (() => { try { return JSON.parse(settings[0].value); } catch { return null; } })()
-    : null;
+  let aboutContent = null;
+  try {
+    const settings = await db.setting.findMany({
+      where: { key: 'CONTENT_ABOUT' }
+    });
+    aboutContent = settings.length > 0 && settings[0].value 
+      ? (() => { try { return JSON.parse(settings[0].value); } catch { return null; } })()
+      : null;
+  } catch {
+    // DB unavailable — render with null content
+  }
 
   return (
     <div className="page-wrapper">

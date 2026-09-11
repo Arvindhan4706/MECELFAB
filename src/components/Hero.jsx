@@ -195,7 +195,7 @@ const Hero = ({ content }) => {
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 md:gap-5 mb-16 mx-auto md:mx-0 w-full max-w-sm sm:max-w-none">
 
-          {/* Primary — Get a Free Quote */}
+          {/* Primary — REQUEST RFQ */}
           <Link
             href="/contact"
             className="hero-cta-btn group relative inline-flex w-full sm:w-auto items-center justify-center gap-4 overflow-hidden opacity-0"
@@ -209,7 +209,7 @@ const Hero = ({ content }) => {
                   background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)',
                 }}
               />
-              <span className="relative">{content?.heroCta || 'Get a Free Quote'}</span>
+              <span className="relative">{content?.heroCta || 'REQUEST RFQ'}</span>
               <span className="relative flex items-center justify-center w-6 h-6 rounded-full bg-black/10 group-hover:bg-white/10 transition-colors duration-300">
                 <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300" />
               </span>
@@ -272,12 +272,12 @@ const Hero = ({ content }) => {
         {/* Contact quick links */}
         <div className="flex items-center gap-4 text-[11px] md:text-xs font-heading tracking-[0.15em] uppercase shrink-0">
           {content?.phone && (
-            <a href={`tel:${content.phone.replace(/[^0-9+]/g, '')}`} className="text-white/40 hover:text-white transition-colors duration-300 py-2">
+            <a href={`tel:${content.phone.replace(/[^0-9+]/g, '')}`} className="text-white/40 hover:text-white transition-colors duration-300 py-2 min-h-[44px] flex items-center">
               Call Us
             </a>
           )}
           {content?.email && (
-            <a href={`mailto:${content.email}`} className="text-white/40 hover:text-white transition-colors duration-300 py-2">
+            <a href={`mailto:${content.email}`} className="text-white/40 hover:text-white transition-colors duration-300 py-2 min-h-[44px] flex items-center">
               Email
             </a>
           )}
@@ -286,7 +286,7 @@ const Hero = ({ content }) => {
               href={`https://wa.me/${content.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
               target="_blank"
               rel="noreferrer"
-              className="text-white/40 hover:text-white transition-colors duration-300 py-2"
+              className="text-white/40 hover:text-white transition-colors duration-300 py-2 min-h-[44px] flex items-center"
             >
               WhatsApp
             </a>

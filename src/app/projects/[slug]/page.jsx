@@ -33,9 +33,14 @@ export async function generateMetadata({ params }) {
 
 export default async function ProjectPage({ params }) {
   const { slug } = await params;
-  const project = await db.project.findUnique({
-    where: { slug }
-  });
+  let project;
+  try {
+    project = await db.project.findUnique({
+      where: { slug }
+    });
+  } catch {
+    project = null;
+  }
 
   if (!project) {
     notFound();
@@ -116,69 +121,53 @@ export default async function ProjectPage({ params }) {
         </div>
 
         <div style={{ padding: '3rem', background: 'rgba(15, 23, 42, 0.4)', borderRadius: 'var(--radius-lg)', marginTop: '3rem' }}>
-          {/* THE CHALLENGE */}
-          <h3 style={{ fontSize: '1.75rem', color: 'var(--white)', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
-            THE CHALLENGE
-          </h3>
-          <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '2rem' }}>
-            Faced with stringent requirements regarding precision engineering, environmental safety, and an aggressive timeline that necessitated parallel workflows and strict coordination among multidisciplinary teams. The project required innovative solutions to overcome complex technical challenges while maintaining zero tolerance for quality deviations.
-          </p>
+          {/* Project Details */}
+          {project.description && (
+            <>
+              <h3 style={{ fontSize: '1.75rem', color: 'var(--white)', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
+                PROJECT OVERVIEW
+              </h3>
+              <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '2rem' }}>
+                {project.description}
+              </p>
+            </>
+          )}
 
-          {/* OUR APPROACH */}
-          <h3 style={{ fontSize: '1.75rem', color: 'var(--white)', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
-            OUR APPROACH
-          </h3>
-          <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '2rem' }}>
-            MECELFAB deployed its elite engineering unit, applying ISO-compliant standards and rigorous quality control protocols. Through predictive risk analysis and CPM scheduling, we optimized resource allocation and ensured seamless execution while maintaining transparent communication with stakeholders throughout the project lifecycle.
-          </p>
-
-          {/* EXECUTION */}
-          <h3 style={{ fontSize: '1.75rem', color: 'var(--white)', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
-            EXECUTION
-          </h3>
-          <div style={{ display: 'grid', gap: '1.5rem', marginBottom: '2rem' }}>
-            <div style={{ textAlign: 'center', padding: '1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-md)' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: '600', color: 'var(--white)', marginBottom: '0.5rem' }}>01</div>
-              <div style={{ fontSize: '0.875rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>PLANNING</div>
-              <p style={{ color: '#e2e8f0', fontSize: '0.875rem', marginTop: '0.5rem' }}>Site assessment, feasibility studies, and detailed project planning</p>
-            </div>
-            <div style={{ textAlign: 'center', padding: '1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-md)' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: '600', color: 'var(--white)', marginBottom: '0.5rem' }}>02</div>
-              <div style={{ fontSize: '0.875rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>ENGINEERING</div>
-              <p style={{ color: '#e2e8f0', fontSize: '0.875rem', marginTop: '0.5rem' }}>Structural design, electrical schematics, and automation planning</p>
-            </div>
-            <div style={{ textAlign: 'center', padding: '1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-md)' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: '600', color: 'var(--white)', marginBottom: '0.5rem' }}>03</div>
-              <div style={{ fontSize: '0.875rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>FABRICATION</div>
-              <p style={{ color: '#e2e8f0', fontSize: '0.875rem', marginTop: '0.5rem' }}>Precision welding, CNC machining, and quality-controlled assembly</p>
-            </div>
-            <div style={{ textAlign: 'center', padding: '1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-md)' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: '600', color: 'var(--white)', marginBottom: '0.5rem' }}>04</div>
-              <div style={{ fontSize: '0.875rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>INSTALLATION</div>
-              <p style={{ color: '#e2e8f0', fontSize: '0.875rem', marginTop: '0.5rem' }}>Professional erection, mechanical alignment, and system integration</p>
-            </div>
-            <div style={{ textAlign: 'center', padding: '1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-md)' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: '600', color: 'var(--white)', marginBottom: '0.5rem' }}>05</div>
-              <div style={{ fontSize: '0.875rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>TEST</div>
-              <p style={{ color: '#e2e8f0', fontSize: '0.875rem', marginTop: '0.5rem' }}>Non-destructive testing, performance validation, and safety certification</p>
-            </div>
-            <div style={{ textAlign: 'center', padding: '1.5rem', background: 'rgba(255,255,255,0.03)', borderRadius: 'var(--radius-md)' }}>
-              <div style={{ fontSize: '2.25rem', fontWeight: '600', color: 'var(--white)', marginBottom: '0.5rem' }}>06</div>
-              <div style={{ fontSize: '0.875rem', color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>COMMISSION</div>
-              <p style={{ color: '#e2e8f0', fontSize: '0.875rem', marginTop: '0.5rem' }}>Final system optimization, client training, and project handover</p>
-            </div>
+          {/* Key Facts */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
+            {project.client && (
+              <div>
+                <p style={{ color: '#64748B', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.25rem' }}>Client</p>
+                <p style={{ color: 'var(--white)', fontSize: '0.875rem' }}>{project.client}</p>
+              </div>
+            )}
+            {project.category && (
+              <div>
+                <p style={{ color: '#64748B', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.25rem' }}>Category</p>
+                <p style={{ color: 'var(--white)', fontSize: '0.875rem' }}>{project.category}</p>
+              </div>
+            )}
+            {project.year && (
+              <div>
+                <p style={{ color: '#64748B', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.25rem' }}>Year</p>
+                <p style={{ color: 'var(--white)', fontSize: '0.875rem' }}>{project.year}</p>
+              </div>
+            )}
+            {project.status && (
+              <div>
+                <p style={{ color: '#64748B', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '0.25rem' }}>Status</p>
+                <p style={{ color: 'var(--white)', fontSize: '0.875rem' }}>{project.status}</p>
+              </div>
+            )}
           </div>
 
-          {/* RESULTS */}
+          {/* PROJECT OUTCOMES */}
           <h3 style={{ fontSize: '1.75rem', color: 'var(--white)', marginBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '0.5rem' }}>
-            RESULTS
+            PROJECT OUTCOMES
           </h3>
-          <ul style={{ color: '#94A3B8', lineHeight: 1.8, listStyleType: 'disc', paddingLeft: '1.5rem' }}>
-            <li>Delivered project milestones ahead of schedule</li>
-            <li>Maintained zero LTI (Lost Time Incidents) throughout execution</li>
-            <li>Achieved 100% compliance with client specifications and industry standards</li>
-            <li>Received client commendation for engineering excellence and professional execution</li>
-          </ul>
+          <p style={{ color: '#94A3B8', lineHeight: 1.8, fontSize: '0.875rem' }}>
+            Detailed project outcomes and verified results will be published upon client approval.
+          </p>
         </div>
       </div>
     </div>

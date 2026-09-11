@@ -114,6 +114,17 @@ img {
   outline-offset: 2px;
 }
 
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .gsap-hidden { opacity: 1 !important; transform: none !important; }
+}
+
 /* Screen reader only utility */
 .sr-only {
   position: absolute;
@@ -204,9 +215,7 @@ p, li, td, th, label, input, textarea, select {
 
 .btn:focus-visible {
   outline: none;
-  ring: 2px;
-  ring-offset: 2px;
-  ring-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--primary), 0 0 0 4px var(--accent);
 }
 
 .btn-primary {

@@ -3,6 +3,8 @@ import I18nProvider from '../context/I18nProvider';
 import AuthProvider from '../context/AuthProvider';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import MobileActionBar from '../components/MobileActionBar';
+import Analytics from '../components/Analytics';
 import SmoothScroller from '../components/SmoothScroller';
 import '../index.css';
 import { getCompanyProfile } from '@/lib/companyConfig';
@@ -49,7 +51,7 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
+  maximumScale: 5,
 };
 
 export default async function RootLayout({ children }) {
@@ -91,9 +93,11 @@ export default async function RootLayout({ children }) {
           <I18nProvider>
             <SmoothScroller>
               <CMSProvider>
+                <Analytics />
                 <Navbar contact={company} />
-                <main id="main-content" className="flex-grow">{children}</main>
+                <main id="main-content" className="flex-grow pb-16 md:pb-0">{children}</main>
                 <Footer contact={company} />
+                <MobileActionBar phone={company.phone} whatsapp={company.whatsapp || company.phone} />
                 {/* Floating CTA */}
               </CMSProvider>
             </SmoothScroller>

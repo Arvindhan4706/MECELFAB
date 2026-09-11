@@ -20,10 +20,15 @@ export const metadata = {
 };
 
 export default async function ServicesPage() {
-  const services = await db.service.findMany({
-    where: { status: 'ACTIVE' },
-    orderBy: { createdAt: 'asc' }
-  });
+  let services = [];
+  try {
+    services = await db.service.findMany({
+      where: { status: 'ACTIVE' },
+      orderBy: { createdAt: 'asc' }
+    });
+  } catch {
+    // DB unavailable — render with empty services (empty state will show)
+  }
 
   return (
     <div className="page-wrapper pt-20">

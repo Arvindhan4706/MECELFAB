@@ -1,14 +1,8 @@
 'use client';
-import { useEffect } from 'react';
 import Link from 'next/link';
 import { ShieldAlert } from 'lucide-react';
 
 export default function GlobalError({ error, reset }) {
-  useEffect(() => {
-    // Log error to monitoring service but don't expose stack traces
-    console.error('Application Error boundary caught an exception:', error);
-  }, [error]);
-
   return (
     <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-6 text-center">
       <div className="max-w-md w-full bg-white/[0.02] border border-white/5 rounded-2xl p-8 backdrop-blur-xl">
@@ -20,9 +14,12 @@ export default function GlobalError({ error, reset }) {
         <h1 className="text-3xl font-heading font-light text-white mb-4 tracking-widest uppercase">
           Service Unavailable
         </h1>
-        <p className="text-secondary text-sm font-light mb-8 leading-relaxed">
-          We encountered an unexpected technical issue. Please try again or return to the homepage.
+        <p className="text-secondary text-sm font-light mb-4 leading-relaxed">
+          We encountered a technical issue. Please try again or contact us directly.
         </p>
+          <p className="text-white/40 text-xs font-light mb-8">
+            Email: mecelfab@gmail.com &middot; Response within 24 hours
+          </p>
         <div className="flex flex-col gap-4">
           <button 
             onClick={() => reset()}

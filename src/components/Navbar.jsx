@@ -19,6 +19,7 @@ const Navbar = () => {
     { name: 'About', id: 'about' },
     { name: 'Services', id: 'services' },
     { name: 'Industries', id: 'industries' },
+    { name: 'Equipment', id: 'equipment' },
     { name: 'Projects', id: 'projects' },
     { name: 'Resources', id: 'resources' },
     { name: 'Contact', id: 'contact' },
@@ -56,10 +57,13 @@ const Navbar = () => {
     const nextState = !isOpen;
     setIsOpen(nextState);
     
-    // Toggle body scroll
+    // Toggle body scroll (iOS-safe)
     if (nextState) {
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
-      document.body.style.touchAction = 'none';
       // Animate menu in
       gsap.fromTo(menuDrawerRef.current,
         { yPercent: -100, opacity: 0 },
@@ -70,8 +74,12 @@ const Navbar = () => {
         { y: 0, opacity: 1, duration: 0.4, stagger: 0.05, delay: 0.3, ease: 'power3.out' }
       );
     } else {
+      const scrollY = document.body.style.top ? parseInt(document.body.style.top, 10) * -1 : 0;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
       document.body.style.overflow = '';
-      document.body.style.touchAction = '';
+      window.scrollTo(0, scrollY || 0);
       // Animate menu out
       gsap.to(menuDrawerRef.current, {
         yPercent: -100, opacity: 0, duration: 0.5, ease: 'power3.in'
@@ -96,7 +104,7 @@ const Navbar = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 py-4 md:py-6 ${isOpen ? 'bg-transparent' : ''}`}
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 pt-[max(1rem,env(safe-area-inset-top))] pb-4 md:pb-6 ${isOpen ? 'bg-transparent' : ''}`}
       >
         <div className="container flex items-center justify-between mx-auto px-4 sm:px-6 md:px-8">
           <Link 

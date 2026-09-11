@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 import { sendPasswordResetEmail } from '@/lib/email';
 import { checkRateLimit } from '@/lib/rateLimit';
 import { logger } from '@/lib/logger';
@@ -35,7 +35,7 @@ export async function POST(req) {
     });
 
     // Create a new token that expires in 1 hour
-    const token = uuidv4();
+    const token = randomUUID();
     const expires = new Date(new Date().getTime() + 1000 * 60 * 60);
 
     await db.resetToken.create({

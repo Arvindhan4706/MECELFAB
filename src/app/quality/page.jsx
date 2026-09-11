@@ -20,10 +20,15 @@ export const metadata = {
 };
 
 export default async function QualityPage() {
-  const certifications = await db.certification.findMany({
-    where: { status: 'PUBLISHED' },
-    orderBy: { createdAt: 'desc' },
-  });
+  let certifications = [];
+  try {
+    certifications = await db.certification.findMany({
+      where: { status: 'PUBLISHED' },
+      orderBy: { createdAt: 'desc' },
+    });
+  } catch {
+    // DB unavailable — render with empty certifications
+  }
 
   return (
     <div className="min-h-screen bg-black pt-32 pb-24">
@@ -186,7 +191,7 @@ export default async function QualityPage() {
             <p className="text-white/50">Request copies of our certifications or quality procedures.</p>
           </div>
           <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors">
-            Request Documentation
+            REQUEST RFQ
             <ChevronRight size={14} />
           </Link>
         </div>

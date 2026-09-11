@@ -30,7 +30,7 @@ const EngineeringWorkflow = () => {
 
   return (
     <section ref={containerRef} className="section-padding bg-black relative">
-      <div className="container mx-auto px-6 max-w-7xl">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
         <div className="mb-16">
           <span className="text-accent font-heading tracking-widest text-sm uppercase mb-4 block">How We Work</span>
           <h2 className="text-4xl md:text-5xl font-heading font-light text-white tracking-tight">
@@ -46,7 +46,7 @@ const EngineeringWorkflow = () => {
               </div>
               <div className="relative z-10">
                 <span className="text-accent font-heading font-bold mb-4 block text-sm">{step.id}</span>
-                <h3 className="text-xl font-heading text-white mb-3 tracking-wide">{step.title}</h3>
+                <h3 className="text-xl font-heading font-light text-white mb-3 tracking-wide">{step.title}</h3>
                 <p className="text-white/50 text-sm leading-relaxed font-light">
                   {step.description}
                 </p>

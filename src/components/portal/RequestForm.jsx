@@ -318,7 +318,7 @@ export default function RequestForm({ session }) {
             </div>
             <div>
               <FieldLabel>Phone Number</FieldLabel>
-              <input type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="+91 98765 43210" className={inputCls} />
+              <input type="tel" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="+91 XXXXX XXXXX" className={inputCls} />
             </div>
           </div>
 

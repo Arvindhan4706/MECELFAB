@@ -1,8 +1,51 @@
 "use client";
 import { useState, useRef } from "react";
+import Link from "next/link";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import { gsap, ScrollTrigger } from '@/lib/gsap';
+
+const SERVICE_FIELDS = {
+  'Industrial Generator Rental': [
+    { key: 'powerRequirement', label: 'Power Requirement (kVA)', type: 'text', placeholder: 'e.g. 250 kVA' },
+    { key: 'duration', label: 'Rental Duration', type: 'text', placeholder: 'e.g. 3 months' },
+    { key: 'siteType', label: 'Site Type', type: 'select', options: ['Indoor', 'Outdoor', 'Temporary Site', 'Remote Location'] },
+  ],
+  'Industrial Generator Spare Parts': [
+    { key: 'generatorMake', label: 'Generator Make / Model', type: 'text', placeholder: 'e.g. Cummins C500D5' },
+    { key: 'partDescription', label: 'Part Description', type: 'text', placeholder: 'e.g. Alternator bearing, AVR, control panel' },
+    { key: 'urgency', label: 'Urgency', type: 'select', options: ['Standard', 'Urgent (48h)', 'Critical (Same day)'] },
+  ],
+  'Hydraulic & Pneumatic System Overhauling': [
+    { key: 'systemType', label: 'System Type', type: 'select', options: ['Hydraulic', 'Pneumatic', 'Both'] },
+    { key: 'cylinderCount', label: 'Number of Cylinders / Actuators', type: 'text', placeholder: 'e.g. 4 cylinders' },
+    { key: 'systemPressure', label: 'System Pressure (bar)', type: 'text', placeholder: 'e.g. 210 bar' },
+  ],
+  'Industrial Erection': [
+    { key: 'equipmentType', label: 'Equipment Type', type: 'text', placeholder: 'e.g. Press machine, CNC, Conveyor' },
+    { key: 'equipmentWeight', label: 'Equipment Weight (tons)', type: 'text', placeholder: 'e.g. 5 tons' },
+    { key: 'craneAccess', label: 'Crane Access Available?', type: 'select', options: ['Yes', 'No', 'Needs arrangement'] },
+  ],
+  'Industrial Fabrication': [
+    { key: 'materialType', label: 'Material Type', type: 'text', placeholder: 'e.g. Mild Steel, Stainless Steel' },
+    { key: 'quantity', label: 'Quantity / Weight', type: 'text', placeholder: 'e.g. 50 units, 2 tons' },
+    { key: 'drawingAvailable', label: 'Drawing Available?', type: 'select', options: ['Yes', 'No', 'Need design support'] },
+  ],
+  'AMC — Annual Maintenance Contract': [
+    { key: 'machineCount', label: 'Number of Machines / Systems', type: 'text', placeholder: 'e.g. 3 generators, 5 hydraulic units' },
+    { key: 'serviceFrequency', label: 'Service Frequency', type: 'select', options: ['Monthly', 'Quarterly', 'Half-yearly', 'As needed'] },
+  ],
+  'Air Compressor Rental': [
+    { key: 'cfmRequirement', label: 'CFM Requirement', type: 'text', placeholder: 'e.g. 500 CFM' },
+    { key: 'duration', label: 'Rental Duration', type: 'text', placeholder: 'e.g. 2 months' },
+    { key: 'application', label: 'Application', type: 'text', placeholder: 'e.g. Sandblasting, Pneumatic tools' },
+  ],
+  'Turbocharger Services': [
+    { key: 'turboMake', label: 'Turbo Make / Model', type: 'text', placeholder: 'e.g. Holset HX35, Garrett' },
+    { key: 'engineType', label: 'Engine / Generator Make', type: 'text', placeholder: 'e.g. Cummins 6BT, Kirloskar' },
+    { key: 'issueDescription', label: 'Issue Description', type: 'text', placeholder: 'e.g. Oil leak, excessive smoke, low boost' },
+  ],
+};
 
 const Contact = ({ services = [], content, initialService = '' }) => {
   const containerRef = useRef(null);
@@ -16,8 +59,11 @@ const Contact = ({ services = [], content, initialService = '' }) => {
     serviceRequired: initialService || (services.length > 0 ? services[0].title : 'Industrial Erection'),
     projectDescription: '',
     expectedTimeline: '',
-    preferredContactMethod: 'Email'
+    preferredContactMethod: 'Email',
+    serviceDetails: {},
   });
+
+  const [formStage, setFormStage] = useState(1); // 1 = quick, 2 = detailed
 
   const [formErrors, setFormErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,48 +74,38 @@ const Contact = ({ services = [], content, initialService = '' }) => {
   const validateForm = () => {
     const errors = {};
 
-    // Full Name
-    if (!formData.fullName.trim()) {
-      errors.fullName = 'Full Name is required';
-    }
-
-    // Company
-    if (!formData.companyName.trim()) {
-      errors.companyName = 'Company is required';
-    }
-
-    // Email
+    // Stage 1 required fields (always)
     if (!formData.email.trim()) {
       errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       errors.email = 'Email address is invalid';
     }
-
-    // Phone
     if (!formData.phone.trim()) {
       errors.phone = 'Phone number is required';
     } else if (!/^[0-9+\s-]{8,15}$/.test(formData.phone)) {
       errors.phone = 'Invalid phone number format';
     }
-
-    // Project Location
-    if (!formData.projectLocation.trim()) {
-      errors.projectLocation = 'Project location is required';
-    }
-
-    // Service Required
     if (!formData.serviceRequired) {
       errors.serviceRequired = 'Service is required';
     }
-
-    // Project Description
     if (!formData.projectDescription.trim()) {
       errors.projectDescription = 'Project description is required';
     }
 
-    // Expected Timeline
-    if (!formData.expectedTimeline.trim()) {
-      errors.expectedTimeline = 'Expected timeline is required';
+    // Stage 2 additional required fields
+    if (formStage === 2) {
+      if (!formData.fullName.trim()) {
+        errors.fullName = 'Full Name is required';
+      }
+      if (!formData.companyName.trim()) {
+        errors.companyName = 'Company is required';
+      }
+      if (!formData.projectLocation.trim()) {
+        errors.projectLocation = 'Project location is required';
+      }
+      if (!formData.expectedTimeline.trim()) {
+        errors.expectedTimeline = 'Expected timeline is required';
+      }
     }
 
     return errors;
@@ -77,10 +113,23 @@ const Contact = ({ services = [], content, initialService = '' }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => {
+      const next = { ...prev, [name]: value };
+      if (name === 'serviceRequired') {
+        next.serviceDetails = {};
+      }
+      return next;
+    });
     if (formErrors[name]) {
       setFormErrors((prev) => ({ ...prev, [name]: '' }));
     }
+  };
+
+  const handleServiceDetailChange = (key, value) => {
+    setFormData((prev) => ({
+      ...prev,
+      serviceDetails: { ...prev.serviceDetails, [key]: value },
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -95,12 +144,23 @@ const Contact = ({ services = [], content, initialService = '' }) => {
     setSubmitError('');
 
     try {
+      const fd = new FormData();
+      fd.append('fullName', formData.fullName);
+      fd.append('companyName', formData.companyName);
+      fd.append('email', formData.email);
+      fd.append('phone', formData.phone);
+      fd.append('projectLocation', formData.projectLocation);
+      fd.append('serviceRequired', formData.serviceRequired);
+      fd.append('projectDescription', formData.projectDescription);
+      fd.append('expectedTimeline', formData.expectedTimeline);
+      fd.append('preferredContactMethod', formData.preferredContactMethod);
+      if (Object.keys(formData.serviceDetails).length > 0) {
+        fd.append('serviceDetails', JSON.stringify(formData.serviceDetails));
+      }
+
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+        body: fd,
       });
 
       if (response.ok) {
@@ -116,7 +176,8 @@ const Contact = ({ services = [], content, initialService = '' }) => {
           serviceRequired: initialService || (services.length > 0 ? services[0].title : 'Industrial Erection'),
           projectDescription: '',
           expectedTimeline: '',
-          preferredContactMethod: 'Email'
+          preferredContactMethod: 'Email',
+          serviceDetails: {},
         });
       } else {
         const errorData = await response.json();
@@ -148,7 +209,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
             Start Your Industrial Project
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-heading font-light text-white tracking-tight mb-6">
-            REQUEST A QUOTE
+            REQUEST RFQ
           </h1>
           <p className="text-lg text-secondary font-light leading-relaxed max-w-2xl">
             Tell us about your requirements and our team will review your project.
@@ -263,27 +324,74 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                 <div className="inline-flex text-accent mb-6">
                   <CheckCircle size={64} strokeWidth={1} />
                 </div>
-                <h3 className="text-2xl font-light text-white mb-2 uppercase tracking-widest">SERVICE REQUEST RECEIVED</h3>
-                <p className="text-white/60 text-sm font-light mb-8">
-                  Your request has been submitted successfully. Our engineering team will review your requirements.
+                <h3 className="text-2xl font-light text-white mb-2 uppercase tracking-widest">REQUEST RECEIVED</h3>
+                <p className="text-white/60 text-sm font-light mb-6 max-w-md mx-auto">
+                  Your requirement has been submitted to the MECELFAB team. Our engineering team will review your requirements.
                 </p>
                 <div className="bg-white/5 border border-white/10 p-6 rounded-lg mb-8 max-w-sm mx-auto">
                   <p className="text-xs text-secondary font-heading uppercase tracking-widest mb-2">Reference Number</p>
                   <p className="text-2xl text-white font-medium">{referenceNumber}</p>
                 </div>
-                <button
-                  onClick={() => setIsSubmitted(false)}
-                  className="px-6 py-3 border border-white/20 text-white font-heading text-xs tracking-widest uppercase hover:bg-white hover:text-primary transition-colors duration-300"
-                >
-                  Submit Another Request
-                </button>
+
+                <div className="max-w-sm mx-auto mb-10 text-left">
+                  <p className="text-xs text-secondary font-heading uppercase tracking-widest mb-4 text-center">What happens next</p>
+                  <div className="flex flex-col gap-3">
+                    {[
+                      { step: '01', text: 'Requirement review by our engineering team' },
+                      { step: '02', text: 'Technical assessment and scope analysis' },
+                      { step: '03', text: 'Clarification if required' },
+                      { step: '04', text: 'Commercial response within 2-3 business days' },
+                    ].map((item) => (
+                      <div key={item.step} className="flex items-start gap-3">
+                        <span className="text-secondary font-heading text-xs mt-0.5">{item.step}</span>
+                        <span className="text-white/70 text-sm font-light">{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <Link
+                    href="/services"
+                    className="px-6 py-3 border border-white/20 text-white font-heading text-xs tracking-widest uppercase hover:bg-white hover:text-primary transition-colors duration-300"
+                  >
+                    Back to Services
+                  </Link>
+                  <button
+                    onClick={() => setIsSubmitted(false)}
+                    className="px-6 py-3 bg-white text-primary font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors duration-300"
+                  >
+                    Submit Another Request
+                  </button>
+                </div>
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
-                <h3 className="text-2xl font-light text-white mb-4 md:mb-2">
-                  REQUEST A QUOTE
-                </h3>
+                <div className="flex items-center justify-between mb-4 md:mb-2">
+                  <h3 className="text-2xl font-light text-white">
+            REQUEST RFQ
+                  </h3>
+                  <div className="flex items-center gap-1 text-xs font-heading tracking-widest uppercase">
+                    <button
+                      type="button"
+                      onClick={() => setFormStage(1)}
+                      className={`px-3 py-1.5 min-h-[36px] transition-colors ${formStage === 1 ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
+                    >
+                      Quick
+                    </button>
+                    <span className="text-white/20">/</span>
+                    <button
+                      type="button"
+                      onClick={() => setFormStage(2)}
+                      className={`px-3 py-1.5 min-h-[36px] transition-colors ${formStage === 2 ? 'text-white' : 'text-white/30 hover:text-white/60'}`}
+                    >
+                      Detailed
+                    </button>
+                  </div>
+                </div>
 
+                {formStage === 2 && (
+                  <>
                 {/* Row 1: Full Name and Company */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
                   <div className="flex flex-col gap-2">
@@ -315,6 +423,8 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     {formErrors.companyName && <p className="text-red-500 text-xs mt-1">{formErrors.companyName}</p>}
                   </div>
                 </div>
+                </>
+                )}
 
                 {/* Row 2: Email and Phone */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
@@ -348,59 +458,62 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                   </div>
                 </div>
 
-                {/* Row 3: Project Location and Service Required */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="projectLocation" className="text-xs font-heading tracking-widest text-secondary uppercase">Project Location *</label>
-                    <input
-                      id="projectLocation"
-                      type="text"
-                      name="projectLocation"
-                      value={formData.projectLocation}
-                      onChange={handleChange}
-                      className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
-                      placeholder="Project Site / City, State"
-                      maxLength={200}
-                    />
-                    {formErrors.projectLocation && <p className="text-red-500 text-xs mt-1">{formErrors.projectLocation}</p>}
+                {formStage === 2 && (
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="projectLocation" className="text-xs font-heading tracking-widest text-secondary uppercase">Project Location *</label>
+                  <input
+                    id="projectLocation"
+                    type="text"
+                    name="projectLocation"
+                    value={formData.projectLocation}
+                    onChange={handleChange}
+                    className="w-full bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:border-white/30 transition-colors font-light text-sm min-h-[44px]"
+                    placeholder="Project Site / City, State"
+                    maxLength={200}
+                  />
+                  {formErrors.projectLocation && <p className="text-red-500 text-xs mt-1">{formErrors.projectLocation}</p>}
+                </div>
+                )}
+
+                {/* Service Required (always visible) */}
+                <div className="flex flex-col gap-2">
+                  <label htmlFor="serviceRequired" className="text-xs font-heading tracking-widest text-secondary uppercase">Service Required *</label>
+                  <div className="relative">
+                  <select
+                    id="serviceRequired"
+                    name="serviceRequired"
+                    value={formData.serviceRequired}
+                    onChange={handleChange}
+                    className="w-full bg-primary-light border border-white/10 text-white px-4 py-3 pr-10 focus:outline-none focus:border-white/30 transition-colors font-light text-sm appearance-none min-h-[44px]"
+                  >
+                    <option value="">Select Service Required</option>
+                    {services.length > 0 ? (
+                      services.map((service, index) => (
+                        <option key={index} value={service.title}>{service.title}</option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="Industrial Erection">Industrial Erection</option>
+                        <option value="Industrial Fabrication">Industrial Fabrication</option>
+                        <option value="Hydraulic & Pneumatic System Overhauling">Hydraulic & Pneumatic System Overhauling</option>
+                        <option value="Industrial Generator Spare Parts">Industrial Generator Spare Parts</option>
+                        <option value="AMC — Annual Maintenance Contract">AMC — Annual Maintenance Contract</option>
+                        <option value="Industrial Generator Rental">Industrial Generator Rental</option>
+                        <option value="Air Compressor Rental">Air Compressor Rental</option>
+                        <option value="Turbocharger Services">Turbocharger Services</option>
+                      </>
+                    )}
+                    <option value="Other">Other Solutions</option>
+                  </select>
+                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                    <svg className="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
                   </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="serviceRequired" className="text-xs font-heading tracking-widest text-secondary uppercase">Service Required *</label>
-                    <div className="relative">
-                    <select
-                      id="serviceRequired"
-                      name="serviceRequired"
-                      value={formData.serviceRequired}
-                      onChange={handleChange}
-                      className="w-full bg-primary-light border border-white/10 text-white px-4 py-3 pr-10 focus:outline-none focus:border-white/30 transition-colors font-light text-sm appearance-none min-h-[44px]"
-                    >
-                      <option value="">Select Service Required</option>
-                      {services.length > 0 ? (
-                        services.map((service, index) => (
-                          <option key={index} value={service.title}>{service.title}</option>
-                        ))
-                      ) : (
-                        <>
-                          <option value="Industrial Erection">Industrial Erection</option>
-                          <option value="Industrial Fabrication">Industrial Fabrication</option>
-                          <option value="Hydraulic & Pneumatic System Overhauling">Hydraulic & Pneumatic System Overhauling</option>
-                          <option value="Industrial Generator Spare Parts">Industrial Generator Spare Parts</option>
-                          <option value="AMC — Annual Maintenance Contract">AMC — Annual Maintenance Contract</option>
-                          <option value="Industrial Generator Rental">Industrial Generator Rental</option>
-                          <option value="Air Compressor Rental">Air Compressor Rental</option>
-                          <option value="Turbocharger Services">Turbocharger Services</option>
-                        </>
-                      )}
-                      <option value="Other">Other Solutions</option>
-                    </select>
-                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                      <svg className="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                    </div>
-                    </div>
-                    {formErrors.serviceRequired && <p className="text-red-500 text-xs mt-1">{formErrors.serviceRequired}</p>}
                   </div>
+                  {formErrors.serviceRequired && <p className="text-red-500 text-xs mt-1">{formErrors.serviceRequired}</p>}
                 </div>
 
+                {formStage === 2 && (
+                <>
                 {/* Row 4: Timeline and Preferred Contact */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
                   <div className="flex flex-col gap-2">
@@ -438,6 +551,8 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     </div>
                   </div>
                 </div>
+                </>
+                )}
 
                 {/* Project Description (Full width) */}
                 <div className="flex flex-col gap-2">
@@ -455,6 +570,47 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                   {formErrors.projectDescription && <p className="text-red-500 text-xs mt-1">{formErrors.projectDescription}</p>}
                 </div>
 
+                {/* Service-Specific Details (Stage 2 only) */}
+                {formStage === 2 && SERVICE_FIELDS[formData.serviceRequired] && (
+                  <div className="flex flex-col gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-lg">
+                    <p className="text-xs font-heading tracking-widest text-secondary uppercase">Additional Details — {formData.serviceRequired}</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {SERVICE_FIELDS[formData.serviceRequired].map((field) => (
+                        <div key={field.key} className="flex flex-col gap-1.5">
+                          <label htmlFor={field.key} className="text-xs font-light text-white/50">{field.label}</label>
+                          {field.type === 'select' ? (
+                            <div className="relative">
+                              <select
+                                id={field.key}
+                                value={formData.serviceDetails[field.key] || ''}
+                                onChange={(e) => handleServiceDetailChange(field.key, e.target.value)}
+                                className="w-full bg-white/5 border border-white/10 text-white px-3 py-2.5 pr-8 text-sm font-light focus:outline-none focus:border-white/30 transition-colors appearance-none min-h-[44px]"
+                              >
+                                <option value="">Select...</option>
+                                {field.options.map((opt) => (
+                                  <option key={opt} value={opt}>{opt}</option>
+                                ))}
+                              </select>
+                              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <svg className="w-3 h-3 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                              </div>
+                            </div>
+                          ) : (
+                            <input
+                              id={field.key}
+                              type="text"
+                              value={formData.serviceDetails[field.key] || ''}
+                              onChange={(e) => handleServiceDetailChange(field.key, e.target.value)}
+                              placeholder={field.placeholder}
+                              className="w-full bg-white/5 border border-white/10 text-white px-3 py-2.5 text-sm font-light focus:outline-none focus:border-white/30 transition-colors min-h-[44px]"
+                            />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {submitError && (
                   <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg" role="alert">
                     <p className="text-red-400 text-sm">{submitError}</p>
@@ -470,9 +626,13 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                     <>
                       Submitting... <Send size={16} />
                     </>
+                  ) : formStage === 1 ? (
+                    <>
+                      Quick Submit <Send size={16} />
+                    </>
                   ) : (
                     <>
-                      Submit Request <Send size={16} />
+                      Submit Detailed Request <Send size={16} />
                     </>
                   )}
                 </button>
