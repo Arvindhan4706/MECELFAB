@@ -67,7 +67,7 @@ const VisionMission = () => {
               Our Vision
             </h3>
             <p style={{ color: '#E2E8F0', fontSize: '1.05rem', lineHeight: 1.6, fontWeight: 400 }}>
-              "To advance industrial engineering excellence through mechanical precision, structural resilience, and automated infrastructure solutions."
+              "To deliver reliable mechanical and structural engineering work for industrial clients, with focus on safety, fabrication quality, and system uptime."
             </p>
           </FadeInCard>
 
@@ -89,7 +89,7 @@ const VisionMission = () => {
               Our Mission
             </h3>
             <p style={{ color: '#E2E8F0', fontSize: '1.05rem', lineHeight: 1.6, fontWeight: 400 }}>
-              "To architect and execute heavy-mechanical solutions that support our clients' operational success, with focus on safety, quality, and reliable delivery across every project phase."
+              "To carry out heavy mechanical work — fabrication, erection, and maintenance — safely, on time, and to documented specifications."
             </p>
           </FadeInCard>
         </div>

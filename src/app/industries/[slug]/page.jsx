@@ -118,9 +118,13 @@ export default async function IndustryDetailPage({ params }) {
   const serviceSlugs = industry.services || [];
   let relatedServices = [];
   if (serviceSlugs.length > 0) {
-    relatedServices = await db.service.findMany({
-      where: { slug: { in: serviceSlugs }, status: 'ACTIVE' },
-    });
+    try {
+      relatedServices = await db.service.findMany({
+        where: { slug: { in: serviceSlugs }, status: 'ACTIVE' },
+      });
+    } catch {
+      // DB unavailable — render without related services
+    }
   }
 
   const commonRequirements = industry.commonRequirements || [];
@@ -224,7 +228,7 @@ export default async function IndustryDetailPage({ params }) {
             <div>
               <p className="text-white/40 text-[10px] font-heading tracking-[0.3em] uppercase mb-3">Have a requirement in this sector?</p>
               <h3 className="text-2xl md:text-3xl font-heading font-light text-white mb-2">
-                Discuss Your Project
+                REQUEST RFQ
               </h3>
               <p className="text-white/50 text-sm font-light">
                 Our engineering team will assess your requirement and provide a technical consultation.

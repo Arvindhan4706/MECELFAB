@@ -227,15 +227,30 @@ export default async function ServicePage({ params }) {
               Sector Applications
             </h2>
             <div className="flex flex-wrap gap-3">
-              {industriesServed.map((industry, i) => (
-                <Link
-                  key={i}
-                  href="/industries"
-                  className="px-5 py-3 border border-white/10 text-white/60 text-sm font-heading tracking-wide hover:border-white/30 hover:text-white transition-colors"
-                >
-                  {industry}
-                </Link>
-              ))}
+              {industriesServed.map((industry, i) => {
+                const slugMap = {
+                  'Manufacturing': 'industrial-manufacturing',
+                  'Power & Energy': 'power-energy',
+                  'Industrial Maintenance': 'industrial-maintenance',
+                  'Commercial': 'commercial-power',
+                  'Oil & Gas': 'industrial-manufacturing',
+                  'Construction': 'industrial-manufacturing',
+                  'Infrastructure': 'industrial-manufacturing',
+                  'Events': 'commercial-power',
+                  'Automotive': 'industrial-manufacturing',
+                  'Marine': 'power-energy',
+                };
+                const slug = slugMap[industry] || 'industrial-manufacturing';
+                return (
+                  <Link
+                    key={i}
+                    href={`/industries/${slug}`}
+                    className="px-5 py-3 border border-white/10 text-white/60 text-sm font-heading tracking-wide hover:border-white/30 hover:text-white transition-colors"
+                  >
+                    {industry}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -330,7 +345,7 @@ export default async function ServicePage({ params }) {
             <div>
               <p className="text-white/40 text-[10px] font-heading tracking-[0.3em] uppercase mb-3">Have a similar requirement?</p>
               <h3 className="text-2xl md:text-3xl font-heading font-light text-white mb-2">
-                Request Technical Consultation
+                REQUEST RFQ
               </h3>
               <p className="text-white/50 text-sm font-light">
                 Our engineering team will review your requirements and respond within 24-48 hours.

@@ -11,13 +11,13 @@ const reasons = [
     icon: CheckCircle,
     num: '01',
     title: 'Industrial Experience',
-    desc: 'Decades of hands-on industrial service capability across heavy manufacturing and power sectors.',
+    desc: 'Established company with hands-on work in heavy manufacturing and power-sector facilities.',
   },
   {
     icon: ShieldAlert,
     num: '02',
     title: 'Mechanical Expertise',
-    desc: 'Deep expertise in fabrication, precision erection and end-to-end mechanical system delivery.',
+    desc: 'Work in structural fabrication, mechanical erection, and complete system installation including alignment and commissioning.',
   },
   {
     icon: Lightbulb,
@@ -29,7 +29,7 @@ const reasons = [
     icon: Calendar,
     num: '04',
     title: 'Planned Maintenance',
-    desc: 'Structured AMC programs keep equipment running efficiently, minimising unplanned downtime.',
+    desc: 'Scheduled AMC contracts for generators and compressors to reduce unplanned breakdowns.',
   },
 ];
 
@@ -38,9 +38,9 @@ const WhyChooseUs = () => {
 
   useGSAP(() => {
     gsap.fromTo('.wcu-left',
-      { opacity: 0, x: -40 },
+      { opacity: 0, y: 20 },
       {
-        opacity: 1, x: 0, duration: 1.1, ease: 'power3.out',
+        opacity: 1, y: 0, duration: 1.1, ease: 'power3.out',
         scrollTrigger: { trigger: containerRef.current, start: 'top 78%' },
       }
     );
@@ -78,12 +78,12 @@ const WhyChooseUs = () => {
             </div>
 
             <h2 className="text-4xl md:text-5xl font-heading font-light text-white tracking-tight leading-tight mb-8">
-              Built on Trust.<br />
-              <span className="text-white/30 italic font-serif">Driven by Results.</span>
+              Fabrication. Erection.<br />
+              <span className="text-white/30 italic font-serif">Maintenance.</span>
             </h2>
 
             <p className="text-sm md:text-base text-white/45 font-light leading-relaxed mb-10 max-w-sm">
-              We deliver on every commitment — from precision fabrication and safe erection to rapid-response maintenance and flexible equipment rental.
+              We handle fabrication, safe erection, maintenance callouts, and equipment rental from our project offices.
             </p>
 
             <Link

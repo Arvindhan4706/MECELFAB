@@ -161,7 +161,7 @@ export default async function CustomerEquipmentPage() {
                       </div>
                     ) : (
                       <p className="text-[11px] text-gray-400 italic">
-                        On-demand service support available. Contact Us to enroll this machine into an AMC plan.
+                        On-demand service support available. Submit a service request to enroll this machine into an AMC plan.
                       </p>
                     )}
                   </div>
@@ -172,7 +172,7 @@ export default async function CustomerEquipmentPage() {
                     href={`/portal/service-requests/new?equipmentId=${item.id}`}
                     className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1"
                   >
-                    <span>Request Service for Machine</span>
+                    <span>Submit Service Request</span>
                     <ArrowRight size={12} />
                   </Link>
                   <Link

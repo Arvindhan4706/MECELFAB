@@ -62,13 +62,10 @@ body {
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
   width: 100%;
 }
 
-/* Ensure html doesn't overflow horizontally either */
 html {
-  overflow-x: hidden;
   width: 100%;
 }
 

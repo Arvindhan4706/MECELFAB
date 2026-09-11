@@ -192,12 +192,12 @@ const Contact = ({ services = [], content, initialService = '' }) => {
 
   useGSAP(() => {
     gsap.fromTo('.contact-left',
-      { opacity: 0, x: -30 },
-      { opacity: 1, x: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: containerRef.current, start: 'top 80%' } }
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: containerRef.current, start: 'top 80%' } }
     );
     gsap.fromTo('.contact-right',
-      { opacity: 0, x: 30 },
-      { opacity: 1, x: 0, duration: 1, ease: 'power3.out', delay: 0.2, scrollTrigger: { trigger: containerRef.current, start: 'top 80%' } }
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 1, ease: 'power3.out', delay: 0.2, scrollTrigger: { trigger: containerRef.current, start: 'top 80%' } }
     );
   }, { scope: containerRef });
 
@@ -573,7 +573,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                 {/* Service-Specific Details (Stage 2 only) */}
                 {formStage === 2 && SERVICE_FIELDS[formData.serviceRequired] && (
                   <div className="flex flex-col gap-4 p-4 bg-white/[0.02] border border-white/5 rounded-lg">
-                    <p className="text-xs font-heading tracking-widest text-secondary uppercase">Additional Details — {formData.serviceRequired}</p>
+                    <p className="text-xs font-heading tracking-wider text-secondary uppercase leading-relaxed">Additional Details — {formData.serviceRequired}</p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {SERVICE_FIELDS[formData.serviceRequired].map((field) => (
                         <div key={field.key} className="flex flex-col gap-1.5">

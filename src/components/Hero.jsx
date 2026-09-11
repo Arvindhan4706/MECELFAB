@@ -180,13 +180,13 @@ const Hero = ({ content }) => {
           </span>
           <div className="w-[1px] h-3 bg-white/20 hidden md:block" />
           <span className="text-white/60 text-xs md:text-sm font-heading tracking-[0.2em] uppercase italic">
-            Precision Engineering Excellence
+            Precision Fabrication & Erection
           </span>
         </div>
 
         {/* Description */}
         <p className="hero-desc text-white/55 text-sm sm:text-base md:text-lg font-light leading-relaxed max-w-xl mb-10 opacity-0 text-center md:text-left mx-auto md:mx-0">
-          {content?.heroDescription || 'Industrial erection, heavy fabrication, generator services, hydraulic & pneumatic overhauling, AMC, and equipment rental — delivered with zero-compromise precision across India.'}
+          {content?.heroDescription || 'Industrial erection, heavy fabrication, generator services, hydraulic & pneumatic overhauling, AMC, and equipment rental — executed to documented procedures and safety standards.'}
         </p>
 
         {/* Horizontal rule */}
@@ -241,10 +241,10 @@ const Hero = ({ content }) => {
         <div className="hero-stat-container overflow-x-auto md:overflow-visible pb-6 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 touch-pan-x" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           <div className="flex md:flex-wrap items-start gap-8 md:gap-14 min-w-max md:min-w-0">
             {[
-              { label: '8 Industrial Services', sub: 'End-to-End Capability' },
-              { label: 'Pan-India Operations', sub: 'Project Site Coverage' },
-              { label: 'ISO 9001 Certified', sub: 'Quality Management' },
-              { label: 'Zero-Compromise', sub: 'Safety-Led Execution' },
+              { label: '8 Service Lines', sub: 'Fabrication to Commissioning' },
+              { label: 'Pan-India Deployment', sub: 'Site-to-Site Mobilization' },
+              { label: 'ISO 9001:2015', sub: 'Audited QMS' },
+              { label: 'Safety-First', sub: 'Zero LTI Target' },
             ].map(({ label, sub }) => (
               <div key={label} className="hero-stat flex flex-col gap-1.5 opacity-0 pr-8 md:pr-0 border-r border-white/10 md:border-r-0 last:border-r-0">
                 <div className="text-[15px] sm:text-base md:text-lg font-heading font-light text-white tracking-tight whitespace-nowrap md:whitespace-normal">

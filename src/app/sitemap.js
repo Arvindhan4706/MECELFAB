@@ -1,23 +1,25 @@
+import { MetadataRoute } from 'next';
 import { db } from '@/lib/db';
 
-const BASE_URL = 'https://mecelfabpvtltd.com';
-
 export default async function sitemap() {
+  const baseUrl = 'https://mecelfabpvtltd.com';
+
   const staticPages = [
-    { url: BASE_URL, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
-    { url: `${BASE_URL}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/services`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/industries`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/projects`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
-    { url: `${BASE_URL}/resources`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/quality`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/capabilities`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: baseUrl, lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
+    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/services`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${baseUrl}/industries`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/projects`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
+    { url: `${baseUrl}/equipment`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/capabilities`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/quality`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/resources`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
   ];
 
   let servicePages = [];
-  let projectPages = [];
   let industryPages = [];
+  let projectPages = [];
 
   try {
     const services = await db.service.findMany({
@@ -25,12 +27,28 @@ export default async function sitemap() {
       select: { slug: true, updatedAt: true },
     });
     servicePages = services.map((s) => ({
-      url: `${BASE_URL}/services/${s.slug}`,
+      url: `${baseUrl}/services/${s.slug}`,
       lastModified: s.updatedAt,
       changeFrequency: 'monthly',
       priority: 0.8,
     }));
-  } catch {}
+  } catch {
+    // DB unavailable — skip dynamic pages
+  }
+
+  try {
+    const industries = await db.industry.findMany({
+      select: { slug: true, updatedAt: true },
+    });
+    industryPages = industries.map((i) => ({
+      url: `${baseUrl}/industries/${i.slug}`,
+      lastModified: i.updatedAt,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    }));
+  } catch {
+    // DB unavailable
+  }
 
   try {
     const projects = await db.project.findMany({
@@ -38,25 +56,14 @@ export default async function sitemap() {
       select: { slug: true, updatedAt: true },
     });
     projectPages = projects.map((p) => ({
-      url: `${BASE_URL}/projects/${p.slug}`,
+      url: `${baseUrl}/projects/${p.slug}`,
       lastModified: p.updatedAt,
-      changeFrequency: 'monthly',
-      priority: 0.7,
+      changeFrequency: 'weekly',
+      priority: 0.8,
     }));
-  } catch {}
+  } catch {
+    // DB unavailable
+  }
 
-  try {
-    const industries = await db.industry.findMany({
-      where: { status: 'PUBLISHED' },
-      select: { slug: true, updatedAt: true },
-    });
-    industryPages = industries.map((i) => ({
-      url: `${BASE_URL}/industries/${i.slug}`,
-      lastModified: i.updatedAt,
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    }));
-  } catch {}
-
-  return [...staticPages, ...servicePages, ...projectPages, ...industryPages];
+  return [...staticPages, ...servicePages, ...industryPages, ...projectPages];
 }

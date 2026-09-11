@@ -23,7 +23,7 @@ test.describe('Contact Form', () => {
     await page.click('button[type="submit"]');
 
     // Check for success message
-    const successMsg = page.locator('text=/successfully|Thank you|SERVICE REQUEST RECEIVED/i').first();
+    const successMsg = page.locator('text=/successfully|Thank you|REQUEST RECEIVED/i').first();
     await expect(successMsg).toBeVisible({ timeout: 10000 });
   });
 });

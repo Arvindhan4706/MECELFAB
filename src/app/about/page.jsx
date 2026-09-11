@@ -7,10 +7,10 @@ export const revalidate = 60;
 
 export const metadata = {
   title: 'About Us | MECELFAB Industrial Solutions',
-  description: 'Learn about MECELFAB Industrial Solutions — our vision, mission, quality systems, and commitment to industrial engineering excellence across India.',
+  description: 'Learn about MECELFAB Industrial Solutions — our services, quality systems, and engineering background.',
   openGraph: {
     title: 'About Us | MECELFAB Industrial Solutions',
-    description: 'Learn about MECELFAB Industrial Solutions — our vision, mission, quality systems, and commitment to industrial engineering excellence across India.',
+    description: 'Learn about MECELFAB Industrial Solutions — our services, quality systems, and engineering background.',
     url: 'https://mecelfabpvtltd.com/about',
     images: [{ url: '/images/hero-bg.png', width: 1200, height: 630, alt: 'About MECELFAB' }],
     type: 'website',

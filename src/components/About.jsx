@@ -44,7 +44,7 @@ const About = ({ content }) => {
           delay={0.1}
           className="text-lg md:text-xl text-secondary font-light leading-relaxed mb-8 max-w-3xl mx-auto"
         >
-          {content?.mission || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED is a specialized industrial engineering and infrastructure solutions partner. Founded by mechanical and mechatronics engineers, we focus on heavy structural fabrication, equipment installation, and industrial maintenance services.'}
+          {content?.mission || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED is an industrial engineering company. We were founded by mechanical and mechatronics engineers and focus on heavy structural fabrication, equipment installation, and maintenance services.'}
         </TextReveal>
 
         <TextReveal
@@ -52,7 +52,7 @@ const About = ({ content }) => {
           delay={0.2}
           className="text-lg md:text-xl text-secondary font-light leading-relaxed mb-16 max-w-3xl mx-auto"
         >
-          {content?.vision || 'Our expertise covers heavy metal fabrication, structural erection, and the maintenance of pneumatic and hydraulic systems. We build facilities and engineer reliable systems designed to maximize uptime and operational efficiency across industrial environments.'}
+          {content?.vision || 'Our work covers heavy metal fabrication, structural erection, and maintenance of pneumatic and hydraulic systems. We build and maintain industrial facilities and mechanical systems to reduce downtime.'}
         </TextReveal>
 
         {/* Enhanced Sections per Master Prompt */}
@@ -62,10 +62,10 @@ const About = ({ content }) => {
             Who We Are
           </div>
           <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Industrial Engineering Excellence
+            What We Do
           </h3>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            MECELFAB Industrial Solutions delivers fabrication, installation and maintenance solutions for industrial environments. Our team of qualified engineers and skilled technicians handles project execution from planning through installation and commissioning.
+            MECELFAB Industrial Solutions provides fabrication, installation, and maintenance work for industrial facilities. Our team of qualified engineers and skilled technicians handles project execution from planning through installation and commissioning.
           </p>
 
           {/* Our Capabilities */}
@@ -107,7 +107,7 @@ const About = ({ content }) => {
             Our Values
           </div>
           <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Guiding Principles
+            How We Work
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-8">
             <div className="text-left">
@@ -133,10 +133,10 @@ const About = ({ content }) => {
             Leadership
           </div>
           <h3 className="about-animate text-2xl font-heading font-light text-white mb-6">
-            Our Core Values
+            Leadership
           </h3>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            {content?.values || 'Safety, Quality, Integrity, Innovation'}
+            {content?.values || 'Precision fabrication. Documented safety procedures. Project accountability. Work completed to spec.'}
           </p>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-3xl">
             Our team consists of qualified engineers with professional experience in industrial fabrication, automation, and infrastructure projects. We maintain a policy of using only verified team member information and do not publish individual profiles without explicit consent.
@@ -168,12 +168,12 @@ const About = ({ content }) => {
             Our Practice
           </h3>
           <p className="text-secondary text-base font-light leading-relaxed mb-8 max-w-2xl">
-            MECELFAB Industrial Solutions delivers integrated engineering solutions to industrial clients. We focus on delivering verified project outcomes and building lasting client relationships.
+            MECELFAB handles fabrication, erection, and maintenance projects for industrial clients. We focus on completing work to specification, on schedule, and at the agreed cost.
           </p>
         </div>
 
         <div className="about-animate text-white text-base md:text-lg font-light uppercase tracking-widest border-y border-white/10 py-8 mt-16">
-          Building Trust. Delivering Quality. Engineering Reliability.
+          Fabrication. Erection. Maintenance.
         </div>
 
       </div>
