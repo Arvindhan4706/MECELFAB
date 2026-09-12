@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { LogOut, ArrowLeft, Home, Shield } from 'lucide-react';
+import Image from 'next/image';
+import { LogOut, ArrowLeft, Home } from 'lucide-react';
 
 const BG       = '#0a0a0a';
 const BORDER   = '#1e1e1e';
@@ -42,12 +43,13 @@ export default function SignOutPage() {
         alignItems: 'center',
         gap: '10px',
       }}>
-        <div style={{
-          width: '28px', height: '28px', borderRadius: '6px',
-          background: WHITE, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>
-          <Shield size={12} color={BG} />
-        </div>
+        <Image
+          src="/images/logo-mark.jpeg"
+          alt="MECELFAB"
+          width={48}
+          height={48}
+          className="rounded-xl"
+        />
         <span style={{
           fontSize: '14px', fontWeight: 700, color: WHITE,
           fontFamily: 'Space Grotesk, Inter, sans-serif', letterSpacing: '-0.02em',

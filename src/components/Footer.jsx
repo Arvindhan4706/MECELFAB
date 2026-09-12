@@ -1,6 +1,7 @@
 "use client";
 import { ArrowUp } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const Footer = ({ contact }) => {
@@ -13,16 +14,20 @@ const Footer = ({ contact }) => {
   if (pathname?.startsWith('/admin') || pathname?.startsWith('/auth') || pathname?.startsWith('/portal')) return null;
 
   return (
-    <footer className="bg-primary pt-24 pb-8 relative">
+    <footer className="bg-primary pt-10 pb-8 relative">
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
       <div className="container px-4 sm:px-6 md:px-8 mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 mb-12 md:mb-16">
           {/* Brand Info */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <span className="font-heading font-light tracking-widest text-2xl text-white uppercase">
-                MECELFAB
-              </span>
+              <Image
+                src="/images/logo-full.jpeg"
+                alt="MECELFAB Industrial Solutions"
+                width={500}
+                height={100}
+                className="h-[100px] w-auto scale-x-[1.3] origin-left rounded-2xl"
+              />
             </div>
             <p className="text-sm text-secondary font-light leading-relaxed mb-6">
               Engineering reliable solutions for industrial growth. Serving fabrication, erection, power distribution, and heavy industrial utility setups across India.

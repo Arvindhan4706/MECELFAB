@@ -3,9 +3,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import {
   Lock, Mail, AlertCircle, ArrowRight, Eye, EyeOff,
-  Shield, CheckCircle2
+  CheckCircle2
 } from 'lucide-react';
 
 /* ─── Design tokens ─────────────────────────────────────── */
@@ -139,12 +140,16 @@ export default function LoginAdminPage() {
 
         {/* Logo */}
         <div
-          style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '40px', alignSelf: 'center' }}
+          style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '40px', alignSelf: 'center' }}
         >
-          <div style={{ width: '32px', height: '32px', borderRadius: '7px', background: WHITE, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Shield size={14} color={BG} />
-          </div>
-          <span style={{ fontSize: '15px', fontWeight: 700, color: WHITE, fontFamily: 'Space Grotesk, Inter, sans-serif', letterSpacing: '-0.02em' }}>
+          <Image
+            src="/images/logo-mark.jpeg"
+            alt="MECELFAB"
+            width={56}
+            height={56}
+            className="rounded-xl"
+          />
+          <span style={{ fontSize: '32px', fontWeight: 700, color: WHITE, fontFamily: 'Space Grotesk, Inter, sans-serif', letterSpacing: '-0.02em' }}>
             MECELFAB
           </span>
         </div>

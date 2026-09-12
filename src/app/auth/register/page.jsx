@@ -6,8 +6,9 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import {
   Lock, Mail, AlertCircle, ArrowRight, Eye, EyeOff,
-  Shield, User as UserIcon
+  User as UserIcon
 } from 'lucide-react';
+import Image from 'next/image';
 
 /* ─── Design tokens ─────────────────────────────────────── */
 const BG       = '#0a0a0a';
@@ -170,11 +171,15 @@ export default function RegisterPage() {
         </div>
 
         {/* Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '30px' }}>
-          <div style={{ width: '32px', height: '32px', borderRadius: '7px', background: WHITE, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Shield size={14} color={BG} />
-          </div>
-          <span style={{ fontSize: '15px', fontWeight: 700, color: WHITE, fontFamily: 'Space Grotesk, Inter, sans-serif', letterSpacing: '-0.02em' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '30px' }}>
+          <Image
+            src="/images/logo-mark.jpeg"
+            alt="MECELFAB"
+            width={56}
+            height={56}
+            className="rounded-xl"
+          />
+          <span style={{ fontSize: '32px', fontWeight: 700, color: WHITE, fontFamily: 'Space Grotesk, Inter, sans-serif', letterSpacing: '-0.02em' }}>
             MECELFAB
           </span>
         </div>

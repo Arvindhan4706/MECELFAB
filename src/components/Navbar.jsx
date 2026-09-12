@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useGSAP } from '@gsap/react';
@@ -104,7 +105,7 @@ const Navbar = () => {
     <>
       <nav
         ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 pt-[max(1rem,env(safe-area-inset-top))] pb-4 md:pb-6 ${isOpen ? 'lg:block hidden' : ''}`}
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 pt-[max(1rem,env(safe-area-inset-top))] pb-6 md:pb-8 ${isOpen ? 'lg:block hidden' : ''}`}
       >
         <div className="container flex items-center justify-between mx-auto px-4 sm:px-6 md:px-8">
           <Link 
@@ -112,9 +113,25 @@ const Navbar = () => {
             onClick={() => isOpen && toggleMenu()} 
             className={`flex items-center gap-3 relative z-[101] transition-opacity duration-300 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
-            <span className="font-heading font-light tracking-widest text-lg sm:text-xl md:text-2xl text-white uppercase">
-              MECELFAB
+            {/* Desktop: full logo | Mobile: compact mark */}
+            <span className="hidden sm:flex items-center bg-white/95 backdrop-blur-sm rounded-xl px-3 py-1.5 shadow-sm shadow-black/20 ring-1 ring-white/30">
+              <Image
+                src="/images/logo-full.png"
+                alt="MECELFAB Industrial Solutions"
+                width={420}
+                height={84}
+                className="h-12 w-auto"
+                priority
+              />
             </span>
+            <Image
+              src="/images/logo-mark.jpeg"
+              alt="MECELFAB"
+              width={56}
+              height={56}
+              className="block sm:hidden h-[56px] w-[56px] rounded-xl"
+              priority
+            />
           </Link>
 
           {/* Desktop Menu */}
