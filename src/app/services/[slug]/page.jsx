@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { db } from '@/lib/db';
-import { CheckCircle, Shield, ChevronRight, HelpCircle } from 'lucide-react';
+import { CheckCircle, Shield, ChevronRight, HelpCircle, ArrowRight, Wrench } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { getEquipmentByServiceSlug } from '@/lib/equipmentData';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -97,6 +98,9 @@ export default async function ServicePage({ params }) {
     take: 3,
   });
 
+  // Query verified equipment catalog items matching this service
+  const relatedEquipment = getEquipmentByServiceSlug(slug);
+
   return (
     <div className="min-h-screen bg-black">
       <script
@@ -163,23 +167,66 @@ export default async function ServicePage({ params }) {
       )}
 
       {/* 04 — Equipment / Capability */}
-      {equipment.length > 0 && (
+      {(equipment.length > 0 || relatedEquipment.length > 0) && (
         <section className="py-16 md:py-24 border-b border-white/5">
           <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-5 h-[1px] bg-white/30" />
-              <span className="text-white/40 text-[10px] font-heading tracking-[0.3em] uppercase">Equipment & Capability</span>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-5 h-[1px] bg-white/30" />
+                <span className="text-white/40 text-[10px] font-heading tracking-[0.3em] uppercase">Equipment & Machinery Deployed</span>
+              </div>
+              <Link 
+                href="/equipment"
+                className="text-xs font-heading tracking-wider uppercase text-white/50 hover:text-white inline-flex items-center gap-1.5 transition-colors"
+              >
+                Catalog <ArrowRight size={13} />
+              </Link>
             </div>
+            
             <h2 className="text-2xl md:text-3xl font-heading font-light text-white mb-10">
-              Technical Equipment
+              Technical Equipment & Tooling
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {equipment.map((item, i) => (
-                <div key={i} className="p-5 bg-white/[0.02] border border-white/5">
-                  <p className="text-white/70 text-sm font-light">{item}</p>
-                </div>
-              ))}
-            </div>
+
+            {/* Verified Catalog Items (if matched) */}
+            {relatedEquipment.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+                {relatedEquipment.map((item) => (
+                  <Link
+                    key={item.slug}
+                    href={`/equipment/${item.slug}`}
+                    className="p-5 bg-white/[0.02] border border-white/10 rounded-lg hover:border-white/25 hover:bg-white/[0.04] transition-all group flex flex-col justify-between"
+                  >
+                    <div>
+                      <span className="text-[10px] font-heading tracking-widest uppercase text-accent/80 block mb-1">
+                        {item.capacityRange}
+                      </span>
+                      <h3 className="text-base font-heading font-light text-white group-hover:text-white transition-colors mb-2">
+                        {item.title}
+                      </h3>
+                      <p className="text-white/50 text-xs font-light line-clamp-2 leading-relaxed mb-4">
+                        {item.shortDescription}
+                      </p>
+                    </div>
+                    <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-heading tracking-wider uppercase text-white/70 group-hover:text-white">
+                      <span>View Specifications</span>
+                      <ArrowRight size={13} />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* Static Capability Equipment List */}
+            {equipment.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {equipment.map((item, i) => (
+                  <div key={i} className="p-4 bg-white/[0.01] border border-white/5 flex items-center gap-3">
+                    <Wrench size={15} className="text-white/30 shrink-0" />
+                    <p className="text-white/70 text-sm font-light">{item}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       )}

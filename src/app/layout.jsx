@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import MobileActionBar from '../components/MobileActionBar';
 import Analytics from '../components/Analytics';
 import SmoothScroller from '../components/SmoothScroller';
+import SplashIntro from '../components/SplashIntro';
 import '../index.css';
 import { getCompanyProfile } from '@/lib/companyConfig';
 import { validateEnv } from '@/lib/validateEnv';
@@ -44,7 +45,11 @@ export const metadata = {
     images: ['/images/hero-bg.png'],
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: [
+      { url: '/images/logo-mark.jpeg', type: 'image/jpeg' },
+    ],
+    shortcut: '/images/logo-mark.jpeg',
+    apple: '/images/logo-mark.jpeg',
   },
   manifest: '/manifest.json',
 };
@@ -94,6 +99,7 @@ export default async function RootLayout({ children }) {
           <I18nProvider>
             <SmoothScroller>
               <CMSProvider>
+                <SplashIntro />
                 <Analytics />
                 <Navbar contact={company} />
                 <main id="main-content" className="flex-grow pb-16 md:pb-0">{children}</main>

@@ -1,8 +1,9 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { CheckCircle, ChevronRight } from 'lucide-react';
+import { CheckCircle, ChevronRight, ArrowRight } from 'lucide-react';
 import { db } from '@/lib/db';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { getEquipmentByIndustrySlug } from '@/lib/equipmentData';
 
 const DEFAULT_INDUSTRIES = {
   'industrial-manufacturing': {
@@ -128,6 +129,7 @@ export default async function IndustryDetailPage({ params }) {
   }
 
   const commonRequirements = industry.commonRequirements || [];
+  const relatedEquipment = getEquipmentByIndustrySlug(slug);
 
   return (
     <div className="min-h-screen bg-black">
@@ -214,6 +216,54 @@ export default async function IndustryDetailPage({ params }) {
                     <p className="text-secondary text-xs font-light mt-1 line-clamp-1">{service.description}</p>
                   </div>
                   <ChevronRight size={14} className="text-white/20 group-hover:text-white/50 transition-colors shrink-0 ml-4" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Relevant Industrial Machinery & Equipment */}
+      {relatedEquipment.length > 0 && (
+        <section className="py-16 md:py-24 border-b border-white/5">
+          <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-6xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-5 h-[1px] bg-white/30" />
+                <span className="text-white/40 text-[10px] font-heading tracking-[0.3em] uppercase">Machinery & Systems</span>
+              </div>
+              <Link 
+                href="/equipment"
+                className="text-xs font-heading tracking-wider uppercase text-white/50 hover:text-white inline-flex items-center gap-1.5 transition-colors"
+              >
+                Catalog <ArrowRight size={13} />
+              </Link>
+            </div>
+            <h2 className="text-2xl md:text-3xl font-heading font-light text-white mb-10">
+              Equipment Deployed in {industry.title}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {relatedEquipment.map((item) => (
+                <Link
+                  key={item.slug}
+                  href={`/equipment/${item.slug}`}
+                  className="p-5 bg-white/[0.02] border border-white/10 rounded-lg hover:border-white/25 hover:bg-white/[0.04] transition-all group flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="text-[10px] font-heading tracking-widest uppercase text-accent/80 block mb-1">
+                      {item.capacityRange}
+                    </span>
+                    <h3 className="text-base font-heading font-light text-white group-hover:text-white transition-colors mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-white/50 text-xs font-light line-clamp-2 leading-relaxed mb-4">
+                      {item.shortDescription}
+                    </p>
+                  </div>
+                  <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-heading tracking-wider uppercase text-white/70 group-hover:text-white">
+                    <span>View Specifications</span>
+                    <ArrowRight size={13} />
+                  </div>
                 </Link>
               ))}
             </div>

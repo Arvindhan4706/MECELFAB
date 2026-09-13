@@ -9,7 +9,7 @@ export const DEFAULT_COMPANY_PROFILE = {
   email: 'mecelfab@gmail.com',
   billingEmail: 'mecelfab@gmail.com',
   phone: '', // Left empty until official number is supplied
-  address: '', // Left empty until registered office / plant address is supplied
+  address: 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099',
   workingHours: 'Mon - Sat: 9:00 AM - 6:00 PM IST',
   gstin: '', // Official GSTIN
   pan: '', // Official PAN

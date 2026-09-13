@@ -47,7 +47,13 @@ const SERVICE_FIELDS = {
   ],
 };
 
-const Contact = ({ services = [], content, initialService = '' }) => {
+const Contact = ({ 
+  services = [], 
+  content, 
+  initialService = '', 
+  initialDescription = '', 
+  prefillEquipment = null 
+}) => {
   const containerRef = useRef(null);
 
   const [formData, setFormData] = useState({
@@ -57,7 +63,7 @@ const Contact = ({ services = [], content, initialService = '' }) => {
     phone: '',
     projectLocation: '',
     serviceRequired: initialService || (services.length > 0 ? services[0].title : 'Industrial Erection'),
-    projectDescription: '',
+    projectDescription: initialDescription || '',
     expectedTimeline: '',
     preferredContactMethod: 'Email',
     serviceDetails: {},
@@ -289,9 +295,24 @@ const Contact = ({ services = [], content, initialService = '' }) => {
               </div>
             </div>
 
-            {/* Styled Map Container */}
-            {content?.address ? (
-              <div className="w-full h-64 border border-white/5 overflow-hidden filter grayscale contrast-125 opacity-80">
+            {/* Styled Google Map Container */}
+            <div className="w-full flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest flex items-center gap-2">
+                  <MapPin size={14} className="text-accent" />
+                  Office Location Map
+                </span>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(content?.address || 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099')}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[11px] font-heading tracking-wider uppercase text-accent hover:underline flex items-center gap-1 transition-colors"
+                >
+                  Open in Maps ↗
+                </a>
+              </div>
+
+              <div className="w-full h-72 sm:h-80 rounded-xl border border-white/10 overflow-hidden relative shadow-lg bg-black/40">
                 <iframe
                   title="MECELFAB Industrial Location Map"
                   width="100%"
@@ -300,21 +321,12 @@ const Contact = ({ services = [], content, initialService = '' }) => {
                   scrolling="no"
                   marginHeight="0"
                   marginWidth="0"
-                  src={`https://maps.google.com/maps?width=100%25&height=250&hl=en&q=${encodeURIComponent(content.address)}&t=m&z=14&ie=UTF8&iwloc=B&output=embed`}
-                  className="invert hue-rotate-180"
+                  loading="lazy"
+                  src={`https://maps.google.com/maps?width=100%25&height=320&hl=en&q=${encodeURIComponent(content?.address || 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099')}&t=m&z=15&ie=UTF8&iwloc=B&output=embed`}
+                  className="w-full h-full filter contrast-[1.08] opacity-90"
                 />
               </div>
-            ) : (
-              <div className="w-full p-8 border border-white/5 bg-white/[0.02] flex flex-col justify-center">
-                <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-2">CORPORATE FACILITIES & YARDS</h4>
-                <p className="text-white/70 text-xs font-light leading-relaxed mb-3">
-                  Physical yard, fabrication shop, and registered office visits are scheduled in coordination with project managers.
-                </p>
-                <p className="text-secondary text-xs font-light">
-                  For immediate project inquiries, please submit the request form or email <span className="text-white font-medium">{content?.email || 'mecelfab@gmail.com'}</span>.
-                </p>
-              </div>
-            )}
+            </div>
           </div>
 
           {/* Contact Form */}
@@ -367,6 +379,20 @@ const Contact = ({ services = [], content, initialService = '' }) => {
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
+                {prefillEquipment && (
+                  <div className="p-4 bg-white/[0.04] border border-white/10 rounded-lg flex items-center justify-between gap-3">
+                    <div>
+                      <span className="text-[10px] font-heading tracking-widest text-accent uppercase block mb-0.5">Contextual RFQ</span>
+                      <span className="text-white text-sm font-medium">{prefillEquipment.title} ({prefillEquipment.capacityRange})</span>
+                    </div>
+                    <Link
+                      href="/equipment"
+                      className="text-white/40 hover:text-white text-xs underline font-heading tracking-wider uppercase"
+                    >
+                      Change
+                    </Link>
+                  </div>
+                )}
                 <div className="flex items-center justify-between mb-4 md:mb-2">
                   <h3 className="text-2xl font-light text-white">
             REQUEST RFQ

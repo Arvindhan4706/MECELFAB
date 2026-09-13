@@ -14,9 +14,12 @@ const Footer = ({ contact }) => {
   if (pathname?.startsWith('/admin') || pathname?.startsWith('/auth') || pathname?.startsWith('/portal')) return null;
 
   return (
-    <footer className="bg-primary pt-10 pb-8 relative">
-      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-      <div className="container px-4 sm:px-6 md:px-8 mx-auto">
+    <footer className="bg-primary/95 backdrop-blur-xl pt-14 pb-10 relative rounded-t-3xl sm:rounded-t-[40px] border-t border-white/10 shadow-[0_-15px_40px_rgba(0,0,0,0.6)] overflow-hidden">
+      {/* Smooth top edge light blend & soft ambient glow */}
+      <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-accent/5 blur-2xl pointer-events-none" />
+
+      <div className="container px-4 sm:px-6 md:px-8 mx-auto relative z-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 mb-12 md:mb-16">
           {/* Brand Info */}
           <div>
@@ -24,9 +27,9 @@ const Footer = ({ contact }) => {
               <Image
                 src="/images/logo-full.jpeg"
                 alt="MECELFAB Industrial Solutions"
-                width={500}
-                height={100}
-                className="h-[100px] w-auto scale-x-[1.3] origin-left rounded-2xl"
+                width={600}
+                height={120}
+                className="h-[105px] w-auto origin-left rounded-xl object-contain"
               />
             </div>
             <p className="text-sm text-secondary font-light leading-relaxed mb-6">

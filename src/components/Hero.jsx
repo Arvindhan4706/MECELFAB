@@ -21,12 +21,6 @@ const Hero = ({ content }) => {
       0
     );
 
-    // Top strip — slide in from top
-    tl.fromTo('.hero-topstrip',
-      { y: -40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
-      0.4
-    );
 
     // MECELFAB — reveal each letter from below clip
     tl.fromTo('.hero-wordmark',
@@ -119,35 +113,15 @@ const Hero = ({ content }) => {
         </span>
       </div>
 
-      {/* ─── Top strip ───────────────────────────────────────────── */}
-      <div className="hero-topstrip relative z-10 flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-16 pt-28 opacity-0">
-        <div className="flex items-center gap-3">
-          <div className="w-5 h-[1px] bg-white/40" />
-          <span className="text-white/40 text-[11px] font-heading tracking-[0.35em] uppercase">
-            Est. India
-          </span>
-        </div>
-        <div className="hidden md:flex items-center gap-6">
-          <span className="text-white/30 text-[10px] font-heading tracking-[0.25em] uppercase">ISO 9001:2015</span>
-          <div className="w-[1px] h-3 bg-white/20" />
-          <span className="text-white/30 text-[10px] font-heading tracking-[0.25em] uppercase">ISO 45001:2018</span>
-        </div>
-      </div>
+      {/* ─── Top strip spacer ───────────────────────────────────── */}
+      <div className="pt-28 sm:pt-32" />
 
       {/* ─── Main content ─────────────────────────────────────────── */}
       <div className="relative z-10 flex-1 flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-16 py-16">
-
-        {/* Mobile ISO Badge */}
-        <div className="md:hidden flex items-center justify-center mb-6 opacity-0 hero-tagline">
-          <span className="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-white/60 text-[11px] font-heading tracking-[0.25em] uppercase backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.02)]">
-            ISO 9001 Certified · Made in India
-          </span>
-        </div>
-
         {/* Company name — the hero wordmark */}
-        <div className="overflow-hidden mb-3 md:border-l-[3px] md:border-accent/80 md:pl-6 md:-ml-[27px] flex flex-col items-center md:items-start text-center md:text-left relative">
+        <div className="overflow-hidden mb-3 md:border-l-[3px] md:border-accent/80 md:pl-6 md:-ml-[27px] flex flex-col items-center md:items-start text-center md:text-left relative pt-6 md:pt-10">
           <h1
-            className="hero-wordmark font-heading font-bold text-white leading-none tracking-tighter uppercase w-full"
+            className="hero-wordmark font-heading font-bold leading-none tracking-tighter uppercase w-full bg-gradient-to-b from-white/90 via-white/80 to-white/65 bg-clip-text text-transparent drop-shadow-[0_2px_24px_rgba(255,255,255,0.06)]"
             style={{ fontSize: 'clamp(3.5rem, 14vw, 12rem)', lineHeight: 0.88 }}
           >
             {content?.heroTitle?.split(' ')[0] || 'MECELFAB'}
@@ -225,7 +199,7 @@ const Hero = ({ content }) => {
             {[
               { label: '8 Service Lines', sub: 'Fabrication to Commissioning' },
               { label: 'Multi-Site Deployment', sub: 'Site-to-Site Mobilization' },
-              { label: 'ISO 9001:2015', sub: 'Audited QMS' },
+              { label: 'Quality Assured', sub: 'Documented Procedures' },
               { label: 'Safety-First', sub: 'Zero LTI Target' },
             ].map(({ label, sub }) => (
               <div key={label} className="hero-stat flex flex-col gap-1.5 opacity-0 pr-8 md:pr-0 border-r border-white/10 md:border-r-0 last:border-r-0">
