@@ -48,7 +48,7 @@ export const EQUIPMENT_ITEMS = [
     capacityRange: '20 kVA – 500 kVA',
     supportedBrands: 'Cummins, Mahindra Powerol, Honda, Kirloskar',
     shortDescription: 'Sound-attenuated weatherproof canopy generators engineered for noise-restricted commercial, hospital, and urban work environments.',
-    overview: 'Engineered with CPCB-compliant acoustic enclosures for quiet operation, MECELFAB silent generators provide seamless power reliability without noise disruption in urban facilities, healthcare campuses, and commercial complexes.',
+      overview: 'Engineered with CPCB-compliant acoustic enclosures for quiet operation, MECELFAB silent generators provide reliable power without noise disruption in urban facilities, healthcare campuses, and commercial complexes.',
     applications: [
       'Commercial buildings and corporate campuses',
       'Hospital and healthcare critical backup',

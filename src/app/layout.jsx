@@ -20,11 +20,11 @@ validateEnv();
 
 export const metadata = {
   title: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
-  description: 'Premier industrial mechanical services, fabrication, generator solutions, rentals, and hydraulic/pneumatic system overhauling in India.',
+  description: 'Industrial mechanical services, fabrication, generator solutions, rentals, and hydraulic/pneumatic system overhauling in India.',
   metadataBase: new URL('https://mecelfabpvtltd.com'),
   openGraph: {
     title: 'MECELFAB INDUSTRIAL SOLUTIONS',
-    description: 'Premier industrial mechanical services, fabrication, generator solutions, rentals, and hydraulic/pneumatic system overhauling in India.',
+    description: 'Industrial mechanical services, fabrication, generator solutions, rentals, and hydraulic/pneumatic system overhauling in India.',
     url: 'https://mecelfabpvtltd.com',
     siteName: 'MECELFAB',
     images: [
@@ -41,7 +41,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'MECELFAB INDUSTRIAL SOLUTIONS',
-    description: 'Premier industrial mechanical services, fabrication, generator solutions, rentals, and hydraulic/pneumatic system overhauling.',
+    description: 'Industrial mechanical services, fabrication, generator solutions, rentals, and hydraulic/pneumatic system overhauling.',
     images: ['/images/hero-bg.png'],
   },
   icons: {

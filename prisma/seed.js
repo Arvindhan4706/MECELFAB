@@ -47,8 +47,8 @@ async function main() {
     {
       title: 'Industrial Erection',
       slug: 'industrial-erection',
-      description: 'Expert erection of heavy industrial machinery, structural steel, and complete plant installations with precision alignment and commissioning.',
-      content: 'MECELFAB provides end-to-end industrial erection services covering structural steel installation, heavy machinery positioning, precision alignment, grouting, and commissioning. Our erection teams handle projects from single equipment installations to complete plant setups across manufacturing, power, and process industries.',
+      description: 'Erection of heavy industrial machinery, structural steel, and complete plant installations with alignment and commissioning.',
+      content: 'MECELFAB provides industrial erection services covering structural steel installation, heavy machinery positioning, alignment, grouting, and commissioning. Our erection teams handle projects from single equipment installations to complete plant setups across manufacturing, power, and process industries.',
       scopeOfWork: JSON.stringify([
         'Structural steel erection and installation',
         'Heavy machinery positioning and alignment',
@@ -88,8 +88,8 @@ async function main() {
     {
       title: 'Industrial Fabrication',
       slug: 'industrial-fabrication',
-      description: 'Precision metal fabrication for industrial structures, equipment, and systems using certified welding and quality-controlled processes.',
-      content: 'MECELFAB delivers precision industrial fabrication covering structural steel, pressure vessels, piping systems, tanks, and custom industrial components. Our fabrication facility handles mild steel, stainless steel, and alloy steel with certified welding procedures and quality inspection at every stage.',
+      description: 'Metal fabrication for industrial structures, equipment, and systems using certified welding and quality-controlled processes.',
+      content: 'MECELFAB provides industrial fabrication covering structural steel, pressure vessels, piping systems, tanks, and custom industrial components. Our fabrication facility handles mild steel, stainless steel, and alloy steel with certified welding procedures and quality inspection at every stage.',
       scopeOfWork: JSON.stringify([
         'Structural steel fabrication',
         'Pressure vessel and tank fabrication',

@@ -25,7 +25,7 @@ const CAPABILITY_MATRIX = [
     service: 'Erection',
     slug: 'industrial-erection',
     sections: [
-      { heading: 'Equipment', items: ['Mobile cranes 25T-200T', 'Hydraulic jacking systems', 'Laser alignment instruments', 'Precision grouting equipment'] },
+      { heading: 'Equipment', items: ['Mobile cranes 25T-200T', 'Hydraulic jacking systems', 'Laser alignment instruments', 'Grouting equipment'] },
       { heading: 'Lifting', items: ['Critical lift planning', 'Rigging engineering', 'Multi-crane lifts', 'Heavy transport coordination'] },
       { heading: 'Alignment', items: ['Laser shaft alignment', 'Dial indicator methods', 'Precision leveling', 'Thermal growth compensation'] },
       { heading: 'Commissioning', items: ['Pre-commissioning checks', 'Dry/wet testing', 'Performance validation', 'Handover documentation'] },

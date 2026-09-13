@@ -136,7 +136,7 @@ const Hero = ({ content }) => {
           </span>
           <div className="w-[1px] h-3 bg-white/20 hidden md:block" />
           <span className="text-white/60 text-xs md:text-sm font-heading tracking-[0.2em] uppercase italic">
-            Precision Fabrication & Erection
+            Fabrication & Erection
           </span>
         </div>
 

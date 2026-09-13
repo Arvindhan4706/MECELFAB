@@ -1,39 +1,34 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useSyncExternalStore } from "react";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 
+function useSessionStorageValue(key, initialValue) {
+  return useSyncExternalStore(
+    () => () => {},
+    () => {
+      try { return sessionStorage.getItem(key) || initialValue; }
+      catch { return initialValue; }
+    },
+    () => initialValue
+  );
+}
+
 const SplashIntro = () => {
-  // Start with shouldShow = true so the overlay exists immediately on frame 0
-  const [shouldShow, setShouldShow] = useState(true);
-  const [animating, setAnimating] = useState(false);
-  const overlayRef = useRef(null);
+  const visited = useSessionStorageValue("mecelfab_visited", "");
+  const [dismissed, setDismissed] = useState(false);
   const contentRef = useRef(null);
   const spinnerRef = useRef(null);
+  const overlayRef = useRef(null);
+
+  const shouldShow = !visited && !dismissed;
 
   useEffect(() => {
-    // Check session on mount:
-    // If already visited this tab/session, hide immediately (0ms)
-    // If first time this tab/session, keep visible and start 3s animation
-    try {
-      localStorage.removeItem("mecelfab_first_visit_complete");
-      const hasVisited = sessionStorage.getItem("mecelfab_visited");
-      if (hasVisited) {
-        setShouldShow(false);
-        setAnimating(false);
-      } else {
-        sessionStorage.setItem("mecelfab_visited", "true");
-        setAnimating(true);
-      }
-    } catch {
-      setAnimating(true);
-    }
-  }, []);
+    if (!shouldShow) return;
 
-  useEffect(() => {
-    if (!animating) return;
+    try { sessionStorage.setItem("mecelfab_visited", "true"); } catch {}
+    try { localStorage.removeItem("mecelfab_first_visit_complete"); } catch {}
 
-    // 1. Silky smooth entrance timeline with staged reveals
     if (contentRef.current) {
       gsap.fromTo(
         contentRef.current,
@@ -42,7 +37,6 @@ const SplashIntro = () => {
       );
     }
 
-    // 2. Continuous silky spin of the outer glow ring
     if (spinnerRef.current) {
       gsap.to(spinnerRef.current, {
         rotation: 360,
@@ -52,7 +46,6 @@ const SplashIntro = () => {
       });
     }
 
-    // 3. Gentle ambient breathe on the central mark
     gsap.to(".splash-mark", {
       scale: 1.04,
       repeat: -1,
@@ -61,7 +54,6 @@ const SplashIntro = () => {
       ease: "sine.inOut"
     });
 
-    // 4. After 5s display window, silky smooth cinematic fade-out transition
     const timer = setTimeout(() => {
       if (overlayRef.current) {
         gsap.to(overlayRef.current, {
@@ -69,19 +61,15 @@ const SplashIntro = () => {
           scale: 1.015,
           duration: 1.0,
           ease: "power2.inOut",
-          onComplete: () => {
-            setShouldShow(false);
-            setAnimating(false);
-          }
+          onComplete: () => setDismissed(true)
         });
       } else {
-        setShouldShow(false);
-        setAnimating(false);
+        setDismissed(true);
       }
-    }, 5000);
+    }, 4000);
 
     return () => clearTimeout(timer);
-  }, [animating]);
+  }, [shouldShow]);
 
   if (!shouldShow) return null;
 

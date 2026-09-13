@@ -15,13 +15,13 @@ const pillars = [
     icon: ShieldCheck,
     label: 'Safety Standard',
     value: 'ISO 45001:2018',
-    sub: 'Zero-Harm Culture',
+    sub: 'Zero LTI Target',
   },
   {
     icon: Cog,
-    label: 'Precision Engineering',
-    value: 'End-to-End',
-    sub: 'Fabrication & Erection',
+    label: 'Fabrication & Erection',
+    value: 'Structural Steel',
+    sub: 'Welding & Assembly',
   },
   {
     icon: TrendingUp,

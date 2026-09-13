@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useGSAP } from '@gsap/react';
-import { gsap, ScrollTrigger } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import GlobalSearch from './GlobalSearch';
 
 const DROPDOWN_MENUS = {
@@ -451,13 +451,13 @@ const Navbar = () => {
 
           <div className="mobile-nav-link mt-4 pt-6 border-t border-white/10 flex flex-col gap-1.5 opacity-60">
             <span className="text-white text-[11px] font-heading tracking-[0.25em] uppercase">MECELFAB Industrial Solutions</span>
-            <span className="text-white/50 text-[11px] font-heading tracking-[0.2em] uppercase italic">            Precision Fabrication & Erection</span>
+            <span className="text-white/50 text-[11px] font-heading tracking-[0.2em] uppercase italic">            Fabrication & Erection</span>
           </div>
         </div>
       </div>
 
       {/* Global Search Modal */}
-      <GlobalSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <GlobalSearch key={isSearchOpen ? 'open' : 'closed'} isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </>
   );
 };

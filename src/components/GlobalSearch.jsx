@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, X, ArrowRight, CornerDownLeft, Sparkles, Wrench, Factory, Cpu, FileText } from 'lucide-react';
+import { Search, X, ArrowRight, Sparkles, Wrench, Factory, Cpu, FileText } from 'lucide-react';
 import { EQUIPMENT_ITEMS } from '@/lib/equipmentData';
 
 const STATIC_SEARCH_ITEMS = [
@@ -60,8 +60,6 @@ export default function GlobalSearch({ isOpen, onClose }) {
 
   useEffect(() => {
     if (isOpen) {
-      setQuery('');
-      setSelectedIndex(0);
       const timer = setTimeout(() => {
         inputRef.current?.focus();
       }, 50);

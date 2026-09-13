@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { notFound, redirect } from 'next/navigation';
 import PrintButton from '@/components/admin/PrintButton';
+import DownloadPDFButton from '@/components/admin/DownloadPDFButton';
 import { getCompanyProfile } from '@/lib/companyConfig';
 import { assertPermission } from '@/lib/permissions';
 
@@ -35,7 +36,10 @@ export default async function (props) {
       {/* Print Controls (Hidden on Print) */}
       <div className="bg-admin-elevated p-4 border-b border-admin-border flex justify-between items-center print:hidden">
         <p className="text-sm text-admin-muted font-medium">Print Preview for {quotation.quotationNumber}</p>
-        <PrintButton />
+        <div className="flex items-center gap-3">
+          <DownloadPDFButton quotationId={quotation.id} quotationNumber={quotation.quotationNumber} />
+          <PrintButton />
+        </div>
       </div>
 
       {/* A4 Document Container */}

@@ -12,7 +12,7 @@ import TextReveal from './animations/TextReveal';
 const DEFAULT_INDUSTRIES = [
   {
     id: '01', title: 'Industrial Manufacturing',
-    desc: 'Precision fabrication, machine foundations, automation and industrial infrastructure for manufacturing plants.',
+      desc: 'Fabrication, machine foundations, automation and industrial infrastructure for manufacturing plants.',
     image: '/images/project-fabrication.png',
     capabilities: ['Equipment Erection', 'Machine Foundations', 'Structural Fabrication'],
     slug: 'industrial-manufacturing',

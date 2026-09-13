@@ -20,7 +20,7 @@ const ProcessTimeline = () => {
     {
       id: '03',
       title: 'Fabricate',
-      description: 'Precision fabrication under controlled processes.'
+      description: 'Fabrication under controlled processes.'
     },
     {
       id: '04',
@@ -86,7 +86,7 @@ const ProcessTimeline = () => {
             <span className="text-white/40 italic font-serif">Commissioning</span>
           </h2>
           <p className="text-sm md:text-base text-white/45 font-light leading-relaxed">
-            A proven six-stage approach ensuring precision, safety, and successful project delivery from initial site study to final handover.
+            A six-stage approach ensuring safety and reliable project delivery from initial site study to final handover.
           </p>
         </div>
 

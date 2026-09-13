@@ -10,7 +10,7 @@ export default function ContentEditor({ initialSettings, saveContentAction }) {
   // Parse initial JSON strings into state
   const [homepage, setHomepage] = useState(initialSettings.find(s => s.key === 'CONTENT_HOMEPAGE')?.value ? JSON.parse(initialSettings.find(s => s.key === 'CONTENT_HOMEPAGE').value) : {
     heroTitle: 'INDUSTRIAL FABRICATION & ERECTION',
-    heroDescription: 'MECELFAB delivers industrial fabrication, erection, and mechanical services with commitment to safety and precision.',
+    heroDescription: 'MECELFAB delivers industrial fabrication, erection, and mechanical services with a focus on safety and quality.',
     heroCta: 'REQUEST RFQ',
     secondaryCta: 'Our Services',
     aboutHeading: 'WHO WE ARE'
@@ -18,7 +18,7 @@ export default function ContentEditor({ initialSettings, saveContentAction }) {
 
   const [about, setAbout] = useState(initialSettings.find(s => s.key === 'CONTENT_ABOUT')?.value ? JSON.parse(initialSettings.find(s => s.key === 'CONTENT_ABOUT').value) : {
     title: 'About MECELFAB',
-    mission: 'To provide unparalleled engineering solutions that power industrial growth while maintaining the highest standards of safety and quality.',
+    mission: 'To provide dependable engineering solutions that support industrial growth while maintaining strong safety and quality standards.',
     vision: 'To be the preferred mechanical and fabrication partner for major industrial sectors across the region.',
     values: 'Safety, Quality, Integrity, Innovation'
   });

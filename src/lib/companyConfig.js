@@ -5,7 +5,7 @@ export const DEFAULT_COMPANY_PROFILE = {
   legalName: 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED',
   shortName: 'MECELFAB',
   tagline: 'Engineering reliable solutions for industrial growth.',
-  description: 'Premier industrial mechanical services, heavy structural fabrication, equipment erection, power solutions, and equipment rental across India.',
+    description: 'Industrial mechanical services, heavy structural fabrication, equipment erection, power solutions, and equipment rental across India.',
   email: 'mecelfab@gmail.com',
   billingEmail: 'mecelfab@gmail.com',
   phone: '', // Left empty until official number is supplied

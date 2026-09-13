@@ -14,10 +14,10 @@ export const revalidate = 60;
 
 export const metadata = {
   title: 'MECELFAB Industrial Solutions | Fabrication, Erection, Power & Maintenance',
-  description: 'Premier industrial mechanical services — fabrication, erection, generator solutions, hydraulic overhauling, AMC, and equipment rental across India. ISO 9001 & ISO 45001 certified.',
+    description: 'Industrial mechanical services — fabrication, erection, generator solutions, hydraulic overhauling, AMC, and equipment rental across India. ISO 9001 & ISO 45001 certified.',
   openGraph: {
     title: 'MECELFAB Industrial Solutions',
-    description: 'Premier industrial mechanical services — fabrication, erection, generator solutions, hydraulic overhauling, AMC, and equipment rental across India.',
+    description: 'Industrial mechanical services — fabrication, erection, generator solutions, hydraulic overhauling, AMC, and equipment rental across India.',
     url: 'https://mecelfabpvtltd.com',
     siteName: 'MECELFAB',
     images: [{ url: '/images/hero-bg.png', width: 1200, height: 630, alt: 'MECELFAB Industrial Solutions' }],

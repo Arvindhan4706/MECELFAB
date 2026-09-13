@@ -10,7 +10,7 @@ const disciplines = [
   { icon: Wrench, name: 'Mechanical Engineering', desc: 'Structural analysis, machine design, and fabrication processes' },
   { icon: Zap, name: 'Electrical Engineering', desc: 'Power distribution, control systems, and automation integration' },
   { icon: Settings, name: 'Automation', desc: 'PLC programming and SCADA systems' },
-  { icon: Target, name: 'Fabrication', desc: 'Precision welding and structural assembly' },
+    { icon: Target, name: 'Fabrication', desc: 'Welding and structural assembly' },
   { icon: Wrench, name: 'Installation', desc: 'Equipment erection, mechanical alignment, and system commissioning' },
   { icon: Clock, name: 'Project Management', desc: 'CPM scheduling, resource allocation, and quality control' },
 ];

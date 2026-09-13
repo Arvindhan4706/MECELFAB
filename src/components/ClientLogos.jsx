@@ -7,7 +7,7 @@ const ClientLogos = ({ clients = [] }) => {
     <section className="py-12 bg-white/[0.02] border-t border-white/5 overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl text-center">
         <h4 className="text-secondary text-xs font-heading tracking-widest uppercase mb-8">
-          Trusted by Industry Leaders
+          Our Clients
         </h4>
         
         <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-70">

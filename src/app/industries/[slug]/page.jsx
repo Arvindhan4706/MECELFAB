@@ -8,7 +8,7 @@ import { getEquipmentByIndustrySlug } from '@/lib/equipmentData';
 const DEFAULT_INDUSTRIES = {
   'industrial-manufacturing': {
     title: 'Industrial Manufacturing',
-    description: 'Precision fabrication, machine foundations, automation and industrial infrastructure for manufacturing plants.',
+    description: 'Fabrication, machine foundations, automation and industrial infrastructure for manufacturing plants.',
     capabilities: ['Equipment Erection', 'Machine Foundations', 'Structural Fabrication', 'Maintenance Contracts'],
     services: ['industrial-erection', 'industrial-fabrication', 'amc'],
     commonRequirements: [

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, Printer, FileText } from 'lucide-react';
 import { revalidatePath } from 'next/cache';
 import QuotationActionButtons from './QuotationActionButtons';
+import DownloadPDFButton from '@/components/admin/DownloadPDFButton';
 
 export const metadata = {
   title: 'Quotation Detail | Admin',
@@ -138,6 +139,7 @@ export default async function QuotationDetailPage(props) {
         </div>
         
         <div className="flex gap-3">
+          <DownloadPDFButton quotationId={quotation.id} quotationNumber={quotation.quotationNumber} />
           <Link href={`/admin/quotations/${quotation.id}/print`} target="_blank" className="flex items-center gap-2 bg-admin-surface border border-admin-border text-admin-text px-4 py-2 rounded-md hover:bg-admin-elevated transition-colors text-sm font-medium shadow-sm">
             <Printer size={16} /> Print / PDF
           </Link>
