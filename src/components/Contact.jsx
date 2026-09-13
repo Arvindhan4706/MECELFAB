@@ -241,16 +241,23 @@ const Contact = ({
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <Phone size={20} className="text-accent mt-1" />
+                  <Phone size={20} className="text-accent mt-1 shrink-0" />
                   <div>
-                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">CONTACT NUMBER</h4>
-                    {content?.phone ? (
-                      <a href={`tel:${content.phone.replace(/[^0-9+]/g, '')}`} className="text-white/80 text-sm font-light leading-relaxed hover:text-white transition-colors duration-300">
-                        {content.phone}
+                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">CONTACT NUMBERS</h4>
+                    <div className="flex flex-col gap-1">
+                      <a
+                        href="tel:+919840620571"
+                        className="text-white/90 text-sm font-light leading-relaxed hover:text-white transition-colors duration-300"
+                      >
+                        +91 9840620571
                       </a>
-                    ) : (
-                      <p className="text-white/80 text-sm font-light leading-relaxed">Please reach us via email</p>
-                    )}
+                      <a
+                        href="tel:+919444067012"
+                        className="text-white/90 text-sm font-light leading-relaxed hover:text-white transition-colors duration-300"
+                      >
+                        +91 9444067012
+                      </a>
+                    </div>
                   </div>
                 </div>
 

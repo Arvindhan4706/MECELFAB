@@ -39,12 +39,17 @@ const Footer = ({ contact }) => {
             {/* Contact CTAs */}
             <div className="flex flex-col gap-1 mb-6">
               {contact?.phone && (
-                <a href={`tel:${contact.phone.replace(/[^0-9+]/g, '')}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-2 min-h-[44px] inline-flex items-center">
+                <a href={`tel:${contact.phone.replace(/[^0-9+]/g, '')}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-1.5 min-h-[36px] inline-flex items-center">
                   {contact.phone}
                 </a>
               )}
+              {contact?.secondaryPhone && (
+                <a href={`tel:${contact.secondaryPhone.replace(/[^0-9+]/g, '')}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-1.5 min-h-[36px] inline-flex items-center">
+                  {contact.secondaryPhone}
+                </a>
+              )}
               {contact?.email && (
-                <a href={`mailto:${contact.email}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-2 min-h-[44px] inline-flex items-center">
+                <a href={`mailto:${contact.email}`} className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-1.5 min-h-[36px] inline-flex items-center">
                   {contact.email}
                 </a>
               )}
@@ -53,7 +58,7 @@ const Footer = ({ contact }) => {
                   href={`https://wa.me/${contact.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-2 min-h-[44px] inline-flex items-center"
+                  className="text-secondary text-xs font-light hover:text-white transition-colors duration-300 py-1.5 min-h-[36px] inline-flex items-center"
                 >
                   WhatsApp
                 </a>
@@ -98,7 +103,6 @@ const Footer = ({ contact }) => {
               <Link href="/services" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Services</Link>
               <Link href="/industries" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Industries</Link>
               <Link href="/projects" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Projects</Link>
-              <Link href="/resources" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Resources</Link>
               <Link href="/equipment" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Equipment</Link>
               <Link href="/contact" className="px-4 py-2.5 min-h-[44px] flex items-center bg-white/5 border border-white/10 rounded-full text-xs font-heading tracking-widest uppercase text-secondary hover:text-white transition-colors">Contact</Link>
             </div>
@@ -131,13 +135,13 @@ const Footer = ({ contact }) => {
                 </Link>
               </li>
               <li>
-                <Link href="/resources" className="text-secondary hover:text-white transition-colors duration-300">
-                  Resources
+                <Link href="/equipment" className="text-secondary hover:text-white transition-colors duration-300">
+                  Equipment Catalog
                 </Link>
               </li>
               <li>
-                <Link href="/equipment" className="text-secondary hover:text-white transition-colors duration-300">
-                  Equipment Catalog
+                <Link href="/contact" className="text-secondary hover:text-white transition-colors duration-300">
+                  Contact Us
                 </Link>
               </li>
             </ul>

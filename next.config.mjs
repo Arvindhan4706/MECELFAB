@@ -5,6 +5,15 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  async redirects() {
+    return [
+      {
+        source: '/resources',
+        destination: '/about#company-resources',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

@@ -8,7 +8,9 @@ export const DEFAULT_COMPANY_PROFILE = {
     description: 'Industrial mechanical services, heavy structural fabrication, equipment erection, power solutions, and equipment rental.',
   email: 'mecelfab@gmail.com',
   billingEmail: 'mecelfab@gmail.com',
-  phone: '', // Left empty until official number is supplied
+  phone: '+91 9840620571',
+  secondaryPhone: '+91 9444067012',
+  whatsapp: '+91 9840620571',
   address: 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099',
   workingHours: 'Mon - Sat: 9:00 AM - 6:00 PM IST',
   gstin: '', // Official GSTIN
@@ -191,6 +193,8 @@ export async function getCompanyProfile() {
       email,
       billingEmail,
       phone,
+      secondaryPhone: sanitizeValue(settingsMap.secondaryPhone || contentContact.secondaryPhone, DEFAULT_COMPANY_PROFILE.secondaryPhone),
+      whatsapp: sanitizeValue(settingsMap.whatsapp || contentContact.whatsapp, DEFAULT_COMPANY_PROFILE.whatsapp),
       address,
       workingHours,
       gstin,
