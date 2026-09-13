@@ -235,7 +235,7 @@ const Contact = ({
                   <div>
                     <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">REGISTERED OFFICE / YARDS</h4>
                     <p className="text-white/80 text-sm font-light leading-relaxed whitespace-pre-wrap">
-                      {content?.address || 'Official registered office address available upon request'}
+                      {content?.address || 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099'}
                     </p>
                   </div>
                 </div>
@@ -249,7 +249,7 @@ const Contact = ({
                         {content.phone}
                       </a>
                     ) : (
-                      <p className="text-white/80 text-sm font-light leading-relaxed">Available upon request</p>
+                      <p className="text-white/80 text-sm font-light leading-relaxed">Please reach us via email</p>
                     )}
                   </div>
                 </div>

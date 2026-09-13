@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FileText, Award, Shield, Download, BookOpen, HelpCircle, ChevronRight } from 'lucide-react';
+import { FileText, Award, Shield, Download, BookOpen, ChevronRight } from 'lucide-react';
 import { db } from '@/lib/db';
 
 export const revalidate = 60;
@@ -25,7 +25,7 @@ const RESOURCE_SECTIONS = [
     title: 'Company Profile',
     description: 'Overview of MECELFAB capabilities, project history, and service portfolio.',
     items: [
-      { name: 'Company Profile PDF', desc: 'Complete overview of MECELFAB Industrial Solutions', available: true },
+      { name: 'Company Profile PDF', desc: 'Complete overview of MECELFAB Industrial Solutions', available: false },
     ],
   },
   {
@@ -33,8 +33,8 @@ const RESOURCE_SECTIONS = [
     title: 'Certifications',
     description: 'Quality management and occupational health & safety certifications.',
     items: [
-      { name: 'ISO 9001:2015 — Quality Management', desc: 'Certified quality management system', available: true },
-      { name: 'ISO 45001:2018 — Occupational H&S', desc: 'Occupational health and safety management', available: true },
+      { name: 'ISO 9001:2015 — Quality Management', desc: 'Certified quality management system', available: false },
+      { name: 'ISO 45001:2018 — Occupational H&S', desc: 'Occupational health and safety management', available: false },
     ],
   },
   {
@@ -42,7 +42,7 @@ const RESOURCE_SECTIONS = [
     title: 'Capability Statement',
     description: 'Technical capability summary across all service disciplines.',
     items: [
-      { name: 'Capability Statement', desc: 'Fabrication, erection, maintenance, power, hydraulic capabilities', available: true },
+      { name: 'Capability Statement', desc: 'Fabrication, erection, maintenance, power, hydraulic capabilities', available: false },
     ],
   },
   {
@@ -50,15 +50,7 @@ const RESOURCE_SECTIONS = [
     title: 'Technical Documents',
     description: 'Technical references and specifications for MECELFAB services.',
     items: [
-      { name: 'Service Specifications', desc: 'Detailed service scope and technical parameters', available: true },
-    ],
-  },
-  {
-    icon: HelpCircle,
-    title: 'Frequently Asked Questions',
-    description: 'Common questions about MECELFAB services and operations.',
-    items: [
-      { name: 'General FAQ', desc: 'Services, coverage, timelines, and process questions', available: true },
+      { name: 'Service Specifications', desc: 'Detailed service scope and technical parameters', available: false },
     ],
   },
 ];
@@ -156,7 +148,7 @@ export default async function ResourcesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               { q: 'What services does MECELFAB provide?', a: 'MECELFAB provides industrial fabrication, erection, hydraulic & pneumatic overhauling, generator spare parts, AMC maintenance, generator rental, air compressor rental, and turbocharger services.' },
-              { q: 'Does MECELFAB operate across India?', a: 'Yes. MECELFAB provides pan-India industrial services with project site coverage across major industrial zones.' },
+              { q: 'What regions does MECELFAB serve?', a: 'MECELFAB serves industrial clients across Tamil Nadu and South India, with project site coverage in major industrial zones.' },
               { q: 'What certifications does MECELFAB hold?', a: 'MECELFAB is ISO 9001:2015 (Quality Management) and ISO 45001:2018 (Occupational Health & Safety) certified.' },
               { q: 'How do I request a quotation?', a: 'Use the Request RFQ form on our Contact page or call us directly. Our engineering team will review your requirements and respond within 24-48 hours.' },
               { q: 'Does MECELFAB provide generator rental?', a: 'Yes. MECELFAB offers industrial generator rental with installation, fuel management, and maintenance support.' },

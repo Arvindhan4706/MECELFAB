@@ -61,7 +61,7 @@ export default function EquipmentCatalogView() {
               <span className="text-white/40 italic font-serif">& Technical Systems</span>
             </h1>
             <p className="text-base sm:text-lg text-secondary font-light leading-relaxed max-w-2xl">
-              Explore equipment types, certified capacity ranges, and verified brand families deployed, serviced, and overhauled by MECELFAB across India.
+              Explore equipment types, certified capacity ranges, and verified brand families deployed, serviced, and overhauled by MECELFAB across Tamil Nadu and South India.
             </p>
           </div>
 

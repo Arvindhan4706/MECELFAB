@@ -33,7 +33,7 @@ const Footer = ({ contact }) => {
               />
             </div>
             <p className="text-sm text-secondary font-light leading-relaxed mb-6">
-              Engineering reliable solutions for industrial growth. Serving fabrication, erection, power distribution, and heavy industrial utility setups across India.
+              Engineering reliable solutions for industrial growth. Serving fabrication, erection, power distribution, and heavy industrial utility setups across Tamil Nadu and South India.
             </p>
 
             {/* Contact CTAs */}

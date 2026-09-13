@@ -197,7 +197,7 @@ async function main() {
       faq: JSON.stringify([
         { question: 'Which generator brands do you support?', a: 'We supply parts for Cummins, Perkins, Caterpillar, Mahindra Powerol, Kirloskar, and other major industrial generator brands.' },
         { question: 'Are the parts genuine or equivalent?', a: 'We stock both genuine OEM parts and certified OEM-equivalent components. All parts come with quality assurance.' },
-        { question: 'Can you source parts not in stock?', a: 'Yes. We have established supply chains for urgent and non-standard part requirements across India.' }
+        { question: 'Can you source parts not in stock?', a: 'Yes. We have established supply chains for urgent and non-standard part requirements across Tamil Nadu and South India.' }
       ]),
     },
     {

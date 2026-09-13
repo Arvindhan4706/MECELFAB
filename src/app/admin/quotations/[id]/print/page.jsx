@@ -54,13 +54,13 @@ export default async function (props) {
               {company.address ? (
                 <p className="whitespace-pre-wrap">{company.address}</p>
               ) : (
-                <p className="italic text-admin-muted">Registered office details available upon request</p>
+                <p className="italic text-admin-muted">No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099</p>
               )}
               <p>Email: {company.email}</p>
               {company.phone ? (
                 <p>Phone: {company.phone}</p>
               ) : (
-                <p className="text-admin-muted">Phone: Available upon request</p>
+                <p className="text-admin-muted">Phone: Contact via email</p>
               )}
               {company.gstin && <p>GSTIN: {company.gstin}</p>}
             </div>

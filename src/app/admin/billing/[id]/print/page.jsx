@@ -89,7 +89,7 @@ export default async function InvoicePrintPage(props) {
               </p>
               <p>
                 Email: {company.billingEmail || company.email}
-                {company.phone ? ` • Phone: ${company.phone}` : ' • Phone: Available upon request'}
+                {company.phone ? ` • Phone: ${company.phone}` : ''}
               </p>
             </div>
           </div>

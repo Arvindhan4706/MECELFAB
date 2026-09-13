@@ -262,7 +262,7 @@ export default async function EquipmentDetailPage({ params }) {
                   href={`/contact?equipment=${item.slug}`}
                   className="block w-full py-3 bg-white text-black font-heading text-xs tracking-wider uppercase rounded hover:bg-white/90 transition-colors"
                 >
-                  REQUEST RFQ NOW
+                  REQUEST RFQ
                 </Link>
               </div>
             </div>
