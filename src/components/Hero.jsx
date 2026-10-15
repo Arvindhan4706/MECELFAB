@@ -119,14 +119,14 @@ const Hero = ({ content }) => {
       {/* ─── Main content ─────────────────────────────────────────── */}
       <div className="relative z-10 flex-1 flex flex-col justify-center px-4 sm:px-6 md:px-8 lg:px-16 py-16">
         {/* Company name — the hero wordmark */}
-        <div className="overflow-hidden mb-3 md:border-l-[3px] md:border-accent/80 md:pl-6 md:-ml-[27px] flex flex-col items-center md:items-start text-center md:text-left relative pt-6 md:pt-10">
+        <div className="overflow-hidden mb-3 md:border-l-[3px] md:border-[#FF6B00] md:pl-6 md:-ml-[27px] flex flex-col items-center md:items-start text-center md:text-left relative pt-6 md:pt-10">
           <h1
             className="hero-wordmark font-heading font-bold leading-none tracking-tighter uppercase w-full bg-gradient-to-b from-white/90 via-white/80 to-white/65 bg-clip-text text-transparent drop-shadow-[0_2px_24px_rgba(255,255,255,0.06)]"
             style={{ fontSize: 'clamp(3.5rem, 14vw, 12rem)', lineHeight: 0.88 }}
           >
             {content?.heroTitle?.split(' ')[0] || 'MECELFAB'}
           </h1>
-          <div className="w-32 h-[2px] bg-gradient-to-r from-accent/0 via-accent to-accent/0 mt-6 md:hidden opacity-0 hero-tagline"></div>
+          <div className="w-32 h-[2px] bg-gradient-to-r from-[#FF6B00]/0 via-[#FF6B00] to-[#FF6B00]/0 mt-6 md:hidden opacity-0 hero-tagline"></div>
         </div>
 
         {/* Full legal name + tagline */}
@@ -146,7 +146,7 @@ const Hero = ({ content }) => {
         </p>
 
         {/* Horizontal rule */}
-        <div className="hero-rule w-full max-w-2xl h-[1px] bg-gradient-to-r from-white/25 to-transparent mb-10 opacity-0 hidden md:block" />
+        <div className="hero-rule w-full max-w-2xl h-[1px] bg-gradient-to-r from-[#FF6B00]/60 via-white/20 to-transparent mb-10 opacity-0 hidden md:block" />
 
         {/* CTAs */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 md:gap-5 mb-16 mx-auto md:mx-0 w-full max-w-sm sm:max-w-none">
@@ -154,20 +154,20 @@ const Hero = ({ content }) => {
           {/* Primary — REQUEST RFQ */}
           <Link
             href="/contact"
-            className="hero-cta-btn group relative inline-flex w-full sm:w-auto items-center justify-center gap-4 overflow-hidden opacity-0"
+            className="hero-cta-btn group relative inline-flex w-full sm:w-auto items-center justify-center gap-4 overflow-hidden rounded-full shadow-[0_4px_30px_rgba(255,107,0,0.3)] hover:shadow-[0_4px_45px_rgba(255,107,0,0.5)] transition-all duration-300 hover:scale-[1.02] opacity-0"
             style={{ textDecoration: 'none' }}
           >
-            <span className="relative z-10 flex w-full justify-center items-center gap-4 px-8 py-4 bg-white text-black font-heading font-semibold text-xs md:text-sm tracking-[0.18em] uppercase transition-all duration-500 group-hover:bg-transparent group-hover:text-white border border-white">
+            <span className="relative z-10 flex w-full justify-center items-center gap-4 px-8 py-4 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-heading font-semibold text-xs md:text-sm tracking-[0.18em] uppercase transition-all duration-500 rounded-full border border-[#FF6B00]/50">
               {/* shimmer sweep on hover */}
               <span
                 className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"
                 style={{
-                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)',
+                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)',
                 }}
               />
-              <span className="relative">{content?.heroCta || 'REQUEST RFQ'}</span>
-              <span className="relative flex items-center justify-center w-6 h-6 rounded-full bg-black/10 group-hover:bg-white/10 transition-colors duration-300">
-                <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+              <span className="relative font-bold">{content?.heroCta || 'REQUEST RFQ'}</span>
+              <span className="relative flex items-center justify-center w-6 h-6 rounded-full bg-white/20 transition-colors duration-300">
+                <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform duration-300 text-white" />
               </span>
             </span>
           </Link>

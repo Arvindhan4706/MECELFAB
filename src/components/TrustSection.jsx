@@ -57,7 +57,7 @@ const TrustSection = () => {
 
       <div className="relative container mx-auto px-4 sm:px-6 md:px-8 max-w-7xl">
         {/* top rule */}
-        <div className="trust-line w-full h-[1px] bg-gradient-to-r from-white/20 via-white/10 to-transparent mb-14" />
+        <div className="trust-line w-full h-[1px] bg-gradient-to-r from-[#FF6B00]/40 via-white/10 to-transparent mb-14" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-y sm:divide-y-0 sm:divide-x divide-white/5">
           {pillars.map(({ icon: Icon, label, value, sub }) => (
@@ -66,10 +66,10 @@ const TrustSection = () => {
               className="trust-card group flex flex-col gap-5 px-8 py-6 first:pl-0 last:pr-0 opacity-0 hover:bg-white/[0.02] transition-colors duration-500"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 flex items-center justify-center border border-white/10 group-hover:border-white/25 transition-colors duration-500">
-                  <Icon size={15} className="text-white/50 group-hover:text-white transition-colors duration-500" />
+                <div className="w-8 h-8 flex items-center justify-center border border-white/10 group-hover:border-[#FF6B00]/50 rounded transition-colors duration-500">
+                  <Icon size={15} className="text-white/50 group-hover:text-[#FF6B00] transition-colors duration-500" />
                 </div>
-                <span className="text-white/35 text-[10px] font-heading tracking-[0.25em] uppercase">{label}</span>
+                <span className="text-white/35 text-[10px] font-heading tracking-[0.25em] uppercase group-hover:text-white/60 transition-colors">{label}</span>
               </div>
               <div>
                 <div className="text-2xl font-heading font-light text-white tracking-tight mb-1">{value}</div>
@@ -80,7 +80,7 @@ const TrustSection = () => {
         </div>
 
         {/* bottom rule */}
-        <div className="trust-line w-full h-[1px] bg-gradient-to-r from-white/20 via-white/10 to-transparent mt-14" />
+        <div className="trust-line w-full h-[1px] bg-gradient-to-r from-[#FF6B00]/40 via-white/10 to-transparent mt-14" />
       </div>
     </section>
   );

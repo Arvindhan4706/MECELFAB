@@ -88,7 +88,7 @@ const WhyChooseUs = () => {
 
             <Link
               href="/contact"
-              className="group inline-flex items-center gap-3 px-6 py-3.5 bg-white text-black font-heading font-semibold text-xs tracking-[0.2em] uppercase hover:bg-white/90 transition-colors duration-300"
+              className="group inline-flex items-center gap-3 px-6 py-3.5 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading font-semibold text-xs tracking-[0.2em] uppercase rounded-md shadow-lg shadow-[#FF6B00]/25 transition-all duration-300 hover:scale-[1.02]"
             >
               REQUEST RFQ
               <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300" />
@@ -104,10 +104,10 @@ const WhyChooseUs = () => {
               >
                 {/* top row */}
                 <div className="flex items-center justify-between">
-                  <div className="w-10 h-10 flex items-center justify-center border border-white/8 group-hover:border-white/25 bg-white/[0.02] transition-all duration-500">
-                    <Icon size={16} className="text-white/40 group-hover:text-white/80 transition-colors duration-500" />
+                  <div className="w-10 h-10 flex items-center justify-center border border-white/8 group-hover:border-accent/40 bg-white/[0.02] transition-all duration-500">
+                    <Icon size={16} className="text-white/40 group-hover:text-accent transition-colors duration-500" />
                   </div>
-                  <span className="text-xs font-heading text-white/15 group-hover:text-white/30 tracking-widest transition-colors duration-500">
+                  <span className="text-xs font-heading text-white/15 group-hover:text-accent/60 tracking-widest transition-colors duration-500">
                     {num}
                   </span>
                 </div>
@@ -117,13 +117,13 @@ const WhyChooseUs = () => {
                   <h3 className="text-lg font-heading font-light text-white/70 group-hover:text-white tracking-tight mb-2 transition-colors duration-500">
                     {title}
                   </h3>
-                  <p className="text-sm text-white/30 group-hover:text-white/55 font-light leading-relaxed transition-colors duration-500">
+                  <p className="text-sm text-white/30 group-hover:text-white/70 font-light leading-relaxed transition-colors duration-500">
                     {desc}
                   </p>
                 </div>
 
                 {/* bottom accent line */}
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full bg-white/20 transition-all duration-700 ease-out" />
+                <div className="absolute bottom-0 left-0 h-[2px] w-0 group-hover:w-full bg-accent transition-all duration-700 ease-out" />
               </div>
             ))}
           </div>

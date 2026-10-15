@@ -8,8 +8,8 @@
   --primary-light: #0a0a0a; /* Deep grey for section contrast */
   --secondary: #a1a1aa;     /* Muted grey for secondary text */
   --secondary-dark: #27272a;
-  --accent: #ffffff;        /* High contrast white for accents */
-  --accent-hover: #e4e4e7;
+  --accent: #FF6B00;        /* MECELFAB Brand Industrial Safety Orange */
+  --accent-hover: #FF8533;
   --neutral-dark: #000000;
   --neutral-light: #09090b;
   --white: #FFFFFF;

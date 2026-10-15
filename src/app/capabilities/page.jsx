@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Wrench, Hammer, Droplets, Zap, Clock, Wind, ChevronRight } from 'lucide-react';
 import { db } from '@/lib/db';
+import { getAllServices } from '@/data/servicesData';
 
 export const revalidate = 60;
 
@@ -89,14 +90,18 @@ const CAPABILITY_MATRIX = [
 ];
 
 export default async function CapabilitiesPage() {
-  let services = [];
+  let services;
   try {
     services = await db.service.findMany({
       where: { status: 'ACTIVE' },
       orderBy: { createdAt: 'asc' },
     });
   } catch {
-    // DB unavailable — render with empty services
+    services = [];
+  }
+
+  if (!services || services.length === 0) {
+    services = getAllServices();
   }
 
   return (
@@ -184,7 +189,7 @@ export default async function CapabilitiesPage() {
             <h3 className="text-2xl font-heading text-white mb-2">Have a technical requirement?</h3>
             <p className="text-white/50">Our engineering team will assess feasibility and respond with a solution.</p>
           </div>
-          <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors">
+          <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading text-xs tracking-widest uppercase rounded-full shadow-lg shadow-[#FF6B00]/25 transition-all hover:scale-[1.02]">
             REQUEST RFQ
             <ChevronRight size={14} />
           </Link>

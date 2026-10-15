@@ -162,7 +162,7 @@ export default function CompanyResources({ certifications = [] }) {
           </div>
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 px-6 py-3.5 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors shrink-0 rounded-sm"
+            className="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading text-xs tracking-widest uppercase rounded-full shadow-lg shadow-[#FF6B00]/25 transition-all hover:scale-[1.02] shrink-0"
           >
             REQUEST RFQ / DOCS
             <ChevronRight size={14} />

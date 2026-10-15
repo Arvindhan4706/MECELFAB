@@ -9,6 +9,7 @@ import WhyChooseUs from '../components/WhyChooseUs';
 import ClientLogos from '../components/ClientLogos';
 import Testimonials from '../components/Testimonials';
 import { db } from '@/lib/db';
+import { DEFAULT_PROJECTS } from '@/data/projectsData';
 
 export const revalidate = 60;
 
@@ -29,7 +30,13 @@ export const metadata = {
   },
 };
 
-export default async function HomePage() {
+let homeDataCache = null;
+let homeDataCacheTime = 0;
+
+async function getHomePageData() {
+  if (homeDataCache && Date.now() - homeDataCacheTime < 60000) {
+    return homeDataCache;
+  }
   let projects = [], services = [], settings = [], clients = [], testimonials = [];
   try {
     [projects, services, settings, clients, testimonials] = await Promise.all([
@@ -56,9 +63,19 @@ export default async function HomePage() {
     // DB unavailable — render with empty data
   }
 
+  homeDataCache = { projects, services, settings, clients, testimonials };
+  homeDataCacheTime = Date.now();
+  return homeDataCache;
+}
+
+export default async function HomePage() {
+  const { projects, services, settings, clients, testimonials } = await getHomePageData();
+
   const homepageContent = settings.find(s => s.key === 'CONTENT_HOMEPAGE')?.value 
     ? (() => { try { return JSON.parse(settings.find(s => s.key === 'CONTENT_HOMEPAGE').value); } catch { return null; } })()
     : null;
+
+  const displayProjects = projects && projects.length > 0 ? projects : DEFAULT_PROJECTS;
 
   return (
     <>
@@ -67,7 +84,7 @@ export default async function HomePage() {
       <Services services={services} />
       <EngineeringWorkflow />
       <Industries />
-      <ProjectsGallery projects={projects} />
+      <ProjectsGallery projects={displayProjects} />
       <Testimonials testimonials={testimonials} />
       <ClientLogos clients={clients} />
       <WhyChooseUs />

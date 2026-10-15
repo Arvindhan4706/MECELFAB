@@ -190,7 +190,7 @@ export default async function QualityPage() {
             <h3 className="text-2xl font-heading text-white mb-2">Need quality documentation?</h3>
             <p className="text-white/50">Request copies of our certifications or quality procedures.</p>
           </div>
-          <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors">
+          <Link href="/contact" className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading text-xs tracking-widest uppercase rounded-full shadow-lg shadow-[#FF6B00]/25 transition-all hover:scale-[1.02]">
             REQUEST RFQ
             <ChevronRight size={14} />
           </Link>

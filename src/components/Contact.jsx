@@ -661,7 +661,7 @@ const Contact = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 mt-4 bg-white text-primary font-heading tracking-widest uppercase text-sm font-medium flex items-center justify-center gap-3 hover:bg-white/90 transition-colors duration-300"
+                  className="w-full py-4 mt-4 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading tracking-widest uppercase text-sm font-semibold rounded-lg shadow-xl shadow-[#FF6B00]/25 transition-all duration-300 hover:scale-[1.01] flex items-center justify-center gap-3 disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>

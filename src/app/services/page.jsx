@@ -2,6 +2,8 @@ import Services from '../../components/Services';
 import WhyChooseUs from '../../components/WhyChooseUs';
 import { db } from '@/lib/db';
 
+import { getAllServices } from '@/data/servicesData';
+
 export const revalidate = 60;
 
 export const metadata = {
@@ -20,14 +22,18 @@ export const metadata = {
 };
 
 export default async function ServicesPage() {
-  let services = [];
+  let services;
   try {
     services = await db.service.findMany({
       where: { status: 'ACTIVE' },
       orderBy: { createdAt: 'asc' }
     });
   } catch {
-    // DB unavailable — render with empty services (empty state will show)
+    services = [];
+  }
+
+  if (!services || services.length === 0) {
+    services = getAllServices();
   }
 
   return (

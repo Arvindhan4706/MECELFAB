@@ -26,8 +26,10 @@ export default {
           dark: '#27272a', // Subtle borders
         },
         accent: {
-          DEFAULT: '#ffffff', // High contrast
-          hover: '#e4e4e7',
+          DEFAULT: '#FF6B00', // MECELFAB Brand Industrial Safety Orange
+          hover: '#FF8533',
+          orange: '#FF6B00',
+          white: '#ffffff',
           steel: '#3f3f46',
           blue: '#1e3a8a', // Deep blue industrial accent
         },

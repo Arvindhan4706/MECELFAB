@@ -56,10 +56,6 @@ export default withAuth(
         return NextResponse.redirect(new URL("/auth/login?callbackUrl=/portal", req.url));
       }
 
-      // Non-customers shouldn't typically access portal unless they are admins impersonating?
-      // The requirement says: "Customers cannot access administrative pages. Technicians cannot access unauthorized administrative functionality."
-      // And "CUSTOMER A -> CUSTOMER B" lateral movement is prevented.
-      // Let's enforce that only CUSTOMER role can access portal.
       if (token.role !== "CUSTOMER") {
         if (isApiRoute) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
         return NextResponse.redirect(new URL("/admin/dashboard", req.url));
@@ -68,7 +64,7 @@ export default withAuth(
   },
   {
     callbacks: {
-      authorized: () => true, // We handle authorization logic above to allow redirects instead of generic 401s
+      authorized: () => true,
     },
     pages: {
       signIn: '/auth/login',

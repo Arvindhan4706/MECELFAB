@@ -104,7 +104,7 @@ export default async function EquipmentDetailPage({ params }) {
             <div className="flex flex-wrap sm:flex-nowrap gap-3 shrink-0">
               <Link
                 href={`/contact?equipment=${item.slug}`}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-white text-black font-heading text-xs tracking-wider uppercase rounded hover:bg-white/90 transition-colors min-h-[44px]"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading text-xs tracking-wider uppercase rounded-lg shadow-lg shadow-[#FF6B00]/25 transition-all hover:scale-[1.02] min-h-[44px]"
               >
                 <FileText size={14} />
                 REQUEST RFQ

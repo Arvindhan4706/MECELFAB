@@ -64,6 +64,21 @@ const DEFAULT_INDUSTRIES = {
   },
 };
 
+export async function generateStaticParams() {
+  try {
+    const industries = await db.industry.findMany({
+      where: { status: 'PUBLISHED' },
+      select: { slug: true }
+    });
+    if (industries && industries.length > 0) {
+      return industries.map((ind) => ({ slug: ind.slug }));
+    }
+  } catch {
+    // Fall back to default industries keys
+  }
+  return Object.keys(DEFAULT_INDUSTRIES).map((slug) => ({ slug }));
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
 
@@ -286,7 +301,7 @@ export default async function IndustryDetailPage({ params }) {
             </div>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors shrink-0"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading text-xs tracking-widest uppercase rounded-full shadow-lg shadow-[#FF6B00]/25 transition-all hover:scale-[1.02] shrink-0"
             >
               REQUEST RFQ
               <ChevronRight size={14} />

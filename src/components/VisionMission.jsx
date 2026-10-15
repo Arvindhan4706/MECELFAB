@@ -54,12 +54,13 @@ const VisionMission = () => {
               width: '60px',
               height: '60px',
               borderRadius: '50%',
-              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              backgroundColor: 'rgba(255, 107, 0, 0.1)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               margin: '0 auto 1.5rem auto',
-              border: '1px solid rgba(16, 185, 129, 0.2)'
+              border: '1px solid rgba(255, 107, 0, 0.25)',
+              boxShadow: '0 0 20px rgba(255, 107, 0, 0.15)'
             }}>
               <Eye size={28} style={{ color: 'var(--accent)' }} />
             </div>
@@ -76,12 +77,13 @@ const VisionMission = () => {
               width: '60px',
               height: '60px',
               borderRadius: '50%',
-              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              backgroundColor: 'rgba(255, 107, 0, 0.1)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               margin: '0 auto 1.5rem auto',
-              border: '1px solid rgba(16, 185, 129, 0.2)'
+              border: '1px solid rgba(255, 107, 0, 0.25)',
+              boxShadow: '0 0 20px rgba(255, 107, 0, 0.15)'
             }}>
               <Rocket size={28} style={{ color: 'var(--accent)' }} />
             </div>

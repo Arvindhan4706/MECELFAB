@@ -4,6 +4,22 @@ import { db } from '@/lib/db';
 import { CheckCircle, Shield, ChevronRight, HelpCircle, ArrowRight, Wrench } from 'lucide-react';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import { getEquipmentByServiceSlug } from '@/lib/equipmentData';
+import { getAllServices, getServiceBySlug } from '@/data/servicesData';
+
+export async function generateStaticParams() {
+  try {
+    const services = await db.service.findMany({
+      where: { status: 'ACTIVE' },
+      select: { slug: true }
+    });
+    if (services && services.length > 0) {
+      return services.map((s) => ({ slug: s.slug }));
+    }
+  } catch {
+    // Fall back to static dataset
+  }
+  return getAllServices().map((s) => ({ slug: s.slug }));
+}
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -13,7 +29,11 @@ export async function generateMetadata({ params }) {
       where: { slug, status: 'ACTIVE' }
     });
   } catch {
-    return { title: 'Service | MECELFAB' };
+    service = null;
+  }
+
+  if (!service) {
+    service = getServiceBySlug(slug);
   }
 
   if (!service) return { title: 'Service Not Found' };
@@ -51,6 +71,10 @@ export default async function ServicePage({ params }) {
     });
   } catch {
     service = null;
+  }
+
+  if (!service) {
+    service = getServiceBySlug(slug);
   }
 
   if (!service) {
@@ -400,7 +424,7 @@ export default async function ServicePage({ params }) {
             </div>
             <Link
               href={`/contact?service=${service.slug}`}
-              className="inline-flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-white text-black font-heading text-xs tracking-widest uppercase hover:bg-white/90 transition-colors shrink-0"
+              className="inline-flex items-center justify-center gap-3 w-full md:w-auto px-8 py-4 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading text-xs tracking-widest uppercase rounded-full shadow-lg shadow-[#FF6B00]/25 transition-all hover:scale-[1.02] shrink-0"
             >
               REQUEST RFQ
               <ChevronRight size={14} />

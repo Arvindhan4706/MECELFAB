@@ -182,42 +182,45 @@ const Navbar = () => {
           hidden ? '-top-32 opacity-0 pointer-events-none' : 'top-3 sm:top-4 md:top-5 opacity-100'
         } ${
           scrolled || isOpen
-            ? 'bg-[#0a0a0a]/75 border border-white/20 shadow-[0_16px_45px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.15)] backdrop-blur-2xl backdrop-saturate-150 px-4 sm:px-6 md:px-8 py-1.5 sm:py-2'
-            : 'bg-white/[0.04] border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.25)] backdrop-blur-2xl backdrop-saturate-150 px-4 sm:px-6 md:px-8 py-1.5 sm:py-2'
+            ? 'bg-[#061224]/92 border border-[#FF6B00]/30 shadow-[0_16px_45px_rgba(2,8,18,0.9),0_0_30px_rgba(255,107,0,0.12)] backdrop-blur-2xl backdrop-saturate-150 px-4 sm:px-6 md:px-8 py-1.5 sm:py-2'
+            : 'bg-[#08182f]/85 border border-[#FF6B00]/25 shadow-[0_12px_40px_rgba(2,8,18,0.75),0_0_20px_rgba(255,107,0,0.08)] backdrop-blur-2xl backdrop-saturate-150 px-4 sm:px-6 md:px-8 py-1.5 sm:py-2'
         } ${isOpen ? 'lg:block hidden' : ''}`}
       >
-        {/* Top ambient glass light sheen accent matching rounded curve */}
-        <div className="absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/35 to-transparent pointer-events-none rounded-t-2xl sm:rounded-t-3xl" />
-        {/* Bottom subtle edge glass ambient reflection */}
-        <div className="absolute inset-x-6 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none rounded-b-2xl sm:rounded-b-3xl" />
+        {/* Top ambient industrial orange neon light sheen */}
+        <div className="absolute inset-x-6 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#FF6B00]/70 to-transparent pointer-events-none rounded-t-2xl sm:rounded-t-3xl" />
+        {/* Bottom subtle edge blue/white glass ambient reflection */}
+        <div className="absolute inset-x-6 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent pointer-events-none rounded-b-2xl sm:rounded-b-3xl" />
 
         <div className="flex items-center justify-between w-full relative z-10">
           <Link 
             href="/" 
             onClick={() => isOpen && toggleMenu()} 
-            className={`flex items-center gap-3 relative z-[101] -ml-2 sm:-ml-3 md:-ml-4 transition-opacity duration-300 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+            className={`flex items-center relative z-[101] -ml-2 sm:-ml-3 md:-ml-4 transition-opacity duration-300 ${isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
           >
-            {/* Desktop: full logo | Mobile: compact mark */}
-            <span className="hidden sm:flex items-center overflow-hidden rounded-xl bg-black/40 backdrop-blur-md p-1 border border-white/10 shadow-sm">
+            {/* Desktop: Exact original logo with white typography & transparent background */}
+            <div className="hidden sm:block">
               <Image
-                src="/images/logo-full.jpeg"
+                src="/images/logo-dark-mode.png?v=2"
                 alt="MECELFAB Industrial Solutions"
                 width={700}
-                height={140}
-                className="h-14 md:h-16 w-auto object-contain origin-left rounded-lg"
+                height={233}
+                className="h-16 md:h-18 lg:h-20 w-auto object-contain drop-shadow-[0_2px_14px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:scale-[1.02]"
                 priority
+                unoptimized
               />
-            </span>
-            <span className="block sm:hidden rounded-xl overflow-hidden bg-black/40 backdrop-blur-md p-1 border border-white/10 shadow-sm">
+            </div>
+            {/* Mobile: Exact original mark with white background removed */}
+            <div className="block sm:hidden">
               <Image
-                src="/images/logo-mark.jpeg"
+                src="/images/logo-mark-transparent.png?v=2"
                 alt="MECELFAB"
-                width={48}
-                height={48}
-                className="h-10 w-10 rounded-lg object-contain"
+                width={56}
+                height={56}
+                className="h-12 w-12 object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
                 priority
+                unoptimized
               />
-            </span>
+            </div>
           </Link>
 
           {/* Desktop Menu */}
@@ -258,7 +261,7 @@ const Navbar = () => {
                     </Link>
 
                     {/* Active underline indicator */}
-                    <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-white/70 transform origin-left transition-transform duration-300 ${isCurrentActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+                    <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#FF6B00] shadow-[0_0_8px_rgba(255,107,0,0.6)] transform origin-left transition-transform duration-300 ${isCurrentActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
 
                     {/* Dropdown Menu Container */}
                     <div
@@ -268,7 +271,7 @@ const Navbar = () => {
                           : 'opacity-0 translate-y-1 pointer-events-none invisible'
                       }`}
                     >
-                      <div className="rounded-2xl bg-[#0a0a0a]/85 backdrop-blur-2xl backdrop-saturate-150 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.85),inset_0_1px_0_rgba(255,255,255,0.15)] p-1.5 overflow-hidden">
+                      <div className="rounded-2xl bg-[#061224]/95 backdrop-blur-2xl backdrop-saturate-150 border border-[#FF6B00]/30 shadow-[0_20px_50px_rgba(2,8,18,0.9),0_0_20px_rgba(255,107,0,0.1)] p-1.5 overflow-hidden">
                         <div className="flex flex-col py-1">
                           {menuData.items.map((item) => {
                             const isItemActive = pathname === item.href;
@@ -279,13 +282,13 @@ const Navbar = () => {
                                 onClick={() => setActiveDropdown(null)}
                                 className={`px-3.5 py-2.5 rounded-lg text-xs font-heading tracking-wider uppercase transition-all duration-200 flex items-center justify-between ${
                                   isItemActive
-                                    ? 'bg-white/10 text-white font-semibold pl-4'
-                                    : 'text-white/60 hover:text-white hover:bg-white/5 hover:pl-4'
+                                    ? 'bg-[#FF6B00]/20 text-white font-semibold pl-4 border border-[#FF6B00]/40'
+                                    : 'text-white/70 hover:text-white hover:bg-[#FF6B00]/15 hover:pl-4'
                                 }`}
                               >
                                 <span>{item.name}</span>
                                 {isItemActive && (
-                                  <span className="w-1.5 h-1.5 rounded-full bg-white/80" />
+                                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF6B00] shadow-[0_0_6px_#FF6B00]" />
                                 )}
                               </Link>
                             );
@@ -306,7 +309,7 @@ const Navbar = () => {
                   <span className={`transition-all duration-300 ${pathname === `/${link.id}` || (link.id && pathname?.startsWith(`/${link.id}/`)) ? 'text-white font-semibold' : 'text-white/55 hover:text-white'}`}>
                     {link.name}
                   </span>
-                  <span className={`absolute bottom-0 left-0 w-full h-[1.5px] bg-white/70 transform origin-left transition-transform duration-300 ${pathname === `/${link.id}` || (link.id && pathname?.startsWith(`/${link.id}/`)) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
+                  <span className={`absolute bottom-0 left-0 w-full h-[2px] bg-[#FF6B00] shadow-[0_0_8px_rgba(255,107,0,0.6)] transform origin-left transition-transform duration-300 ${pathname === `/${link.id}` || (link.id && pathname?.startsWith(`/${link.id}/`)) ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
                 </Link>
               );
             })}
@@ -323,12 +326,12 @@ const Navbar = () => {
                 </Link>
                 <Link
                   href="/contact"
-                  className="group relative inline-flex items-center p-1 pl-1 pr-4 sm:pr-4.5 bg-white/90 hover:bg-white text-black/90 border border-white/30 rounded-full font-heading text-xs sm:text-[13px] tracking-wider uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.25)] overflow-hidden select-none backdrop-blur-sm -mr-1 sm:-mr-2 md:-mr-3 ml-2"
+                  className="group relative inline-flex items-center p-1 pl-1 pr-4 sm:pr-4.5 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white border border-[#FF6B00]/50 rounded-full font-heading text-xs sm:text-[13px] tracking-wider uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(255,107,0,0.35)] overflow-hidden select-none -mr-1 sm:-mr-2 md:-mr-3 ml-2 hover:scale-[1.03]"
                 >
-                  <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/80 text-white/90 transition-all duration-300 ease-out group-hover:w-8 sm:group-hover:w-8.5">
-                    <ArrowRight size={12} className="transition-transform duration-300 ease-out group-hover:translate-x-1 text-white/90" />
+                  <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/20 text-white transition-all duration-300 ease-out group-hover:w-8 sm:group-hover:w-8.5">
+                    <ArrowRight size={12} className="transition-transform duration-300 ease-out group-hover:translate-x-1 text-white" />
                   </span>
-                  <span className="ml-2 sm:ml-2.5 font-bold whitespace-nowrap text-black/90 group-hover:text-black transition-colors">
+                  <span className="ml-2 sm:ml-2.5 font-bold whitespace-nowrap text-white">
                     REQUEST RFQ
                   </span>
                 </Link>
@@ -337,12 +340,12 @@ const Navbar = () => {
               <>
                 <Link
                   href="/contact"
-                  className="group relative inline-flex items-center p-1 pl-1 pr-4 sm:pr-4.5 bg-white/90 hover:bg-white text-black/90 border border-white/30 rounded-full font-heading text-xs sm:text-[13px] tracking-wider uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.25)] overflow-hidden select-none backdrop-blur-sm -mr-1 sm:-mr-2 md:-mr-3 ml-2"
+                  className="group relative inline-flex items-center p-1 pl-1 pr-4 sm:pr-4.5 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white border border-[#FF6B00]/50 rounded-full font-heading text-xs sm:text-[13px] tracking-wider uppercase transition-all duration-300 shadow-[0_4px_20px_rgba(255,107,0,0.35)] overflow-hidden select-none -mr-1 sm:-mr-2 md:-mr-3 ml-2 hover:scale-[1.03]"
                 >
-                  <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-black/80 text-white/90 transition-all duration-300 ease-out group-hover:w-8 sm:group-hover:w-8.5">
-                    <ArrowRight size={12} className="transition-transform duration-300 ease-out group-hover:translate-x-1 text-white/90" />
+                  <span className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/20 text-white transition-all duration-300 ease-out group-hover:w-8 sm:group-hover:w-8.5">
+                    <ArrowRight size={12} className="transition-transform duration-300 ease-out group-hover:translate-x-1 text-white" />
                   </span>
-                  <span className="ml-2 sm:ml-2.5 font-bold whitespace-nowrap text-black/90 group-hover:text-black transition-colors">
+                  <span className="ml-2 sm:ml-2.5 font-bold whitespace-nowrap text-white">
                     REQUEST RFQ
                   </span>
                 </Link>
@@ -375,7 +378,7 @@ const Navbar = () => {
       <div
         ref={menuDrawerRef}
         id="mobile-menu"
-        className="fixed inset-0 bg-black z-[90] flex flex-col px-6 sm:px-8 pb-10 lg:hidden"
+        className="fixed inset-0 bg-[#061224] z-[90] flex flex-col px-6 sm:px-8 pb-10 lg:hidden"
         style={{ display: isOpen ? 'flex' : 'none', pointerEvents: isOpen ? 'auto' : 'none' }}
       >
         {/* Close button at top */}
@@ -432,7 +435,7 @@ const Navbar = () => {
               <Link
                 href="/contact"
                 onClick={() => toggleMenu()}
-                className="mobile-nav-link flex w-full items-center justify-between px-6 py-5 bg-white text-black font-heading font-medium text-sm tracking-widest uppercase min-h-[44px]"
+                className="mobile-nav-link flex w-full items-center justify-between px-6 py-4 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-heading font-semibold text-sm tracking-widest uppercase rounded-xl shadow-lg shadow-[#FF6B00]/30 min-h-[44px]"
               >
                 REQUEST RFQ
                 <ArrowRight size={18} />

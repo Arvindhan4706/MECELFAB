@@ -26,3 +26,6 @@ supabase_schema.sql
 *.sln
 *.sw?
 test-results/
+.playwright-mcp/
+WhatsApp Image*
+WhatsApp Video*

@@ -1,6 +1,7 @@
 import Contact from '../../components/Contact';
 import { db } from '@/lib/db';
 import { getCompanyProfile } from '@/lib/companyConfig';
+import { getAllServices } from '@/data/servicesData';
 
 export const revalidate = 60;
 
@@ -26,11 +27,11 @@ export default async function ContactPage({ searchParams }) {
   const initialIndustrySlug = resolvedParams?.industry || '';
   const initialProjectTitle = resolvedParams?.project || '';
 
-  let services = [];
+  let services;
   let initialService = '';
   let initialDescription = '';
   let prefillEquipment = null;
-  let company = {};
+  let company = await getCompanyProfile();
 
   // Equipment lookup if provided
   if (initialEquipmentSlug) {
@@ -39,17 +40,6 @@ export default async function ContactPage({ searchParams }) {
     if (eq) {
       prefillEquipment = eq;
       initialDescription = `Inquiry regarding ${eq.title} (${eq.capacityRange}). Scope of requirement: `;
-      // Map equipment category to standard service
-      const categoryToServiceSlug = {
-        'power-generation': 'generator-rental',
-        'compressed-air': 'air-compressor-rental',
-        'hydraulics-pneumatics': 'hydraulic-pneumatic-overhauling',
-        'turbochargers': 'turbocharger-services',
-        'machinery-rigging': 'industrial-erection',
-      };
-      if (!initialServiceSlug && categoryToServiceSlug[eq.category]) {
-        // Will be matched against fetched services below
-      }
     }
   } else if (initialProjectTitle) {
     initialDescription = `Inquiry regarding project execution: ${initialProjectTitle}. `;
@@ -62,24 +52,26 @@ export default async function ContactPage({ searchParams }) {
       where: { status: 'ACTIVE' },
       select: { title: true, slug: true }
     });
-
-    if (initialServiceSlug) {
-      initialService = services.find(s => s.slug === initialServiceSlug)?.title || '';
-    } else if (prefillEquipment) {
-      const categoryToServiceSlug = {
-        'power-generation': 'generator-rental',
-        'compressed-air': 'air-compressor-rental',
-        'hydraulics-pneumatics': 'hydraulic-pneumatic-overhauling',
-        'turbochargers': 'turbocharger-services',
-        'machinery-rigging': 'industrial-erection',
-      };
-      const mappedSlug = categoryToServiceSlug[prefillEquipment.category];
-      initialService = services.find(s => s.slug === mappedSlug)?.title || '';
-    }
-
-    company = await getCompanyProfile();
   } catch {
-    // DB unavailable — render with empty data
+    services = [];
+  }
+
+  if (!services || services.length === 0) {
+    services = getAllServices().map(s => ({ title: s.title, slug: s.slug }));
+  }
+
+  if (initialServiceSlug) {
+    initialService = services.find(s => s.slug === initialServiceSlug)?.title || '';
+  } else if (prefillEquipment) {
+    const categoryToServiceSlug = {
+      'power-generation': 'generator-rental',
+      'compressed-air': 'air-compressor-rental',
+      'hydraulics-pneumatics': 'hydraulic-pneumatic-overhauling',
+      'turbochargers': 'turbocharger-services',
+      'machinery-rigging': 'industrial-erection',
+    };
+    const mappedSlug = categoryToServiceSlug[prefillEquipment.category];
+    initialService = services.find(s => s.slug === mappedSlug)?.title || '';
   }
 
   return (

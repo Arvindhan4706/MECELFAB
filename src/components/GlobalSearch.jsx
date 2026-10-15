@@ -3,8 +3,9 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Search, X, ArrowRight, Sparkles, Wrench, Factory, Cpu, FileText } from 'lucide-react';
+import { Search, X, ArrowRight, Sparkles, Wrench, Factory, Cpu, FileText, CheckCircle2 } from 'lucide-react';
 import { EQUIPMENT_ITEMS } from '@/lib/equipmentData';
+import { DEFAULT_PROJECTS } from '@/data/projectsData';
 
 const STATIC_SEARCH_ITEMS = [
   // Core Services
@@ -34,7 +35,7 @@ export default function GlobalSearch({ isOpen, onClose }) {
   const inputRef = useRef(null);
   const router = useRouter();
 
-  // Combine static entities with Equipment items
+  // Combine static entities with Equipment and Project items
   const allSearchable = useMemo(() => {
     const equipmentMapped = EQUIPMENT_ITEMS.map((item) => ({
       type: 'Equipment',
@@ -43,7 +44,14 @@ export default function GlobalSearch({ isOpen, onClose }) {
       subtitle: `${item.capacityRange} — ${item.supportedBrands}`,
       icon: Cpu,
     }));
-    return [...STATIC_SEARCH_ITEMS, ...equipmentMapped];
+    const projectsMapped = DEFAULT_PROJECTS.map((proj) => ({
+      type: 'Project',
+      title: proj.title,
+      href: `/projects/${proj.slug}`,
+      subtitle: `${proj.category} • ${proj.scope}`,
+      icon: CheckCircle2,
+    }));
+    return [...STATIC_SEARCH_ITEMS, ...equipmentMapped, ...projectsMapped];
   }, []);
 
   const filteredResults = useMemo(() => {
@@ -177,12 +185,16 @@ export default function GlobalSearch({ isOpen, onClose }) {
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2">
-                        <span className={`text-[9px] font-heading tracking-wider uppercase px-1 py-0.2 rounded ${
+                        <span className={`text-[9px] font-heading tracking-wider uppercase px-1.5 py-0.5 rounded ${
                           item.type === 'Equipment'
-                            ? 'bg-accent/20 text-accent border border-accent/30'
+                            ? 'bg-accent/15 text-accent border border-accent/30'
+                            : item.type === 'Project'
+                            ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
                             : item.type === 'Service'
-                            ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-                            : 'bg-white/10 text-white/60'
+                            ? 'bg-[#FF6B00]/20 text-[#FF8533] border border-[#FF6B00]/30'
+                            : item.type === 'Industry'
+                            ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/25'
+                            : 'bg-white/10 text-white/70'
                         }`}>
                           {item.type}
                         </span>

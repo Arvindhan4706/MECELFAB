@@ -23,15 +23,15 @@ const Footer = ({ contact }) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-12 mb-12 md:mb-16">
           {/* Brand Info */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
+            <Link href="/" className="inline-block mb-6">
               <Image
-                src="/images/logo-full.jpeg"
+                src="/images/logo-dark-mode.png"
                 alt="MECELFAB Industrial Solutions"
-                width={600}
-                height={120}
-                className="h-[105px] w-auto origin-left rounded-xl object-contain"
+                width={500}
+                height={166}
+                className="h-14 sm:h-16 w-auto object-contain drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)] transition-transform duration-300 hover:scale-[1.02]"
               />
-            </div>
+            </Link>
             <p className="text-sm text-secondary font-light leading-relaxed mb-6">
               Engineering reliable solutions for industrial growth. Serving fabrication, erection, power distribution, and heavy industrial utility setups across Tamil Nadu and South India.
             </p>
@@ -201,7 +201,7 @@ const Footer = ({ contact }) => {
           </div>
           <button
             onClick={handleScrollToTop}
-            className="md:absolute md:right-0 md:top-8 w-[44px] h-[44px] shrink-0 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-white hover:text-primary transition-colors duration-300"
+            className="md:absolute md:right-0 md:top-8 w-[44px] h-[44px] shrink-0 rounded-full bg-white/5 border border-white/10 text-white flex items-center justify-center hover:bg-accent hover:border-accent hover:text-white hover:shadow-lg hover:shadow-accent/30 transition-all duration-300"
             aria-label="Scroll to top"
           >
             <ArrowUp size={16} />

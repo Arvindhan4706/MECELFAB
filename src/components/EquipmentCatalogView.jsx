@@ -114,7 +114,7 @@ export default function EquipmentCatalogView() {
                   onClick={() => setActiveCategory(cat.id)}
                   className={`flex-shrink-0 px-4 py-2 rounded-lg text-xs font-heading tracking-wider uppercase transition-all duration-200 min-h-[40px] flex items-center gap-2 ${
                     isActive 
-                      ? 'bg-white text-black font-medium shadow-sm' 
+                      ? 'bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium shadow-md shadow-[#FF6B00]/25 border border-[#FF8533]/40' 
                       : 'bg-white/[0.03] text-white/60 hover:text-white hover:bg-white/[0.07] border border-white/5'
                   }`}
                 >
@@ -137,12 +137,12 @@ export default function EquipmentCatalogView() {
                 return (
                   <article 
                     key={item.slug} 
-                    className="group bg-white/[0.02] border border-white/5 rounded-xl p-6 sm:p-7 flex flex-col justify-between hover:border-white/20 hover:bg-white/[0.04] transition-all duration-300"
+                    className="group bg-white/[0.02] border border-white/5 rounded-xl p-6 sm:p-7 flex flex-col justify-between hover:border-accent/40 hover:bg-white/[0.04] transition-all duration-300"
                   >
                     <div>
                       {/* Top Header */}
                       <div className="flex items-start justify-between gap-3 mb-4">
-                        <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center text-white/80 group-hover:text-white transition-colors">
+                        <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-lg flex items-center justify-center text-white/80 group-hover:text-accent group-hover:border-accent/40 transition-colors">
                           <Icon size={18} />
                         </div>
                         <span className="text-[10px] font-heading uppercase tracking-widest px-2.5 py-1 bg-white/[0.04] border border-white/10 text-white/50 rounded">
@@ -156,7 +156,7 @@ export default function EquipmentCatalogView() {
                           {item.title}
                         </Link>
                       </h2>
-                      <p className="text-xs font-heading tracking-wide text-accent/80 font-medium mb-4">
+                      <p className="text-xs font-heading tracking-wide text-accent font-medium mb-4">
                         {item.capacityRange}
                       </p>
 
@@ -185,7 +185,7 @@ export default function EquipmentCatalogView() {
                       
                       <Link
                         href={`/contact?equipment=${item.slug}`}
-                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-white text-black font-heading text-[11px] tracking-wider uppercase rounded hover:bg-white/90 transition-colors min-h-[44px]"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] hover:from-[#FF7A1A] hover:to-[#FFA05C] text-white font-heading text-[11px] tracking-wider uppercase rounded shadow-sm shadow-[#FF6B00]/25 hover:scale-[1.02] transition-all min-h-[44px]"
                       >
                         <FileText size={13} />
                         RFQ

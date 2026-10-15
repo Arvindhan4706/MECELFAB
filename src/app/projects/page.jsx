@@ -1,6 +1,7 @@
 import ProjectsGallery from '../../components/ProjectsGallery';
 import TrustSection from '../../components/TrustSection';
 import { db } from '@/lib/db';
+import { DEFAULT_PROJECTS } from '@/data/projectsData';
 
 export const revalidate = 60;
 
@@ -27,12 +28,14 @@ export default async function ProjectsPage() {
       orderBy: { createdAt: 'desc' }
     });
   } catch {
-    // DB unavailable — render with empty projects (empty state will show)
+    // DB unavailable — render with empty projects
   }
+
+  const displayProjects = projects && projects.length > 0 ? projects : DEFAULT_PROJECTS;
 
   return (
     <div className="pt-24 bg-primary min-h-screen">
-      <ProjectsGallery projects={projects} />
+      <ProjectsGallery projects={displayProjects} />
       <TrustSection />
     </div>
   );

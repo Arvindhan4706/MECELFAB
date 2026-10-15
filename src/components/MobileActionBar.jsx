@@ -82,7 +82,7 @@ export default function MobileActionBar({ phone, whatsapp }) {
           )}
           <a
             href={rfqHref}
-            className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-3 bg-white text-primary rounded-lg text-[10px] sm:text-xs font-heading tracking-wider uppercase hover:bg-white/90 transition-colors min-h-[44px]"
+            className="flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-3 bg-gradient-to-r from-[#FF6B00] to-[#FF8533] text-white font-medium rounded-lg text-[10px] sm:text-xs font-heading tracking-wider uppercase shadow-md shadow-[#FF6B00]/30 min-h-[44px]"
             aria-label="Request RFQ"
           >
             <FileText size={15} />

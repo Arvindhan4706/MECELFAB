@@ -55,7 +55,7 @@ const About = ({ content }) => {
           <h2 className="about-animate text-3xl md:text-5xl lg:text-6xl font-heading font-light text-white leading-tight tracking-tight mb-8">
             Our Foundation
           </h2>
-          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-8" />
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-accent/50 to-transparent mx-auto mb-8" />
           <TextReveal
             as="p"
             delay={0.1}
@@ -72,14 +72,14 @@ const About = ({ content }) => {
           <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
             Who We Are
           </h2>
-          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent mx-auto mb-12" />
           <div className="max-w-3xl mx-auto text-center">
             <p className="about-animate text-secondary text-base md:text-lg font-light leading-relaxed mb-8">
               {content?.vision || 'Our work covers heavy metal fabrication, structural erection, and maintenance of pneumatic and hydraulic systems. We build and maintain industrial facilities and mechanical systems to reduce downtime.'}
             </p>
-            <div className="about-animate flex items-start gap-4 p-5 bg-white/[0.02] border border-white/5 rounded-lg text-left">
-              <div className="w-10 h-10 rounded-full bg-white/[0.05] flex items-center justify-center shrink-0 mt-0.5">
-                <Award size={18} className="text-white/60" />
+            <div className="about-animate flex items-start gap-4 p-5 bg-white/[0.02] border border-accent/20 rounded-lg text-left shadow-sm shadow-accent/5">
+              <div className="w-10 h-10 rounded-full bg-accent/10 border border-accent/25 flex items-center justify-center shrink-0 mt-0.5">
+                <Award size={18} className="text-accent" />
               </div>
               <p className="text-secondary text-sm font-light leading-relaxed">
                 MECELFAB handles fabrication, erection, and maintenance projects for industrial clients. We focus on completing work to specification, on schedule, and at the agreed cost.
@@ -95,7 +95,7 @@ const About = ({ content }) => {
           <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
             Our Capabilities
           </h2>
-          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent mx-auto mb-12" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {disciplines.map((d) => (
               <div
@@ -121,7 +121,7 @@ const About = ({ content }) => {
           <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
             Our Values
           </h2>
-          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent mx-auto mb-12" />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {values.map((v) => (
               <div
@@ -145,7 +145,7 @@ const About = ({ content }) => {
           <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
             Certifications
           </h2>
-          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent mx-auto mb-12" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
             <div className="about-animate flex items-center gap-5 p-6 bg-white/[0.02] border border-white/5 rounded-lg">
               <div className="w-14 h-14 rounded-lg bg-white/[0.04] flex items-center justify-center shrink-0">
@@ -175,7 +175,7 @@ const About = ({ content }) => {
           <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
             Our Team
           </h2>
-          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent mx-auto mb-12" />
           <div className="max-w-3xl mx-auto text-center">
             <p className="about-animate text-secondary text-base md:text-lg font-light leading-relaxed">
               Our team consists of qualified engineers with professional experience in industrial fabrication, automation, and infrastructure projects. We maintain a policy of using only verified team member information and do not publish individual profiles without explicit consent.
@@ -190,7 +190,7 @@ const About = ({ content }) => {
           <h2 className="about-animate text-3xl md:text-4xl font-heading font-light text-white text-center mb-4">
             Quality Assurance
           </h2>
-          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
+          <div className="about-animate w-16 h-[1px] bg-gradient-to-r from-transparent via-accent/40 to-transparent mx-auto mb-12" />
           <div className="max-w-3xl mx-auto">
             <div className="about-animate grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
               <div className="p-5 bg-white/[0.02] border border-white/5 rounded-lg">
