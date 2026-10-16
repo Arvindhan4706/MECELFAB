@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
 import { useGSAP } from '@gsap/react';
 import { gsap } from '@/lib/gsap';
@@ -229,74 +230,140 @@ const Contact = ({
               <h3 className="text-2xl font-light text-white mb-8">
                 {content?.legalName || content?.companyName || 'MECELFAB INDUSTRIAL SOLUTIONS PRIVATE LIMITED'}
               </h3>
-              <div className="flex flex-col gap-6">
-                <div className="flex items-start gap-4">
-                  <MapPin size={20} className="text-accent mt-1" />
-                  <div>
-                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">REGISTERED OFFICE / YARDS</h4>
-                    <p className="text-white/80 text-sm font-light leading-relaxed whitespace-pre-wrap">
-                      {content?.address || 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099'}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <Phone size={20} className="text-accent mt-1 shrink-0" />
-                  <div>
-                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">CONTACT NUMBERS</h4>
-                    <div className="flex flex-col gap-1">
-                      <a
-                        href="tel:+919840620571"
-                        className="text-white/90 text-sm font-light leading-relaxed hover:text-white transition-colors duration-300"
-                      >
-                        +91 9840620571
-                      </a>
-                      <a
-                        href="tel:+919444067012"
-                        className="text-white/90 text-sm font-light leading-relaxed hover:text-white transition-colors duration-300"
-                      >
-                        +91 9444067012
-                      </a>
+              <div className="flex flex-col gap-4">
+                {/* Registered Office & Location QR Hub */}
+                <div className="p-5 sm:p-6 rounded-xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all duration-300">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-5">
+                    <div className="flex items-start gap-3.5 flex-1">
+                      <div className="p-2 rounded-lg bg-accent/10 border border-accent/20 text-accent shrink-0 mt-0.5">
+                        <MapPin size={20} />
+                      </div>
+                      <div className="space-y-1.5">
+                        <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest">
+                          REGISTERED OFFICE / YARDS
+                        </h4>
+                        <p className="text-white/90 text-sm font-light leading-relaxed whitespace-pre-wrap">
+                          {content?.address || 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099'}
+                        </p>
+                        <a
+                          href={`https://maps.google.com/?q=${encodeURIComponent(content?.address || 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099')}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs text-accent hover:underline font-medium pt-1"
+                        >
+                          <span>Open in Google Maps</span>
+                          <span className="text-xs">↗</span>
+                        </a>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                <div className="flex items-start gap-4">
-                  <Mail size={20} className="text-accent mt-1" />
-                  <div>
-                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">OFFICIAL EMAIL</h4>
-                    <a href={`mailto:${content?.email || 'mecelfab@gmail.com'}`} className="text-white/80 text-sm font-light leading-relaxed hover:text-white transition-colors duration-300">
-                      {content?.email || 'mecelfab@gmail.com'}
-                    </a>
-                  </div>
-                </div>
-
-                {(content?.phone || content?.whatsapp) && (
-                  <div className="flex items-start gap-4">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-accent mt-1 shrink-0">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
-                    <div>
-                      <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">WHATSAPP</h4>
+                    {/* Integrated QR Scan Token */}
+                    <div className="flex items-center sm:flex-col gap-3.5 pt-4 sm:pt-0 border-t sm:border-t-0 sm:border-l border-white/10 sm:pl-6 shrink-0 justify-center">
                       <a
-                        href={`https://wa.me/${(content?.phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
+                        href={`https://maps.google.com/?q=${encodeURIComponent(content?.address || 'No. 35 & 36, Jayam Nagar, Shanmugapuram, Surapattu, Chennai – 600 099')}`}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-white/80 text-sm font-light leading-relaxed hover:text-white transition-colors duration-300"
+                        title="Scan with phone or click to navigate on Google Maps"
+                        className="group relative p-2.5 bg-white rounded-xl shadow-lg hover:scale-105 transition-all duration-300 block shrink-0 ring-1 ring-white/20"
                       >
-                        Chat on WhatsApp
+                        <Image
+                          src="/images/location-qr.png"
+                          alt="Scan location QR code for Google Maps"
+                          width={160}
+                          height={160}
+                          className="w-32 h-32 sm:w-36 sm:h-36 md:w-40 md:h-40 object-contain"
+                          priority
+                        />
+                      </a>
+                      <div className="text-left sm:text-center">
+                        <span className="text-xs font-heading font-medium uppercase tracking-wider text-white block">
+                          Scan for Map
+                        </span>
+                        <span className="text-[11px] text-secondary font-light block mt-0.5">
+                          Open in Google Maps
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2-Column Grid for Direct Communications & Operations */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Phone Numbers */}
+                  <div className="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all duration-300 flex items-start gap-3.5">
+                    <div className="p-2 rounded-lg bg-accent/10 border border-accent/20 text-accent shrink-0 mt-0.5">
+                      <Phone size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-heading font-medium text-secondary uppercase tracking-widest mb-1.5">
+                        PHONE NUMBERS
+                      </h4>
+                      <div className="flex flex-col gap-1 text-sm font-light">
+                        <a href="tel:+919840620571" className="text-white/90 hover:text-white transition-colors">
+                          +91 9840620571
+                        </a>
+                        <a href="tel:+919444067012" className="text-white/90 hover:text-white transition-colors">
+                          +91 9444067012
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Official Email */}
+                  <div className="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all duration-300 flex items-start gap-3.5">
+                    <div className="p-2 rounded-lg bg-accent/10 border border-accent/20 text-accent shrink-0 mt-0.5">
+                      <Mail size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-heading font-medium text-secondary uppercase tracking-widest mb-1.5">
+                        EMAIL
+                      </h4>
+                      <a
+                        href={`mailto:${content?.email || 'mecelfab@gmail.com'}`}
+                        className="text-white/90 text-sm font-light hover:text-white transition-colors break-all"
+                      >
+                        {content?.email || 'mecelfab@gmail.com'}
                       </a>
                     </div>
                   </div>
-                )}
 
-                <div className="flex items-start gap-4">
-                  <Clock size={20} className="text-accent mt-1" />
-                  <div>
-                    <h4 className="text-xs font-heading font-semibold text-secondary uppercase tracking-widest mb-1">OPERATIONS</h4>
-                    <p className="text-white/80 text-sm font-light leading-relaxed">
-                      {content?.workingHours || 'Mon - Sat: 9:00 AM - 6:00 PM IST'}
-                    </p>
+                  {/* WhatsApp */}
+                  {(content?.phone || content?.whatsapp) && (
+                    <div className="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all duration-300 flex items-start gap-3.5">
+                      <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-heading font-medium text-secondary uppercase tracking-widest mb-1.5">
+                          WHATSAPP
+                        </h4>
+                        <a
+                          href={`https://wa.me/${(content?.phone || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Hello MECELFAB, I have an industrial service requirement.')}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-white/90 text-sm font-light hover:text-white transition-colors"
+                        >
+                          Chat on WhatsApp ↗
+                        </a>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Operations */}
+                  <div className="p-4 sm:p-5 rounded-xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all duration-300 flex items-start gap-3.5">
+                    <div className="p-2 rounded-lg bg-accent/10 border border-accent/20 text-accent shrink-0 mt-0.5">
+                      <Clock size={18} />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-heading font-medium text-secondary uppercase tracking-widest mb-1.5">
+                        WORKING HOURS
+                      </h4>
+                      <p className="text-white/90 text-sm font-light">
+                        {content?.workingHours || 'Mon - Sat: 9:00 AM - 6:00 PM IST'}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
